@@ -20,6 +20,7 @@ public class CheckPoint : MonoBehaviour
         if (reached)
         {
             rend.material.color = Color.cyan;
+            this.gameObject.SetActive(false);
         }
 
         if (!Flipped)

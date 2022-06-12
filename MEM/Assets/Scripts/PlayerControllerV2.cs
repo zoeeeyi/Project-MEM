@@ -259,11 +259,17 @@ public class PlayerControllerV2 : RaycastController
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Enter");
         if (other.gameObject.CompareTag("Checkpoint"))
         {
             CheckPoint checkPoint = other.GetComponent<CheckPoint>();
             checkPoint.reached = true;
+            gameManager.checkPointReached += 1;
+            this.gameObject.SetActive(false);
+        }
+
+        if (other.gameObject.CompareTag("DeathBound"))
+        {
+            gameManager.gameOver = true;
         }
     }
 
