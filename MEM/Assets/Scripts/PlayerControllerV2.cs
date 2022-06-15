@@ -96,6 +96,20 @@ public class PlayerControllerV2 : RaycastController
                     continue;
                 }
 
+                if(hit.collider.tag == "Switch")
+                {
+                    SwitchController switchController = hit.collider.GetComponent<SwitchController>();
+                    if(directionX == 1)
+                    {
+                        switchController.activated = true;
+                        continue;
+                    } else
+                    {
+                        switchController.activated = false;
+                        continue;
+                    }
+                }
+
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up * gravityDir);
                 //each frame, start checking with the first ray if the object can climb the slope.
                 if (i == 0 && (slopeAngle <= maxClimbAngle))
@@ -151,7 +165,8 @@ public class PlayerControllerV2 : RaycastController
             //Set velocity when collision is detected
             if (hit)
             {
-                if (hit.collider.tag == "Through")
+                if (playerInput.parent.VerticalCollisionExemptions.Contains(hit.collider.tag))
+                //if (hit.collider.tag == "Through")
                 {
                     if(directionY == 1 || hit.distance == 0)
                     {
@@ -271,6 +286,12 @@ public class PlayerControllerV2 : RaycastController
         {
             gameManager.gameOver = true;
         }
+
+        /*if (other.gameObject.CompareTag("Switch"))
+        {
+            SwitchController switchController = other.GetComponent<SwitchController>();
+            switchController.activated = true;
+        }*/
     }
 
     public struct CollisionInfo

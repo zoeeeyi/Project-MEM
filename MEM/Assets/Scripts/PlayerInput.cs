@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour
     Vector3 velocity;
     [HideInInspector] public Vector3 displacement;
     PlayerControllerV2 controller;
-    PlayerInputParent parent;
+    [HideInInspector] public PlayerInputParent parent;
 
     PlayerInputParent.PlayerState state;
 
@@ -115,23 +115,26 @@ public class PlayerInput : MonoBehaviour
             if (wallSliding)
             {
                 //Jump climb the wall
-                if(wallDirX == input.x)
+                if (parent.wallJumpActivate)
                 {
-                    velocity.x = -wallDirX * parent.wallJumpClimb.x;
-                    velocity.y = parent.wallJumpClimb.y;
+                    if (wallDirX == input.x)
+                    {
+                        velocity.x = -wallDirX * parent.wallJumpClimb.x;
+                        velocity.y = parent.wallJumpClimb.y;
+                    }
+                    else
+                    {
+                        velocity.x = -wallDirX * parent.wallLeap.x;
+                        velocity.y = parent.wallLeap.y;
+                    }
                 }
                 //Jump off the wall
-                else if(input.x == 0)
+                if(input.x == 0)
                 {
                     velocity.x = -wallDirX * parent.wallJumpOff.x;
                     velocity.y = parent.wallJumpClimb.y;
                 }
                 //Leap between two walls
-                else
-                {
-                    velocity.x = -wallDirX * parent.wallLeap.x;
-                    velocity.y = parent.wallLeap.y;
-                }
             }
             if (isGrounded)
             {

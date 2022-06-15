@@ -25,6 +25,7 @@ public class PlayerInputParent : MonoBehaviour
     [Space]
     [Header("Wall Jump")]
     //Wall jump parameters
+    public bool wallJumpActivate = true;
     public Vector2 wallJumpClimb;
     public Vector2 wallJumpOff;
     public Vector2 wallLeap;
@@ -40,6 +41,11 @@ public class PlayerInputParent : MonoBehaviour
 
     [HideInInspector] public Vector3 posCharacter, posCharacterFlipped;
     [HideInInspector] public Vector3 characterCenter;
+
+    [Space]
+    [Header("Misc")]
+    public List<string> HorizontalCollisionExemptions = new List<string>();
+    public List<string> VerticalCollisionExemptions = new List<string>();
 
     [HideInInspector]
     public enum PlayerState
