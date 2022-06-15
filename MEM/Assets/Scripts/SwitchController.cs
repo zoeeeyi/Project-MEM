@@ -7,15 +7,17 @@ public class SwitchController : MonoBehaviour
     public bool activated = false;
     private Renderer rend;
 
+    //Type 1: Move Block
     public GameObject moveBlock;
     MoveBlockController moveBlockController;
-
 
     void Start()
     { 
         rend = GetComponent<Renderer>();
+
+        //Type 1: Move Block
         moveBlockController = moveBlock.GetComponent<MoveBlockController>();
-        moveBlock.SetActive(false);
+        //moveBlock.SetActive(false);
     }
 
     // Update is called once per frame
@@ -23,12 +25,13 @@ public class SwitchController : MonoBehaviour
     {
         if (activated)
         {
-            rend.material.color = Color.cyan;
-            moveBlock.SetActive(true);
+            rend.material.color = Color.red;
+            moveBlockController.activated = true;
         }
         else
         {
-            moveBlock.SetActive(false);
+            rend.material.color = new Color(0, 255, 47, 255);
+            moveBlockController.activated = false;
         }
     }
 }

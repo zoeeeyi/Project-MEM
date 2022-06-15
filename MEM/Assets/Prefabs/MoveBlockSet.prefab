@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7174774155642013441}
   m_Layer: 0
-  m_Name: SwitchSet
+  m_Name: MoveBlockSet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,11 +50,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6473370168123178729, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.47
+      value: -4.6
       objectReference: {fileID: 0}
     - target: {fileID: 6473370168123178729, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.03
+      value: -5.71
       objectReference: {fileID: 0}
     - target: {fileID: 6473370168123178729, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
       propertyPath: m_LocalPosition.z
@@ -90,12 +90,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6473370168123178728, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
+    - {fileID: 6473370168123178733, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
 --- !u!1 &7174774155049167603 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6473370168123178726, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
   m_PrefabInstance: {fileID: 4199585531179062293}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1820225880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7174774155049167603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b36ee531abdcbd428aec7d3a8ee2990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activated: 0
+  activatedLastStep: 0
+  localWaypoints:
+  - {x: -8.9, y: 3, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 3, y: 0, z: 0}
+  speed: 4
+  waitTime: 0.05
+  easeAmount: 0.8
+  fromWaypointIndex: 0
+  percentBetweenWaypoints: 0
 --- !u!4 &7174774155049167612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6473370168123178729, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}

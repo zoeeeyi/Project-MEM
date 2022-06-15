@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class MoveBlockController : MonoBehaviour
 {
-    public bool activated = false;
+    [HideInInspector] public bool activated = false;
+    [HideInInspector] public bool activatedLastStep = false;
     MoveBlockState moveState;
-    bool open = false;
-    bool move = false;
+    /*bool open = false;
+    bool move = false;*/
 
     public Vector3[] localWaypoints;
     Vector3[] globalWaypoints;
@@ -20,8 +21,8 @@ public class MoveBlockController : MonoBehaviour
     [Range(0, 2)]//clamp easeAmount between 0-2.
     public float easeAmount;
 
-    int fromWaypointIndex;
-    float percentBetweenWaypoints;
+    [SerializeField] int fromWaypointIndex;
+    [SerializeField] float percentBetweenWaypoints;
     float nextMoveTime;
 
     public enum MoveBlockState
@@ -33,6 +34,7 @@ public class MoveBlockController : MonoBehaviour
 
     void Start()
     {
+        //Set global waypoints
         globalWaypoints = new Vector3[localWaypoints.Length];
         for (int i = 0; i < localWaypoints.Length; i++)
         {
@@ -40,47 +42,47 @@ public class MoveBlockController : MonoBehaviour
         }
 
         transform.position = globalWaypoints[0];
+        moveState = MoveBlockState.StartPoint;
 
-        //Make two versions of waypoints: Normal and Reversed
-        globalWaypointsNormal = globalWaypoints;
+        //Make two versions of waypoints for further use: Normal and Reversed
+        /*globalWaypointsNormal = globalWaypoints;
         System.Array.Reverse(globalWaypoints);
         globalWaypointsReversed = globalWaypoints;
-        globalWaypoints = globalWaypointsNormal;
+        globalWaypoints = globalWaypointsNormal;*/
     }
     void Update()
     {
-        if (!activated)
+        Vector3 velocity = Vector3.zero;
+        switch (moveState)
         {
-            if(moveState == MoveBlockState.StartPoint)
-            {
-                move = false;
-            }
-        }
-        if (!activated && open)
-        {
-            percentBetweenWaypoints = 0;
-            globalWaypoints = globalWaypointsReversed;
-            move = true;
-            open = false;
+            case MoveBlockState.StartPoint:
+                if (activated) velocity = CalculatePlatformMovement();
+                break;
+
+            case MoveBlockState.FinishPoint:
+                if (!activated) velocity = CalculatePlatformMovement();
+                break;
+
+            case MoveBlockState.Middle:
+                if (activated == activatedLastStep) velocity = CalculatePlatformMovement();
+                else if (activated != activatedLastStep)
+                {
+                    changeDirMidway();
+                    velocity = CalculatePlatformMovement();
+                }
+                break;
         }
 
-        if (activated && !open)
-        {
-            move = true;
-            globalWaypoints = globalWaypointsNormal;
-        }
-
-        if (move)
-        {
-            Vector3 velocity = CalculatePlatformMovement();
-            transform.Translate(velocity);
-        }
+        transform.Translate(velocity);
+        activatedLastStep = activated;
     }
 
-    float Ease(float x)
+    //Do if we change direction middle of the way
+    void changeDirMidway()
     {
-        float a = easeAmount + 1;//when easeAmount = 0, a = 1, there is no easing.
-        return Mathf.Pow(x, a) / (Mathf.Pow(x, a) + Mathf.Pow(1 - x, a));//formula that creates easing effect.
+        System.Array.Reverse(globalWaypoints);
+        fromWaypointIndex = globalWaypoints.Length - 1 - (fromWaypointIndex + 1);
+        percentBetweenWaypoints = 1 - percentBetweenWaypoints;
     }
 
     Vector3 CalculatePlatformMovement()
@@ -91,39 +93,49 @@ public class MoveBlockController : MonoBehaviour
             return Vector3.zero;
         }
 
-        fromWaypointIndex %= globalWaypoints.Length;
-        int toWaypointIndex = (fromWaypointIndex + 1) % globalWaypoints.Length;
+        fromWaypointIndex %= globalWaypoints.Length;//Which waypoint the object just passed
+        int toWaypointIndex = (fromWaypointIndex + 1) % globalWaypoints.Length;//Next waypoint
+
+        //Calculate the percentage we have traveled between waypoints (value subject to the order of waypoints)
         float distanceBetweenWaypoints = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
         percentBetweenWaypoints += Time.deltaTime * speed / distanceBetweenWaypoints;
         percentBetweenWaypoints = Mathf.Clamp01(percentBetweenWaypoints);//clamp the percentage between 0 and 1.
         float easedPercentBetweenWaypoints = Ease(percentBetweenWaypoints);
 
+        //Get new position
         Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], easedPercentBetweenWaypoints);
 
-        if(percentBetweenWaypoints >= 1)
-        {
-            move = false;
-            if (activated) { open = true; }
-        }
-        /*if (percentBetweenWaypoints >= 1)
+        //Move to next waypoint
+        if (percentBetweenWaypoints >= 1)
         {
             percentBetweenWaypoints = 0;
             fromWaypointIndex++;
 
-            //If not cyclic, the platform will move back in the reverse order.
-            if (!cyclic)
+            //When we reach the last waypoint
+            if (fromWaypointIndex == globalWaypoints.Length - 1)
             {
-                if (fromWaypointIndex >= globalWaypoints.Length - 1)
-                {
-                    fromWaypointIndex = 0;
-                    System.Array.Reverse(globalWaypoints);
-                }
+                if (activated) moveState = MoveBlockState.FinishPoint;
+                else if (!activated) moveState = MoveBlockState.StartPoint;
+
+                //Reset
+                System.Array.Reverse(globalWaypoints);
+                fromWaypointIndex = 0;
+                percentBetweenWaypoints = 0;
+                return Vector3.zero;
             }
+
             //Create a pause when the platform reach a new waypoint
             nextMoveTime = Time.time + waitTime;
-        }*/
+        }
 
+        moveState = MoveBlockState.Middle;
         return newPos - transform.position;
+    }
+
+    float Ease(float x)
+    {
+        float a = easeAmount + 1;//when easeAmount = 0, a = 1, there is no easing.
+        return Mathf.Pow(x, a) / (Mathf.Pow(x, a) + Mathf.Pow(1 - x, a));//formula that creates easing effect.
     }
 
     private void OnDrawGizmos()
