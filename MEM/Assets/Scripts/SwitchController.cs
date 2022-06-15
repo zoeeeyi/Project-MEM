@@ -25,12 +25,12 @@ public class SwitchController : MonoBehaviour
     {
         if (activated)
         {
-            rend.material.color = Color.red;
+            rend.material.color = new Color(0, 255/255f, 0, 255/255f);
             moveBlockController.activated = true;
         }
         else
         {
-            rend.material.color = new Color(0, 255, 47, 255);
+            rend.material.color = new Color(255/255f, 0/255f, 0/255f, 255/255f);
             moveBlockController.activated = false;
         }
     }
