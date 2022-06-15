@@ -1,14 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatformController : RaycastController
 {
+    [Header("General Settings")]
+    public bool bothWay = false;
     public LayerMask passengerMask;
 
+    [Header("Movement Settings")]
     public Vector3[] localWaypoints;
     Vector3[] globalWaypoints;
-
     public float speed;
     public bool cyclic;
     public float waitTime;
@@ -48,6 +51,7 @@ public class PlatformController : RaycastController
         MovePassengers(true);
         transform.Translate(velocity);
         MovePassengers(false);
+
     }
 
     float Ease(float x)
@@ -98,6 +102,8 @@ public class PlatformController : RaycastController
     {
         foreach (PassengerMovementInfo passenger in passengerMovementInfoList)
         {
+            PlayerControllerV2 playerController = passenger.transform.GetComponent<PlayerControllerV2>();
+            if (playerController.inverseGrav != inverseGrav) continue;
             if (!passengerDic.ContainsKey(passenger.transform))
             {
                 //map the playercontroller scripts to passenger.transform so we don't need to getcomponent every frame

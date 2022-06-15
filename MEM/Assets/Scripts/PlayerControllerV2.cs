@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -166,9 +167,21 @@ public class PlayerControllerV2 : RaycastController
             if (hit)
             {
                 if (playerInput.parent.VerticalCollisionExemptions.Contains(hit.collider.tag))
-                //if (hit.collider.tag == "Through")
                 {
-                    if(directionY == 1 || hit.distance == 0)
+                    continue;
+                }
+                if (hit.collider.tag == "MovePlatform")
+                {
+                    try
+                    {
+                        PlatformController platformController = hit.collider.GetComponent<PlatformController>();
+                        if ((platformController.inverseGrav != inverseGrav)
+                            && (!platformController.bothWay)){
+                            continue;
+                        }
+                    }catch(NullReferenceException e) { }
+
+                    if (directionY == 1 || hit.distance == 0)
                     {
                         continue;
                     }
