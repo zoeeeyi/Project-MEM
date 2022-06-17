@@ -102,8 +102,6 @@ public class PlatformController : RaycastController
     {
         foreach (PassengerMovementInfo passenger in passengerMovementInfoList)
         {
-            PlayerControllerV2 playerController = passenger.transform.GetComponent<PlayerControllerV2>();
-            if (playerController.inverseGrav != inverseGrav) continue;
             if (!passengerDic.ContainsKey(passenger.transform))
             {
                 //map the playercontroller scripts to passenger.transform so we don't need to getcomponent every frame
@@ -111,6 +109,12 @@ public class PlatformController : RaycastController
             }
             if (passenger.moveBeforePlatform == beforeMovePlatform)
             {
+                //If the platform isn't bothway and the player have different gravity dir, skip its move step.
+                if ((passengerDic[passenger.transform].inverseGrav != inverseGrav))
+                {
+                    if (!bothWay) continue;
+                    else passenger.SetVelocity(new Vector3(passenger.velocity.x, -passenger.velocity.y));
+                }
                 passengerDic[passenger.transform].Move(passenger.velocity, passenger.standingOnPlatform, passenger.overwritePlatformPush);
             }
         }
@@ -130,22 +134,25 @@ public class PlatformController : RaycastController
         if(velocity.y != 0)
         {
             float rayLength = Mathf.Abs(velocity.y) + skinWidth;//the distance only cover the travel length of this frame
+            float shortRayLength = 2 * skinWidth;
 
             for (int i = 0; i < verticalRayCount; i++)
             {
+                rayLength = Mathf.Abs(velocity.y) + skinWidth;
                 Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;//Ternary
                 rayOrigin += Vector2.right * (verticalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY * gravityDir, rayLength, passengerMask);
-                Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength * gravityDir, Color.green);
+                RaycastHit2D hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.down * directionY * gravityDir, shortRayLength, passengerMask);
+                bool samePassenger = (hit.transform == hitBelowSurface.transform);
+                Debug.DrawRay(rayOrigin, 10*Vector2.up * directionY * gravityDir * rayLength, Color.red);
 
-                //Set velocity when collision is detected
-                if (hit && hit.distance != 0)
+                if (hit && hit.distance != 0 && !samePassenger)
                 {
                     if (!movedPassengers.Contains(hit.transform))
                     {
                         movedPassengers.Add(hit.transform);
                         //the passenger can only be taken horizontally if its on the platform.
-                        float pushX = (directionY == 1) ? velocity.x : 0;
+                        float pushX = (bothWay || directionY == 1) ? velocity.x : 0;
                         //(hit.distance-skinWidth) is the gap between passenger and the platform
                         //we first close this gap, then move the rest of the distance with "pushY"
                         float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
@@ -153,10 +160,72 @@ public class PlatformController : RaycastController
                         passengerMovementInfoList.Add(new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), directionY == 1, true, false));
                     }
                 }
+
+                if (bothWay)
+                {
+                    rayLength = 2 * skinWidth;
+                    rayOrigin = (directionY == -1) ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
+                    rayOrigin += Vector2.right * (verticalRaySpacing * i);
+                    RaycastHit2D hitDown = Physics2D.Raycast(rayOrigin, Vector2.down * directionY * gravityDir, rayLength, passengerMask);
+                    hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.up * directionY * gravityDir, shortRayLength, passengerMask);
+                    samePassenger = (hitDown.transform == hitBelowSurface.transform);
+                    Debug.DrawRay(rayOrigin, 10 * Vector2.down * directionY * gravityDir * rayLength, Color.red);
+
+                    if (hitDown && hitDown.distance != 0 && !samePassenger)
+                    {
+                        if (!movedPassengers.Contains(hitDown.transform))
+                        {
+                            movedPassengers.Add(hitDown.transform);
+                            float pushX = velocity.x;
+                            float pushY = velocity.y;
+
+                            passengerMovementInfoList.Add(new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false));
+                        }
+                    }
+                }
+
+
+
+                /*if ((hit || hitDown) && (hit.distance != 0) && (hitDown.distance != 0))
+                {
+                    List<Transform> hitList = new List<Transform>();
+                    if (bothWay)
+                    {
+                        if (!movedPassengers.Contains(hit.transform)) hitList.Add(hit.transform);
+                        if (!movedPassengers.Contains(hitDown.transform)) hitList.Add(hitDown.transform);
+                    }
+                    else
+                    {
+                        if (!movedPassengers.Contains(hit.transform)) hitList.Add(hit.transform);
+                    }
+
+                    foreach (Transform t in hitList)
+                    {
+                        movedPassengers.Add(t);
+                        float pushX = 0;
+                        float pushY = 0;
+                        if (bothWay)
+                        {
+                            pushX = velocity.x;
+                            pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                        } else
+                        {
+                            //If the platform is not both way, the passenger can only be taken horizontally if its on the platform.
+                            pushX = (directionY == 1) ? velocity.x : 0;
+                            //(hit.distance-skinWidth) is the gap between passenger and the platform
+                            //we first close this gap, then move the rest of the distance with "pushY"
+                            pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                        }
+                        passengerMovementInfoList.Add(new PassengerMovementInfo(t, new Vector3(pushX, pushY), true, false, false));
+                    }
+                }*/
+
+
+                //Set velocity when collision is detected
             }
         }
 
-        //Horizontally moving platforms
+        //Horizontally moving platforms (for horizontal collisions)
         if (velocity.x != 0)
         {
             float rayLength = Mathf.Abs(velocity.x) + skinWidth;
@@ -183,7 +252,7 @@ public class PlatformController : RaycastController
         }
 
         //Passengers on top of a horizontally or downward moving platform
-        if (velocity.y < 0 || (velocity.y == 0 && velocity.x != 0))
+        if ((velocity.y < 0 && !bothWay) || (velocity.y == 0 && velocity.x != 0))
         {
             //only cast a very small ray for detection
             float rayLength = 2 * skinWidth;
@@ -192,14 +261,15 @@ public class PlatformController : RaycastController
             {
                 Vector2 rayOrigin = raycastOrigins.topLeft + Vector2.right * (verticalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * gravityDir, rayLength, passengerMask);
-                RaycastHit2D hitDown = Physics2D.Raycast(rayOrigin, Vector2.down * gravityDir, Mathf.Infinity, passengerMask);
+                //RaycastHit2D hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.down * gravityDir, Mathf.Infinity, passengerMask);
+                RaycastHit2D hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.down * gravityDir, rayLength, passengerMask);
                 //sometimes the platform will go through the player and the upward ray will detect the player
                 //Meaning this will give player velocity.x
                 //Cast ray both upward and downward to detect if the collider is "through" the passenger
                 //if the upward and downward detects different objects from "passenger" layer mask, then the collider isn't "through" the passenger
-                bool samePassenger = (hit.transform == hitDown.transform);
+                bool samePassenger = (hit.transform == hitBelowSurface.transform);
 
-                //Set velocity when collision is detected
+                //Set velocity when collision is detected and the passenger is not "through"
                 if (hit && !samePassenger && hit.distance != 0)
                 {
                     if (!movedPassengers.Contains(hit.transform))
@@ -211,6 +281,50 @@ public class PlatformController : RaycastController
                         passengerMovementInfoList.Add(new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, false, false));
                     }
                 }
+
+                if (bothWay)
+                {
+                    rayOrigin = raycastOrigins.bottomLeft + Vector2.right * (verticalRaySpacing * i);
+                    RaycastHit2D hitDown = Physics2D.Raycast(rayOrigin, Vector2.down * gravityDir, rayLength, passengerMask);
+                    hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.up * gravityDir, rayLength, passengerMask);
+                    samePassenger = (hitDown.transform == hitBelowSurface.transform);
+
+                    if (hitDown && !samePassenger && hitDown.distance != 0)
+                    {
+                        if (!movedPassengers.Contains(hitDown.transform))
+                        {
+                            movedPassengers.Add(hitDown.transform);
+                            float pushX = velocity.x;
+                            float pushY = velocity.y;
+
+                            passengerMovementInfoList.Add(new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false));
+                        }
+                    }
+                }
+
+
+                /*if ((hit || hitDown) && !samePassenger && (hit.distance != 0) && (hitDown.distance != 0))
+                {
+                    List<Transform> hitList = new List<Transform>();
+                    if (bothWay)
+                    {
+                        if (!movedPassengers.Contains(hit.transform)) hitList.Add(hit.transform);
+                        if (!movedPassengers.Contains(hitDown.transform)) hitList.Add(hitDown.transform);
+                    }
+                    else
+                    {
+                        if (!movedPassengers.Contains(hit.transform)) hitList.Add(hit.transform);
+                    }
+
+                    foreach (Transform t in hitList)
+                    {
+                        movedPassengers.Add(t);
+                        float pushX = velocity.x;
+                        float pushY = velocity.y;
+                        passengerMovementInfoList.Add(new PassengerMovementInfo(t, new Vector3(pushX, pushY), true, false, false));
+                    }
+                }*/
+
             }
 
         }
@@ -230,6 +344,11 @@ public class PlatformController : RaycastController
             standingOnPlatform = _standingOnPlatform;
             moveBeforePlatform = _moveBeforePlatform;
             overwritePlatformPush = _overwritePlatformPush;
+        }
+
+        public void SetVelocity(Vector3 _velocity)
+        {
+            velocity = _velocity;
         }
     }
 
