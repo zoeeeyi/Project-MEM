@@ -46,12 +46,14 @@ public class PlayerInputParent : MonoBehaviour
     [Header("Misc")]
     public List<string> HorizontalCollisionExemptions = new List<string>();
     public List<string> VerticalCollisionExemptions = new List<string>();
+    public float maxCharacterXGap;
 
     [HideInInspector]
     public enum PlayerState
     {
         Normal,
-        CenterDash
+        CenterDash,
+        BeyondXGap
     }
 
     [HideInInspector] public PlayerState state;
@@ -79,5 +81,7 @@ public class PlayerInputParent : MonoBehaviour
         {
             state = PlayerState.Normal;
         }
+
+        if (Mathf.Abs(posCharacter.x - posCharacterFlipped.x) > maxCharacterXGap) state = PlayerState.BeyondXGap;
     }
 }

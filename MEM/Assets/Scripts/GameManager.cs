@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public bool gameOver = false;
     public GameObject gameOverUI;
     public GameObject gameWinUI;
+    public PlayerInputParent playerInputParent;
 
     //Checkpoints
     public int checkPointNum = 2;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        playerInputParent = GameObject.Find("Character Parent").GetComponent<PlayerInputParent>();
         Time.timeScale = 1;
         gameOverUI = GameObject.Find("GameOver");
         gameWinUI = GameObject.Find("GameWin");
@@ -39,6 +41,8 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             gameWinUI.SetActive(true);
         }
+
+        if (playerInputParent.state == PlayerInputParent.PlayerState.BeyondXGap) gameOver = true;
     }
 
     public void ExitGame()
