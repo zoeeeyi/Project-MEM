@@ -21,8 +21,8 @@ public class MoveBlockController : MonoBehaviour
     [Range(0, 2)]//clamp easeAmount between 0-2.
     public float easeAmount;
 
-    [SerializeField] int fromWaypointIndex;
-    [SerializeField] float percentBetweenWaypoints;
+    int fromWaypointIndex;
+    float percentBetweenWaypoints;
     float nextMoveTime;
 
     public enum MoveBlockState

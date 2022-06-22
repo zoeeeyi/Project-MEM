@@ -99,10 +99,10 @@ public class PlayerControllerV2 : RaycastController
                 }
 
                 //If we hit killers
-                if (playerInput.parent.Killers.Contains(hit.collider.tag))
+                /*if (playerInput.parent.Killers.Contains(hit.collider.tag))
                 {
                     gameManager.gameOver = true;
-                }
+                }*/
 
                 if (hit.distance == 0)
                 {
@@ -112,7 +112,7 @@ public class PlayerControllerV2 : RaycastController
                 if(hit.collider.tag == "Switch")
                 {
                     SwitchController switchController = hit.collider.GetComponent<SwitchController>();
-                    if(directionX == 1)
+                    if(directionX == 1 * switchController.leftOpenValue)
                     {
                         switchController.activated = true;
                         continue;
@@ -185,10 +185,10 @@ public class PlayerControllerV2 : RaycastController
                 }
 
                 //If we hit killers
-                if (playerInput.parent.Killers.Contains(hit.collider.tag))
+                /*if (playerInput.parent.Killers.Contains(hit.collider.tag))
                 {
                     gameManager.gameOver = true;
-                }
+                }*/
 
                 if (hit.collider.tag == "MovePlatform")
                 {
@@ -312,13 +312,10 @@ public class PlayerControllerV2 : RaycastController
             CheckPoint checkPoint = other.GetComponent<CheckPoint>();
             checkPoint.reached = true;
             gameManager.checkPointReached += 1;
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
         }
 
-        if (other.gameObject.CompareTag("DeathBound"))
-        {
-            gameManager.gameOver = true;
-        }
+        if (playerInput.parent.Killers.Contains(other.tag)) gameManager.gameOver = true;
 
         /*if (other.gameObject.CompareTag("Switch"))
         {

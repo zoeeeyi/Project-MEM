@@ -13,11 +13,14 @@ public class PlayerInput : MonoBehaviour
 
     int centerDashDir;
 
+    Renderer rend;
+
     [Space]
     [Header("Misc")]
     public bool inverseGravity = false;
     Vector2 input;
     Vector3 velocity;
+    float gravity;
     [HideInInspector] public Vector3 displacement;
     PlayerControllerV2 controller;
     [HideInInspector] public PlayerInputParent parent;
@@ -29,6 +32,7 @@ public class PlayerInput : MonoBehaviour
     {
         controller = GetComponent<PlayerControllerV2>();
         parent = GetComponentInParent<PlayerInputParent>();
+        rend = GetComponent<Renderer>();
 
         //Read the position and send it to parent class
         if (!inverseGravity)
@@ -58,6 +62,10 @@ public class PlayerInput : MonoBehaviour
         //Set state from parent
         state = parent.state;
 
+        if (parent.state == PlayerInputParent.PlayerState.Normal) rend.material.color = Color.white;
+        if (parent.state == PlayerInputParent.PlayerState.NearlyBeyondXGap) rend.material.color = Color.green;
+        if (parent.state == PlayerInputParent.PlayerState.BeyondXGap) rend.material.color = Color.blue;
+
         //Get inputs
         //float xInput = (Input.GetKey(KeyCode.D)?1:0) + (Input.GetKey(KeyCode.A)?-1:0);
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -78,10 +86,10 @@ public class PlayerInput : MonoBehaviour
         {
             wallSliding = true;
 
-            if(velocity.y < -parent.wallSlideSpeedMax)
+            /*if(velocity.y < -parent.wallSlideSpeedMax)
             {
                 velocity.y = -parent.wallSlideSpeedMax;
-            }
+            }*/
 
             if(timeToWallUnstick > 0)
             {
@@ -159,12 +167,12 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (((!inverseGravity) && (parent.characterGap > 0))//normal character on right.
-                ||((inverseGravity) && (parent.characterGap < 0))) //flipped character on right.
+            if (((!inverseGravity) && (parent.characterXGap > 0))//normal character on right.
+                ||((inverseGravity) && (parent.characterXGap < 0))) //flipped character on right.
             {
                 centerDashDir = -1;
-            } else if (((!inverseGravity) && (parent.characterGap < 0))//normal character on left.
-                || ((inverseGravity) && (parent.characterGap > 0)))//flipped character on left.
+            } else if (((!inverseGravity) && (parent.characterXGap < 0))//normal character on left.
+                || ((inverseGravity) && (parent.characterXGap > 0)))//flipped character on left.
             {
                 centerDashDir = 1;
             } else
@@ -204,7 +212,8 @@ public class PlayerInput : MonoBehaviour
                 //velocity.x = input.x * moveSpeed;
                 displacement.x = velocity.x * Time.deltaTime;
                 float yInitialVelocity = velocity.y;
-                velocity.y += parent.gravity * Time.deltaTime;
+                gravity = (wallSliding) ? (parent.wallSlideGravBuffer * parent.gravity) : parent.gravity;
+                velocity.y += gravity * Time.deltaTime;
                 displacement.y = (Mathf.Pow(velocity.y, 2) - Mathf.Pow(yInitialVelocity, 2)) / (2 * parent.gravity);
                 break;
         }

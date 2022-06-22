@@ -356,7 +356,7 @@ public class PlatformController : RaycastController
     {
         if (localWaypoints != null)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.blue;
             float size = 0.3f;
 
             for (int i=0; i < localWaypoints.Length; i++)

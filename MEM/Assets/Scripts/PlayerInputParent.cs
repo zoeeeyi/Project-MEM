@@ -32,12 +32,13 @@ public class PlayerInputParent : MonoBehaviour
     //Specifically for wall leaping, we want to temporarily pause player on each leap so that they don't slide down
     public float wallStickTime = 0.25f;
     //Wall sliding parameter
-    public float wallSlideSpeedMax = 3;
+    //public float wallSlideSpeedMax = 3;
+    public float wallSlideGravBuffer = 0.5f;
 
     [Space]
     [Header("Center Dash")]
     public float centerDashVelocityX = 10;
-    [HideInInspector] public float characterGap;
+    [HideInInspector] public float characterXGap;
 
     [HideInInspector] public Vector3 posCharacter, posCharacterFlipped;
     [HideInInspector] public Vector3 characterCenter;
@@ -52,8 +53,10 @@ public class PlayerInputParent : MonoBehaviour
     [HideInInspector]
     public enum PlayerState
     {
+        Align,
         Normal,
         CenterDash,
+        NearlyBeyondXGap,
         BeyondXGap
     }
 
@@ -71,18 +74,21 @@ public class PlayerInputParent : MonoBehaviour
 
     void FixedUpdate()
     {
+        characterXGap = posCharacter.x - posCharacterFlipped.x;
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             characterCenter = (posCharacter + posCharacterFlipped) / 2;
-            characterGap = posCharacter.x - posCharacterFlipped.x;
             state = PlayerState.CenterDash;
         }
 
-        if (posCharacter.x == posCharacterFlipped.x)
+        /*if (characterXGap == 0)
         {
             state = PlayerState.Normal;
-        }
+        }*/
 
-        if (Mathf.Abs(posCharacter.x - posCharacterFlipped.x) > maxCharacterXGap) state = PlayerState.BeyondXGap;
+        if (characterXGap <= 0.6f * maxCharacterXGap) state = PlayerState.Normal;
+        else if (characterXGap > 0.6f * maxCharacterXGap && characterXGap <= maxCharacterXGap) state = PlayerState.NearlyBeyondXGap;
+        else if (characterXGap > maxCharacterXGap) state = PlayerState.BeyondXGap;   
     }
 }
