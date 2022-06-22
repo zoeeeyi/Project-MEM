@@ -132,7 +132,7 @@ public class PlayerInput : MonoBehaviour
                 if(input.x == 0)
                 {
                     velocity.x = -wallDirX * parent.wallJumpOff.x;
-                    velocity.y = parent.wallJumpClimb.y;
+                    velocity.y = (parent.wallJumpActivate) ? parent.wallJumpClimb.y : 0;
                 }
                 //Leap between two walls
             }

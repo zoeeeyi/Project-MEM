@@ -92,7 +92,19 @@ public class PlayerControllerV2 : RaycastController
 
             if (hit)
             {
-                if(hit.distance == 0)
+                //Collision Exemptions
+                if (playerInput.parent.HorizontalCollisionExemptions.Contains(hit.collider.tag))
+                {
+                    continue;
+                }
+
+                //If we hit killers
+                if (playerInput.parent.Killers.Contains(hit.collider.tag))
+                {
+                    gameManager.gameOver = true;
+                }
+
+                if (hit.distance == 0)
                 {
                     continue;
                 }
@@ -166,10 +178,18 @@ public class PlayerControllerV2 : RaycastController
             //Set velocity when collision is detected
             if (hit)
             {
+                //Collision Exemptions
                 if (playerInput.parent.VerticalCollisionExemptions.Contains(hit.collider.tag))
                 {
                     continue;
                 }
+
+                //If we hit killers
+                if (playerInput.parent.Killers.Contains(hit.collider.tag))
+                {
+                    gameManager.gameOver = true;
+                }
+
                 if (hit.collider.tag == "MovePlatform")
                 {
                     try

@@ -12,8 +12,8 @@ public class PlatformController : RaycastController
     [Header("Movement Settings")]
     public Vector3[] localWaypoints;
     Vector3[] globalWaypoints;
-    public float speed;
     public bool cyclic;
+    public float speed;
     public float waitTime;
     [Range(0,2)]//clamp easeAmount between 0-2.
     public float easeAmount;

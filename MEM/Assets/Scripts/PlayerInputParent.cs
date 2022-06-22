@@ -44,9 +44,10 @@ public class PlayerInputParent : MonoBehaviour
 
     [Space]
     [Header("Misc")]
+    public float maxCharacterXGap;
     public List<string> HorizontalCollisionExemptions = new List<string>();
     public List<string> VerticalCollisionExemptions = new List<string>();
-    public float maxCharacterXGap;
+    public List<string> Killers = new List<string>();
 
     [HideInInspector]
     public enum PlayerState
