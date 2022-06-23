@@ -6,8 +6,15 @@ public class RotatingKiller : MonoBehaviour
 {
     [Range(0, 0.5f)]
     public float rotationSpeed;
+    float hiddenRotationSpeed;
+
+    public bool reverse = false;
+
     void Update()
     {
-        transform.Rotate(0, 0, rotationSpeed);
+        hiddenRotationSpeed = rotationSpeed;
+        hiddenRotationSpeed *= (reverse) ? -1 : 1;
+
+        transform.Rotate(0, 0, hiddenRotationSpeed);
     }
 }

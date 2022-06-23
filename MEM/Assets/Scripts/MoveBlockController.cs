@@ -40,7 +40,7 @@ public class MoveBlockController : MonoBehaviour
         {
             globalWaypoints[i] = localWaypoints[i] + transform.position;
         }
-
+        if (globalWaypoints.Length < 1) return;
         transform.position = globalWaypoints[0];
         moveState = MoveBlockState.StartPoint;
 
@@ -52,6 +52,8 @@ public class MoveBlockController : MonoBehaviour
     }
     void Update()
     {
+        if (globalWaypoints.Length < 1) return;
+
         Vector3 velocity = Vector3.zero;
         switch (moveState)
         {
