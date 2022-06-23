@@ -50,6 +50,8 @@ public class PlayerInputParent : MonoBehaviour
     public List<string> VerticalCollisionExemptions = new List<string>();
     public List<string> Killers = new List<string>();
 
+    SavePointController savePointController;
+
     [HideInInspector]
     public enum PlayerState
     {
@@ -70,6 +72,9 @@ public class PlayerInputParent : MonoBehaviour
         //vt = vo + gt
         minJumpVelocity = -Mathf.Sign(gravity) * Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
         state = PlayerState.Normal;
+
+        savePointController = GameObject.Find("SavePointController").GetComponent<SavePointController>();
+        transform.position = savePointController.lastSavePos;
     }
 
     void FixedUpdate()
