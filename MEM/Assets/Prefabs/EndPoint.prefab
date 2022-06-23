@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2380570386089631591}
   - component: {fileID: 2380570386089631608}
   m_Layer: 0
-  m_Name: Checkpoint
-  m_TagString: Checkpoint
+  m_Name: EndPoint
+  m_TagString: Endpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reached: 0
   Flipped: 0
-  checkPointFlipped: {fileID: 0}
+  endPointFlipped: {fileID: 0}
 --- !u!50 &2380570386089631591
 Rigidbody2D:
   serializedVersion: 4

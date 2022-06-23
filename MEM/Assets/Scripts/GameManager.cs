@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     public PlayerInputParent playerInputParent;
 
     //Checkpoints
-    public int checkPointNum = 2;
-    public int checkPointReached = 0;
+    public int endPointNum = 2;
+    public int endPointReached = 0;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
             gameOverUI.SetActive(true);
         }
 
-        if (checkPointNum == checkPointReached)
+        if (endPointNum == endPointReached)
         {
             Time.timeScale = 0;
             gameWinUI.SetActive(true);
