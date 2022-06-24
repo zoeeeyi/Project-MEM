@@ -5,8 +5,8 @@ using UnityEngine;
 public class EndPoint : MonoBehaviour
 {
     public bool reached = false;
-    public bool Flipped;
-    public EndPoint endPointFlipped;
+    //public bool Flipped;
+    //public EndPoint endPointFlipped;
 
     private Renderer rend;
 
@@ -23,12 +23,12 @@ public class EndPoint : MonoBehaviour
             this.gameObject.SetActive(false);
         }
 
-        if (!Flipped)
+        /*if (!Flipped)
         {
             if (endPointFlipped.reached)
             {
                 Debug.Log("Checkpoint Reached!");
             }
-        }
+        }*/
     }
 }
