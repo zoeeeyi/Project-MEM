@@ -14,6 +14,8 @@ public class PlayerControllerV2 : RaycastController
     public CollisionInfo collisionInfo;
     public PlayerInput playerInput;
 
+    Dictionary<Transform, PlatformController> movePlatformDic = new Dictionary<Transform, PlatformController>();
+
     public override void Start()
     {
         base.Start();
@@ -109,7 +111,20 @@ public class PlayerControllerV2 : RaycastController
                     continue;
                 }
 
-                if(hit.collider.tag == "Switch")
+                if(hit.collider.tag == "movePlatform")
+                {
+                    try
+                    {
+                        if (!movePlatformDic.ContainsKey(hit.transform))
+                        {
+                            movePlatformDic.Add(hit.transform, hit.transform.GetComponent<PlatformController>());
+                        }
+                        if ((movePlatformDic[hit.transform].inverseGrav != inverseGrav) && (!movePlatformDic[hit.transform].bothWay)) continue;
+                    }
+                    catch (NullReferenceException e) { }
+                }
+
+                if (hit.collider.tag == "Switch")
                 {
                     SwitchController switchController = hit.collider.GetComponent<SwitchController>();
                     if(directionX == 1 * switchController.leftOpenValue)
@@ -194,12 +209,20 @@ public class PlayerControllerV2 : RaycastController
                 {
                     try
                     {
+                        if (!movePlatformDic.ContainsKey(hit.transform))
+                        {
+                            movePlatformDic.Add(hit.transform, hit.transform.GetComponent<PlatformController>());
+                        }
+                        if ((movePlatformDic[hit.transform].inverseGrav != inverseGrav) && (!movePlatformDic[hit.transform].bothWay)) continue;
+                    } catch (NullReferenceException e) { }
+                    /*try
+                    {
                         PlatformController platformController = hit.collider.GetComponent<PlatformController>();
                         if ((platformController.inverseGrav != inverseGrav)
                             && (!platformController.bothWay)){
                             continue;
                         }
-                    }catch(NullReferenceException e) { }
+                    }catch(NullReferenceException e) { }*/
 
                     if (directionY == 1 || hit.distance == 0)
                     {
