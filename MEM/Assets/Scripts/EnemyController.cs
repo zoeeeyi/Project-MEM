@@ -32,6 +32,7 @@ public class EnemyController : MonoBehaviour
     }
     void Update()
     {
+        if (globalWaypoints.Length < 2) return;
         Vector3 velocity = CalculatePlatformMovement();
         transform.Translate(velocity);
     }
