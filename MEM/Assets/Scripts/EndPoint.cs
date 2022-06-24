@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckPoint : MonoBehaviour
+public class EndPoint : MonoBehaviour
 {
     public bool reached = false;
-    public bool Flipped;
-    public CheckPoint checkPointFlipped;
+    //public bool Flipped;
+    //public EndPoint endPointFlipped;
 
     private Renderer rend;
 
@@ -23,12 +23,12 @@ public class CheckPoint : MonoBehaviour
             this.gameObject.SetActive(false);
         }
 
-        if (!Flipped)
+        /*if (!Flipped)
         {
-            if (checkPointFlipped.reached)
+            if (endPointFlipped.reached)
             {
                 Debug.Log("Checkpoint Reached!");
             }
-        }
+        }*/
     }
 }

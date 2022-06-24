@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -9120092019706475058}
   m_Layer: 0
   m_Name: CharacterFlipped
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -190,6 +190,14 @@ MonoBehaviour:
     m_Bits: 128
   horizontalRayCount: 4
   verticalRayCount: 4
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
+  collider: {fileID: 0}
+  inverseGrav: 0
+  gravityDir: 1
+  maxClimbAngle: 80
+  maxDescendAngle: 75
+  playerInput: {fileID: 0}
 --- !u!114 &-9120092019706475058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,8 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bf5a51a250c4fcf9af42ce510b786b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 4
-  timeToJumpApex: 0.4
-  xAccelerationTimeGrounded: 0.1
-  xAccelerationTimeAir: 0.2
   inverseGravity: 1
+  displacement: {x: 0, y: 0, z: 0}
+  parent: {fileID: 0}
