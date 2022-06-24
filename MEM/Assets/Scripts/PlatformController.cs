@@ -40,7 +40,7 @@ public class PlatformController : RaycastController
     // Update is called once per frame
     void Update()
     {
-        if (globalWaypoints.Length < 1) return;
+        if (globalWaypoints.Length < 2) return;
         UpdateRaycastOrigins();
 
         Vector3 velocity = CalculatePlatformMovement();
