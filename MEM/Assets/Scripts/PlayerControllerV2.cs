@@ -111,7 +111,7 @@ public class PlayerControllerV2 : RaycastController
                     continue;
                 }
 
-                if(hit.collider.tag == "movePlatform")
+                if(hit.collider.tag == "MovePlatform")
                 {
                     try
                     {
