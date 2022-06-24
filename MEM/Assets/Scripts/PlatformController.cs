@@ -158,7 +158,7 @@ public class PlatformController : RaycastController
                         //we first close this gap, then move the rest of the distance with "pushY"
                         float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
 
-                        passengerMovementInfoList.Add(new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), directionY == 1, true, false));
+                        passengerMovementInfoList.Add(new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), (bothWay || directionY == 1), true, false));
                     }
                 }
 
