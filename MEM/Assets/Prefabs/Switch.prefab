@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3886165174978375548}
   - component: {fileID: 3886165174978375549}
   - component: {fileID: 3886165174978375546}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: Switch
   m_TagString: Switch
   m_Icon: {fileID: 0}
@@ -124,5 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00de317f54b21134c96e822560158d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftOpen: 1
+  leftOpenValue: 1
   activated: 0
   moveBlock: {fileID: 0}
+  blockDisappear: 0
