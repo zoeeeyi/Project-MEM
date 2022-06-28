@@ -14,6 +14,8 @@ public class PlayerControllerV2 : RaycastController
     public CollisionInfo collisionInfo;
     public PlayerInput playerInput;
 
+    public Vector3 lastDisplacement = Vector3.zero;
+
     Dictionary<Transform, PlatformController> movePlatformDic = new Dictionary<Transform, PlatformController>();
 
     public override void Start()
@@ -65,6 +67,7 @@ public class PlayerControllerV2 : RaycastController
         }
 
         transform.Translate(displacement);
+        lastDisplacement = displacement;
 
         if (standingOnPlatform)
         {
