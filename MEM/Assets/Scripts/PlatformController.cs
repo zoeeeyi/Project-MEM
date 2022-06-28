@@ -15,7 +15,7 @@ public class PlatformController : RaycastController
     public bool cyclic;
     public float speed;
     public float waitTime;
-    [Range(0,2)]//clamp easeAmount between 0-2.
+    [Range(0, 2)]//clamp easeAmount between 0-2.
     public float easeAmount;
 
     int fromWaypointIndex;
@@ -109,13 +109,13 @@ public class PlatformController : RaycastController
         fromWaypointIndex %= globalWaypoints.Length;
         int toWaypointIndex = (fromWaypointIndex + 1) % globalWaypoints.Length;
         float distanceBetweenWaypoints = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
-        percentBetweenWaypoints += Time.deltaTime * speed/distanceBetweenWaypoints;
+        percentBetweenWaypoints += Time.deltaTime * speed / distanceBetweenWaypoints;
         percentBetweenWaypoints = Mathf.Clamp01(percentBetweenWaypoints);//clamp the percentage between 0 and 1.
         float easedPercentBetweenWaypoints = Ease(percentBetweenWaypoints);
 
         Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], easedPercentBetweenWaypoints);
 
-        if(percentBetweenWaypoints >= 1)
+        if (percentBetweenWaypoints >= 1)
         {
             percentBetweenWaypoints = 0;
             fromWaypointIndex++;
@@ -151,8 +151,13 @@ public class PlatformController : RaycastController
                 if ((passengerDic[passenger.transform].inverseGrav != inverseGrav))
                 {
                     if (!bothWay) continue;
+                    else if (-passenger.velocity.y < passengerDic[passenger.transform].lastDisplacement.y) continue;
                     else passenger.SetVelocity(new Vector3(passenger.velocity.x, -passenger.velocity.y));
                 }
+                /*else
+                {
+                    if (passenger.velocity.y < passengerDic[passenger.transform].lastDisplacement.y) continue;
+                }*/
                 if (passenger.verticalCollision && disappearPlatform && !isDisappearing) StartCoroutine(DisappearCoroutine());
                 if (passenger.dontMove) continue;
                 passengerDic[passenger.transform].Move(passenger.velocity, passenger.standingOnPlatform, passenger.overwritePlatformPush);
@@ -171,7 +176,7 @@ public class PlatformController : RaycastController
         float directionY = Mathf.Sign(velocity.y);
 
         //Stationary platform, cast small amout of ray to check
-        if(velocity == Vector3.zero)
+        if (velocity == Vector3.zero)
         {
             float rayLength = 2 * skinWidth;
 
@@ -218,7 +223,7 @@ public class PlatformController : RaycastController
         }
 
         //Upward moving platforms
-        if(velocity.y > 0)
+        if (velocity.y != 0)
         {
             float rayLength = Mathf.Abs(velocity.y) + skinWidth;//the distance only cover the travel length of this frame
             float shortRayLength = 2 * skinWidth;
@@ -226,29 +231,35 @@ public class PlatformController : RaycastController
             for (int i = 0; i < verticalRayCount; i++)
             {
                 rayLength = Mathf.Abs(velocity.y) + skinWidth;
-                //Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;//Ternary
-                Vector2 rayOrigin = raycastOrigins.topLeft;//Ternary
+                Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;//Ternary
+                //Vector2 rayOrigin = raycastOrigins.topLeft;//Ternary
                 rayOrigin += Vector2.right * (verticalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY * gravityDir, rayLength, passengerMask);
-                RaycastHit2D hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.down * directionY * gravityDir, shortRayLength, passengerMask);
-                bool samePassenger = (hit.transform == hitBelowSurface.transform);
-                Debug.DrawRay(rayOrigin, 10*Vector2.up * directionY * gravityDir * rayLength, Color.red);
+                //RaycastHit2D hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.down * directionY * gravityDir, shortRayLength, passengerMask);
+                //bool samePassenger = (hit.transform == hitBelowSurface.transform);
+                Debug.DrawRay(rayOrigin, 10 * Vector2.up * directionY * gravityDir * rayLength, Color.red);
 
-                if (hit && hit.distance != 0 && !samePassenger)
+                if (hit && hit.distance != 0)
                 {
-                    if (!movedPassengers.Contains(hit.transform))
+                    if ((directionY == -1 && hit.transform.rotation.eulerAngles.x == 180)
+                        || (directionY == 1 && hit.transform.rotation.eulerAngles.x == 0))
+                    //this if statement is necessary for bothway platform, when the pf is moving down and the "normal" character is below it (vice versa for flipped char)
+                    //they will be sucked under the platform without this if statement 
+                    //the reason is they won't cast upward ray to detect the platform
                     {
-                        movedPassengers.Add(hit.transform);
-                        //the passenger can only be taken horizontally if its on the platform.
-                        float pushX = (bothWay || directionY == 1) ? velocity.x : 0;
-                        //(hit.distance-skinWidth) is the gap between passenger and the platform
-                        //we first close this gap, then move the rest of the distance with "pushY"
-                        float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                        if (!movedPassengers.Contains(hit.transform))
+                        {
+                            movedPassengers.Add(hit.transform);
+                            //the passenger can only be taken horizontally if its on the platform.
+                            float pushX = (bothWay || directionY == 1) ? velocity.x : 0;
+                            //(hit.distance-skinWidth) is the gap between passenger and the platform
+                            //we first close this gap, then move the rest of the distance with "pushY"
+                            float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
 
-                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), (bothWay || directionY == 1), true, false);
-                        newPassenger.SetVerCollision(true);
-                        passengerMovementInfoList.Add(newPassenger);
-
+                            PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), (bothWay || directionY == 1), true, false);
+                            newPassenger.SetVerCollision(true);
+                            passengerMovementInfoList.Add(newPassenger);
+                        }
                     }
                 }
 
@@ -258,11 +269,11 @@ public class PlatformController : RaycastController
                     rayOrigin = (directionY == -1) ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
                     rayOrigin += Vector2.right * (verticalRaySpacing * i);
                     RaycastHit2D hitDown = Physics2D.Raycast(rayOrigin, Vector2.down * directionY * gravityDir, rayLength, passengerMask);
-                    hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.up * directionY * gravityDir, shortRayLength, passengerMask);
-                    samePassenger = (hitDown.transform == hitBelowSurface.transform);
+                    //hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.up * directionY * gravityDir, shortRayLength, passengerMask);
+                    //samePassenger = (hitDown.transform == hitBelowSurface.transform);
                     Debug.DrawRay(rayOrigin, 10 * Vector2.down * directionY * gravityDir * rayLength, Color.red);
 
-                    if (hitDown && hitDown.distance != 0 && !samePassenger)
+                    if (hitDown && hitDown.distance != 0)
                     {
                         if (!movedPassengers.Contains(hitDown.transform))
                         {
@@ -490,9 +501,9 @@ public class PlatformController : RaycastController
             Gizmos.color = Color.blue;
             float size = 0.3f;
 
-            for (int i=0; i < localWaypoints.Length; i++)
+            for (int i = 0; i < localWaypoints.Length; i++)
             {
-                Vector3 globalWaypointPos = (Application.isPlaying)?globalWaypoints[i] : localWaypoints[i] + transform.position;
+                Vector3 globalWaypointPos = (Application.isPlaying) ? globalWaypoints[i] : localWaypoints[i] + transform.position;
                 Gizmos.DrawLine(globalWaypointPos - Vector3.up * size * gravityDir, globalWaypointPos + Vector3.up * gravityDir * size);
                 Gizmos.DrawLine(globalWaypointPos - Vector3.left * size, globalWaypointPos + Vector3.left * size);
             }
