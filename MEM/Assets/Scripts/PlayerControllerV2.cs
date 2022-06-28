@@ -171,6 +171,45 @@ public class PlayerControllerV2 : RaycastController
                     collisionInfo.right = (directionX == 1);
                 }
             }
+
+            //------------------------------------------------------------------//
+
+            //Cast a small ray to check opposite direction
+            rayLength = 2 * skinWidth;
+            rayOrigin = (directionX == 1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
+            //Raycasts do not use local vectors. So anything related to vertical raycast should be multiplied by gravityDir
+            rayOrigin += Vector2.up * (horizontalRaySpacing * i) * gravityDir;
+            //Detect if there is an obstacle
+            hit = Physics2D.Raycast(rayOrigin, Vector2.left * directionX, rayLength, collisionMask);
+            Debug.DrawRay(rayOrigin, Vector2.left * directionX * rayLength, Color.red);
+
+
+            if (hit)
+            {
+                if(displacement.x == 0) displacement.x = (hit.distance - skinWidth) * -directionX;
+
+                //displacement.x = Mathf.Max(Mathf.Abs(displacement.x), (hit.distance - skinWidth)) * -directionX;
+
+                /*float slopeAngle = Vector2.Angle(hit.normal, Vector2.up * gravityDir);
+                //each frame, start checking with the first ray if the object can climb the slope.
+                if (i == 0 && (slopeAngle <= maxClimbAngle))
+                {
+
+                    //New slope: if the slope angle is not equal to the previous one
+                    if (slopeAngle != collisionInfo.slopeAngleOld)
+                    {
+                        collisionInfo.descendingSlope = false;
+                        collisionInfo.slopeAngle = slopeAngle;
+                        //move to the edge of new slope instead of immediately climb
+                        displacement.x = (hit.distance - skinWidth) * directionX;
+                    }
+                    else
+                    {
+                        ClimbSlope(ref displacement, slopeAngle);
+                    }
+                }*/
+            }
+
         }
     }
 
@@ -319,7 +358,7 @@ public class PlayerControllerV2 : RaycastController
 
         if (hit)
         {
-            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up * gravityDir);
             if(slopeAngle != collisionInfo.slopeAngle)
             {
                 displacement.x = (hit.distance - skinWidth) * directionX;

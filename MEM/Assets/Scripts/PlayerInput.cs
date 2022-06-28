@@ -214,7 +214,7 @@ public class PlayerInput : MonoBehaviour
                 float yInitialVelocity = velocity.y;
                 gravity = (wallSliding) ? (parent.wallSlideGravBuffer * parent.gravity) : parent.gravity;
                 velocity.y += gravity * Time.deltaTime;
-                displacement.y = (Mathf.Pow(velocity.y, 2) - Mathf.Pow(yInitialVelocity, 2)) / (2 * parent.gravity);
+                displacement.y = (Mathf.Pow(velocity.y, 2) - Mathf.Pow(yInitialVelocity, 2)) / (2 * gravity);
                 break;
         }
 

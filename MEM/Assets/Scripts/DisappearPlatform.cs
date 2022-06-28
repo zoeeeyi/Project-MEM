@@ -11,7 +11,10 @@ public class DisappearPlatform : RaycastController
     [Header("Platform Setting")]
     [Range(0, 10)]
     public float disappearTime;
+    public bool reappear = false;
+    public float reappearTime;
 
+    Collider2D m_collider;
     Renderer rend;
     Color color;
 
@@ -23,6 +26,7 @@ public class DisappearPlatform : RaycastController
         base.Start();
         rayLength = 2 * skinWidth;
 
+        m_collider = GetComponent<Collider2D>();
         rend = GetComponent<Renderer>();
         color = rend.material.color;
         timer = disappearTime;
@@ -39,7 +43,7 @@ public class DisappearPlatform : RaycastController
             } else timer += Time.deltaTime * 10;
 
             color.a = Mathf.Cos(timer);*/
-            timer -= Time.deltaTime;
+            timer = Mathf.Max(timer - Time.deltaTime, 0);
             color.a = timer / disappearTime;
             rend.material.color = color;
             return;
@@ -76,6 +80,17 @@ public class DisappearPlatform : RaycastController
     {
         isDisappearing = true;
         yield return new WaitForSeconds(disappearTime);
-        gameObject.SetActive(false);
+        m_collider.enabled = false;
+        if (reappear) StartCoroutine(ReappearCoroutine());
+    }
+
+    IEnumerator ReappearCoroutine()
+    {
+        yield return new WaitForSeconds(reappearTime);
+        m_collider.enabled = true;
+        isDisappearing = false;
+        color.a = 1;
+        rend.material.color = color;
+        timer = disappearTime;
     }
 }

@@ -25,25 +25,62 @@ public class PlatformController : RaycastController
     List<PassengerMovementInfo> passengerMovementInfoList;
     Dictionary<Transform, PlayerControllerV2> passengerDic = new Dictionary<Transform, PlayerControllerV2>();
 
+    [Header("Disappear Platform Setting")]
+    public bool disappearPlatform = false;
+    [Range(0, 10)]
+    public float waitToDisappearTime;
+    [Range(0, 10)]
+    public float disappearTime;
+    public bool reappear = false;
+    [Range(0, 10)]
+    public float reappearTime;
+    bool isDisappearing = false;
+    float timer = 0;
+
+    Collider2D m_collider;
+    Renderer rend;
+    Color color;
+
+
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
 
         globalWaypoints = new Vector3[localWaypoints.Length];
-        for (int i=0; i<localWaypoints.Length; i++)
+        for (int i = 0; i < localWaypoints.Length; i++)
         {
             globalWaypoints[i] = localWaypoints[i] + transform.position;
         }
+
+        //Disappearing Platform Settings
+        m_collider = GetComponent<Collider2D>();
+        rend = GetComponent<Renderer>();
+        color = rend.material.color;
+        timer = disappearTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (globalWaypoints.Length < 2) return;
+        if (isDisappearing)
+        {
+            /*if (timer >= Mathf.PI)
+            {
+                timer = 0;
+            } else timer += Time.deltaTime * 10;
+
+            color.a = Mathf.Cos(timer);*/
+            timer = Mathf.Max(timer - Time.deltaTime, 0);
+            color.a = timer / disappearTime;
+            rend.material.color = color;
+            if (timer <= 0) return;
+        }
+
         UpdateRaycastOrigins();
 
-        Vector3 velocity = CalculatePlatformMovement();
+        Vector3 velocity = Vector3.zero;
+        if (globalWaypoints.Length >= 2) velocity = CalculatePlatformMovement();
 
         velocity.y *= gravityDir;
 
@@ -116,6 +153,8 @@ public class PlatformController : RaycastController
                     if (!bothWay) continue;
                     else passenger.SetVelocity(new Vector3(passenger.velocity.x, -passenger.velocity.y));
                 }
+                if (passenger.verticalCollision && disappearPlatform && !isDisappearing) StartCoroutine(DisappearCoroutine());
+                if (passenger.dontMove) continue;
                 passengerDic[passenger.transform].Move(passenger.velocity, passenger.standingOnPlatform, passenger.overwritePlatformPush);
             }
         }
@@ -131,8 +170,55 @@ public class PlatformController : RaycastController
         float directionX = Mathf.Sign(velocity.x);
         float directionY = Mathf.Sign(velocity.y);
 
-        //vertically moving platforms
-        if(velocity.y != 0)
+        //Stationary platform, cast small amout of ray to check
+        if(velocity == Vector3.zero)
+        {
+            float rayLength = 2 * skinWidth;
+
+            for (int i = 0; i < verticalRayCount; i++)
+            {
+                Vector2 rayOrigin = raycastOrigins.topLeft;
+                rayOrigin += Vector2.right * (verticalRaySpacing * i);
+                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * gravityDir, rayLength, passengerMask);
+                Debug.DrawRay(rayOrigin, gravityDir * Vector2.up * rayLength, Color.red);
+
+                if (hit && hit.distance != 0)
+                {
+                    if (!movedPassengers.Contains(hit.transform))
+                    {
+                        movedPassengers.Add(hit.transform);
+                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, Vector3.zero, (bothWay || directionY == 1), true, false);
+                        newPassenger.SetVerCollision(true);
+                        newPassenger.SetDontMove(true);
+                        passengerMovementInfoList.Add(newPassenger);
+                    }
+                }
+
+                if (bothWay)
+                {
+                    rayOrigin = raycastOrigins.bottomLeft;
+                    rayOrigin += Vector2.right * (verticalRaySpacing * i);
+                    RaycastHit2D hitDown = Physics2D.Raycast(rayOrigin, Vector2.down * gravityDir, rayLength, passengerMask);
+                    Debug.DrawRay(rayOrigin, gravityDir * Vector2.down * rayLength, Color.red);
+
+                    if (hitDown && hitDown.distance != 0)
+                    {
+                        if (!movedPassengers.Contains(hitDown.transform))
+                        {
+                            movedPassengers.Add(hitDown.transform);
+                            PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, Vector3.zero, true, true, false);
+                            newPassenger.SetVerCollision(true);
+                            newPassenger.SetDontMove(true);
+                            passengerMovementInfoList.Add(newPassenger);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        //Upward moving platforms
+        if(velocity.y > 0)
         {
             float rayLength = Mathf.Abs(velocity.y) + skinWidth;//the distance only cover the travel length of this frame
             float shortRayLength = 2 * skinWidth;
@@ -140,7 +226,8 @@ public class PlatformController : RaycastController
             for (int i = 0; i < verticalRayCount; i++)
             {
                 rayLength = Mathf.Abs(velocity.y) + skinWidth;
-                Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;//Ternary
+                //Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;//Ternary
+                Vector2 rayOrigin = raycastOrigins.topLeft;//Ternary
                 rayOrigin += Vector2.right * (verticalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY * gravityDir, rayLength, passengerMask);
                 RaycastHit2D hitBelowSurface = Physics2D.Raycast(rayOrigin, Vector2.down * directionY * gravityDir, shortRayLength, passengerMask);
@@ -158,7 +245,10 @@ public class PlatformController : RaycastController
                         //we first close this gap, then move the rest of the distance with "pushY"
                         float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
 
-                        passengerMovementInfoList.Add(new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), (bothWay || directionY == 1), true, false));
+                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), (bothWay || directionY == 1), true, false);
+                        newPassenger.SetVerCollision(true);
+                        passengerMovementInfoList.Add(newPassenger);
+
                     }
                 }
 
@@ -180,7 +270,9 @@ public class PlatformController : RaycastController
                             float pushX = velocity.x;
                             float pushY = velocity.y;
 
-                            passengerMovementInfoList.Add(new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false));
+                            PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false);
+                            newPassenger.SetVerCollision(true);
+                            passengerMovementInfoList.Add(newPassenger);
                         }
                     }
                 }
@@ -279,7 +371,9 @@ public class PlatformController : RaycastController
                         float pushX = velocity.x;
                         float pushY = velocity.y;
 
-                        passengerMovementInfoList.Add(new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, false, false));
+                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, false, false);
+                        newPassenger.SetVerCollision(true);
+                        passengerMovementInfoList.Add(newPassenger);
                     }
                 }
 
@@ -298,7 +392,9 @@ public class PlatformController : RaycastController
                             float pushX = velocity.x;
                             float pushY = velocity.y;
 
-                            passengerMovementInfoList.Add(new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false));
+                            PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false);
+                            newPassenger.SetVerCollision(true);
+                            passengerMovementInfoList.Add(newPassenger);
                         }
                     }
                 }
@@ -330,6 +426,26 @@ public class PlatformController : RaycastController
 
         }
     }
+
+    IEnumerator DisappearCoroutine()
+    {
+        yield return new WaitForSeconds(waitToDisappearTime);
+        isDisappearing = true;
+        yield return new WaitForSeconds(disappearTime);
+        m_collider.enabled = false;
+        if (reappear) StartCoroutine(ReappearCoroutine());
+    }
+
+    IEnumerator ReappearCoroutine()
+    {
+        yield return new WaitForSeconds(reappearTime);
+        m_collider.enabled = true;
+        isDisappearing = false;
+        color.a = 1;
+        rend.material.color = color;
+        timer = disappearTime;
+    }
+
     struct PassengerMovementInfo
     {
         public Transform transform;
@@ -337,6 +453,8 @@ public class PlatformController : RaycastController
         public bool standingOnPlatform;
         public bool moveBeforePlatform;
         public bool overwritePlatformPush;
+        public bool verticalCollision;
+        public bool dontMove;
 
         public PassengerMovementInfo(Transform _transform, Vector3 _velocity, bool _standingOnPlatform, bool _moveBeforePlatform, bool _overwritePlatformPush)
         {
@@ -345,11 +463,23 @@ public class PlatformController : RaycastController
             standingOnPlatform = _standingOnPlatform;
             moveBeforePlatform = _moveBeforePlatform;
             overwritePlatformPush = _overwritePlatformPush;
+            verticalCollision = false; //for disappearing platform
+            dontMove = false; //for disappearing platform
         }
 
         public void SetVelocity(Vector3 _velocity)
         {
             velocity = _velocity;
+        }
+
+        public void SetVerCollision(bool _verCollision)
+        {
+            verticalCollision = _verCollision;
+        }
+
+        public void SetDontMove(bool _dontMove)
+        {
+            dontMove = _dontMove;
         }
     }
 
