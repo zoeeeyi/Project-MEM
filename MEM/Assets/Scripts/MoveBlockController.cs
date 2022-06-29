@@ -10,6 +10,12 @@ public class MoveBlockController : MonoBehaviour
     /*bool open = false;
     bool move = false;*/
 
+    [Header("Switch Setting")]
+    public bool blockDisappear = false;
+    public GameObject switchObject;
+    SwitchController switchController;
+
+    [Header("Movement Settings")]
     public Vector3[] localWaypoints;
     Vector3[] globalWaypoints;
     Vector3[] globalWaypointsNormal;
@@ -34,6 +40,9 @@ public class MoveBlockController : MonoBehaviour
 
     void Start()
     {
+        switchController = switchObject.GetComponent<SwitchController>();
+        if (blockDisappear) switchObject.GetComponent<Collider2D>().isTrigger = true;
+
         //Set global waypoints
         globalWaypoints = new Vector3[localWaypoints.Length];
         for (int i = 0; i < localWaypoints.Length; i++)
@@ -52,22 +61,23 @@ public class MoveBlockController : MonoBehaviour
     }
     void Update()
     {
+        if (blockDisappear && switchController.activated) gameObject.SetActive(false);
         if (globalWaypoints.Length < 2) return;
 
         Vector3 velocity = Vector3.zero;
         switch (moveState)
         {
             case MoveBlockState.StartPoint:
-                if (activated) velocity = CalculatePlatformMovement();
+                if (switchController.activated) velocity = CalculatePlatformMovement();
                 break;
 
             case MoveBlockState.FinishPoint:
-                if (!activated) velocity = CalculatePlatformMovement();
+                if (!switchController.activated) velocity = CalculatePlatformMovement();
                 break;
 
             case MoveBlockState.Middle:
-                if (activated == activatedLastStep) velocity = CalculatePlatformMovement();
-                else if (activated != activatedLastStep)
+                if (switchController.activated == activatedLastStep) velocity = CalculatePlatformMovement();
+                else if (switchController.activated != activatedLastStep)
                 {
                     changeDirMidway();
                     velocity = CalculatePlatformMovement();
@@ -76,7 +86,7 @@ public class MoveBlockController : MonoBehaviour
         }
 
         transform.Translate(velocity);
-        activatedLastStep = activated;
+        activatedLastStep = switchController.activated;
     }
 
     //Do if we change direction middle of the way
@@ -116,8 +126,8 @@ public class MoveBlockController : MonoBehaviour
             //When we reach the last waypoint
             if (fromWaypointIndex == globalWaypoints.Length - 1)
             {
-                if (activated) moveState = MoveBlockState.FinishPoint;
-                else if (!activated) moveState = MoveBlockState.StartPoint;
+                if (switchController.activated) moveState = MoveBlockState.FinishPoint;
+                else if (!switchController.activated) moveState = MoveBlockState.StartPoint;
 
                 //Reset
                 System.Array.Reverse(globalWaypoints);

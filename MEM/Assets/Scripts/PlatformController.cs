@@ -9,6 +9,10 @@ public class PlatformController : RaycastController
     public bool bothWay = false;
     public LayerMask passengerMask;
 
+    [Header("Switch Settings")]
+    public GameObject switchObject;
+    SwitchController switchController;
+
     [Header("Movement Settings")]
     public Vector3[] localWaypoints;
     Vector3[] globalWaypoints;
@@ -47,6 +51,12 @@ public class PlatformController : RaycastController
     {
         base.Start();
 
+        try
+        {
+            switchController = switchObject.GetComponent<SwitchController>();
+            switchObject.GetComponent<Collider2D>().isTrigger = true;
+        } catch (Exception e) { }
+
         globalWaypoints = new Vector3[localWaypoints.Length];
         for (int i = 0; i < localWaypoints.Length; i++)
         {
@@ -63,6 +73,11 @@ public class PlatformController : RaycastController
     // Update is called once per frame
     void Update()
     {
+        try
+        {
+            if (!switchController.activated) return;
+        } catch(Exception e) { }
+
         if (isDisappearing)
         {
             /*if (timer >= Mathf.PI)
