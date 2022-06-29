@@ -9,18 +9,22 @@ public class SwitchController : MonoBehaviour
     public bool leftOpen = true;
     [HideInInspector] public int leftOpenValue = 1;
     [HideInInspector] public bool activated = false;
-    private Renderer rend;
+    Renderer rend;
+    Collider2D m_collider;
+    Color m_color;
 
     //Type 1: Move Block
     public GameObject moveBlock;
     public bool blockDisappear;
-    public bool trigger = false;
     MoveBlockController moveBlockController;
 
     void Start()
     {
         leftOpenValue = (leftOpen) ? 1 : -1;
+
+        m_collider = GetComponent<Collider2D>();
         rend = GetComponent<Renderer>();
+        m_color = rend.material.color;
 
         //Type 1: Move Block
         moveBlockController = moveBlock.GetComponent<MoveBlockController>();
@@ -30,27 +34,32 @@ public class SwitchController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (m_collider.isTrigger) return;
         if (activated)
         {
             if (blockDisappear)
             {
                 moveBlock.SetActive(false);
             }
-            rend.material.color = Color.cyan;
+            m_color.a = 0.5f;
+            rend.material.color = m_color;
             moveBlockController.activated = true;
         }
         else
         {
-            //rend.material.color = new Color(255/255f, 0/255f, 0/255f, 255/255f);
+            m_color.a = 1;
+            rend.material.color = m_color;
             moveBlockController.activated = false;
         }
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if((collision.tag == "Player") && (trigger))
+        if((collision.tag == "Player"))
         {
-            activated = true;
+            m_color.a = 0.5f;
+            rend.material.color = m_color;
+            moveBlockController.activated = true;
         }
     }
 }
