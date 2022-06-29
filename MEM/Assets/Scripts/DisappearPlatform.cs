@@ -11,8 +11,9 @@ public class DisappearPlatform : RaycastController
     [Header("Platform Setting")]
     //Auto Disappear
     public bool autoDisappear = false;
+    bool waitingToDisappear = false;
     [Range(0, 10)]
-    public float autoDisappearTime;
+    public float autoDisappearWaitTime;
 
     //Disappear
     [Range(0, 10)]
@@ -58,7 +59,7 @@ public class DisappearPlatform : RaycastController
             return;
         }
 
-        if (autoDisappear)
+        if (autoDisappear && !waitingToDisappear)
         {
             StartCoroutine(AutoDisappearCoroutine());
             return;
@@ -94,8 +95,8 @@ public class DisappearPlatform : RaycastController
 
     IEnumerator AutoDisappearCoroutine()
     {
-        autoDisappear = false;
-        yield return new WaitForSeconds(autoDisappearTime);
+        waitingToDisappear = true;
+        yield return new WaitForSeconds(autoDisappearWaitTime);
         isDisappearing = true;
         yield return new WaitForSeconds(disappearTime);
         m_collider.enabled = false;
@@ -118,6 +119,6 @@ public class DisappearPlatform : RaycastController
         color.a = 1;
         rend.material.color = color;
         timer = disappearTime;
-        autoDisappear = true;
+        waitingToDisappear = false;
     }
 }
