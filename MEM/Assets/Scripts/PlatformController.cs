@@ -151,7 +151,7 @@ public class PlatformController : RaycastController
                 if ((passengerDic[passenger.transform].inverseGrav != inverseGrav))
                 {
                     if (!bothWay) continue;
-                    else if (-passenger.velocity.y < passengerDic[passenger.transform].lastDisplacement.y) continue;
+                    //else if (-passenger.velocity.y < passengerDic[passenger.transform].lastDisplacement.y) continue;
                     else passenger.SetVelocity(new Vector3(passenger.velocity.x, -passenger.velocity.y));
                 }
                 /*else

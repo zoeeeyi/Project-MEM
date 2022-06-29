@@ -14,6 +14,7 @@ public class SwitchController : MonoBehaviour
     //Type 1: Move Block
     public GameObject moveBlock;
     public bool blockDisappear;
+    public bool trigger = false;
     MoveBlockController moveBlockController;
 
     void Start()
@@ -42,6 +43,14 @@ public class SwitchController : MonoBehaviour
         {
             //rend.material.color = new Color(255/255f, 0/255f, 0/255f, 255/255f);
             moveBlockController.activated = false;
+        }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if((collision.tag == "Player") && (trigger))
+        {
+            activated = true;
         }
     }
 }
