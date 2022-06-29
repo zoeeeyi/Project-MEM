@@ -9,9 +9,18 @@ public class DisappearPlatform : RaycastController
     float rayLength;
 
     [Header("Platform Setting")]
+    //Auto Disappear
+    public bool autoDisappear = false;
+    [Range(0, 10)]
+    public float autoDisappearTime;
+
+    //Disappear
     [Range(0, 10)]
     public float disappearTime;
+
+    //Reappear
     public bool reappear = false;
+    [Range(0, 10)]
     public float reappearTime;
 
     Collider2D m_collider;
@@ -49,6 +58,12 @@ public class DisappearPlatform : RaycastController
             return;
         }
 
+        if (autoDisappear)
+        {
+            StartCoroutine(AutoDisappearCoroutine());
+            return;
+        }
+
         UpdateRaycastOrigins();
 
         for (int i = 0; i < verticalRayCount; i++)
@@ -76,6 +91,17 @@ public class DisappearPlatform : RaycastController
             }
         }
     }
+
+    IEnumerator AutoDisappearCoroutine()
+    {
+        autoDisappear = false;
+        yield return new WaitForSeconds(autoDisappearTime);
+        isDisappearing = true;
+        yield return new WaitForSeconds(disappearTime);
+        m_collider.enabled = false;
+        if (reappear) StartCoroutine(ReappearCoroutine());
+    }
+
     IEnumerator DisappearCoroutine()
     {
         isDisappearing = true;
@@ -92,5 +118,6 @@ public class DisappearPlatform : RaycastController
         color.a = 1;
         rend.material.color = color;
         timer = disappearTime;
+        autoDisappear = true;
     }
 }
