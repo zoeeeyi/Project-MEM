@@ -9,6 +9,7 @@ public class DisappearPlatform : RaycastController
     float rayLength;
 
     [Header("Platform Setting")]
+    public bool disappearOnStart = false;
     //Auto Disappear
     public bool autoDisappear = false;
     bool waitingToDisappear = false;
@@ -40,6 +41,14 @@ public class DisappearPlatform : RaycastController
         rend = GetComponent<Renderer>();
         color = rend.material.color;
         timer = disappearTime;
+
+        if (disappearOnStart)
+        {
+            m_collider.enabled = false;
+            timer = 0;
+            isDisappearing = true;
+            StartCoroutine(ReappearCoroutine());
+        }
     }
 
     // Update is called once per frame
