@@ -23,10 +23,10 @@ public class NotRotatingPlatform : RaycastController
 
     void Update()
     {
-        velocity = (transform.position - lastPosition) / Time.deltaTime;
+        transform.Rotate(0, 0, -parent.hiddenRotationSpeed);
+        velocity = transform.position - lastPosition;
 
         UpdateRaycastOrigins();
-        transform.Rotate(0, 0, -parent.hiddenRotationSpeed);
 
         CalculatePassengerMovement(velocity);
         MovePassengers(true);
@@ -78,7 +78,10 @@ public class NotRotatingPlatform : RaycastController
                     movedPassengers.Add(hit.transform);
                     float pushX = velocity.x;
                     //float pushY = 0;
-                    float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                    //float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                    float pushY;
+                    if (directionY == 1) pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                    else pushY = velocity.y;
 
                     PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, true, false);
                     passengerMovementInfoList.Add(newPassenger);
@@ -91,8 +94,10 @@ public class NotRotatingPlatform : RaycastController
                 {
                     movedPassengers.Add(hitDown.transform);
                     float pushX = velocity.x;
-                    float pushY = 0;
-                    //float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                    //float pushY = 0;
+                    float pushY;
+                    if (directionY == -1) pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                    else pushY = velocity.y;
 
                     PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, true, false);
                     passengerMovementInfoList.Add(newPassenger);
