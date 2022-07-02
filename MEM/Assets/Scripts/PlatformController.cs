@@ -259,7 +259,7 @@ public class PlatformController : RaycastController
                     if ((directionY == -1 && hit.transform.localEulerAngles.z == 180)
                         || (directionY == 1 && hit.transform.localEulerAngles.z == 0))
                     //this if statement is necessary for bothway platform, when the pf is moving down and the "normal" character is below it (vice versa for flipped char)
-                    //they will be sucked under the platform without this if statement 
+                    //they will be sucked under the platform without this if statement
                     //the reason is they won't cast upward ray to detect the platform
                     {
                         if (!movedPassengers.Contains(hit.transform))
@@ -290,15 +290,19 @@ public class PlatformController : RaycastController
 
                     if (hitDown && hitDown.distance != 0)
                     {
-                        if (!movedPassengers.Contains(hitDown.transform))
+                        if ((directionY == -1 && hitDown.transform.localEulerAngles.z == 0)
+                            || (directionY == 1 && hitDown.transform.localEulerAngles.z == 180))
                         {
-                            movedPassengers.Add(hitDown.transform);
-                            float pushX = velocity.x;
-                            float pushY = velocity.y;
+                            if (!movedPassengers.Contains(hitDown.transform))
+                            {
+                                movedPassengers.Add(hitDown.transform);
+                                float pushX = velocity.x;
+                                float pushY = velocity.y;
 
-                            PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false);
-                            newPassenger.SetVerCollision(true);
-                            passengerMovementInfoList.Add(newPassenger);
+                                PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false);
+                                newPassenger.SetVerCollision(true);
+                                passengerMovementInfoList.Add(newPassenger);
+                            }
                         }
                     }
                 }
