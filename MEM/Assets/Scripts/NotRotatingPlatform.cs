@@ -73,34 +73,40 @@ public class NotRotatingPlatform : RaycastController
 
             if (hit && hit.distance != 0)
             {
-                if (!movedPassengers.Contains(hit.transform))
+                if (hit.transform.localEulerAngles.z == 0)
                 {
-                    movedPassengers.Add(hit.transform);
-                    float pushX = velocity.x;
-                    //float pushY = 0;
-                    //float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
-                    float pushY;
-                    if (directionY == 1) pushY = velocity.y - (hit.distance - skinWidth) * directionY;
-                    else pushY = velocity.y;
+                    if (!movedPassengers.Contains(hit.transform))
+                    {
+                        movedPassengers.Add(hit.transform);
+                        float pushX = velocity.x;
+                        //float pushY = 0;
+                        //float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                        float pushY;
+                        if (directionY == 1) pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                        else pushY = velocity.y;
 
-                    PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, true, false);
-                    passengerMovementInfoList.Add(newPassenger);
+                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, true, false);
+                        passengerMovementInfoList.Add(newPassenger);
+                    }
                 }
             }
 
             if (hitDown && hitDown.distance != 0)
             {
-                if (!movedPassengers.Contains(hitDown.transform))
+                if (hitDown.transform.localEulerAngles.z == 180)
                 {
-                    movedPassengers.Add(hitDown.transform);
-                    float pushX = velocity.x;
-                    //float pushY = 0;
-                    float pushY;
-                    if (directionY == -1) pushY = velocity.y - (hit.distance - skinWidth) * directionY;
-                    else pushY = velocity.y;
+                    if (!movedPassengers.Contains(hitDown.transform))
+                    {
+                        movedPassengers.Add(hitDown.transform);
+                        float pushX = velocity.x;
+                        //float pushY = 0;
+                        float pushY;
+                        if (directionY == -1) pushY = velocity.y - (hit.distance - skinWidth) * directionY;
+                        else pushY = -velocity.y;
 
-                    PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, true, false);
-                    passengerMovementInfoList.Add(newPassenger);
+                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, true, false);
+                        passengerMovementInfoList.Add(newPassenger);
+                    }
                 }
             }
         }
