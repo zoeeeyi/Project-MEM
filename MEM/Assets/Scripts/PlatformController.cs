@@ -257,7 +257,7 @@ public class PlatformController : RaycastController
                 if (hit && hit.distance != 0)
                 {
                     if ((directionY == -1 && hit.transform.localEulerAngles.z == 180)
-                        || (directionY == 1 && hit.transform.localEulerAngles.z == 0))
+                        || (directionY == 1 && hit.transform.localEulerAngles.z == 0) || inverseGrav)
                     //this if statement is necessary for bothway platform, when the pf is moving down and the "normal" character is below it (vice versa for flipped char)
                     //they will be sucked under the platform without this if statement
                     //the reason is they won't cast upward ray to detect the platform
