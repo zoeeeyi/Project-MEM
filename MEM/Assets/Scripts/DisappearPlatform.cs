@@ -25,6 +25,10 @@ public class DisappearPlatform : RaycastController
     [Range(0, 10)]
     public float reappearTime;
 
+    [Header("Aesthetic Setting")]
+    [Range(0, 1)]
+    public float minTransparency = 0.1f;
+
     Collider2D m_collider;
     Renderer rend;
     Color color;
@@ -62,7 +66,7 @@ public class DisappearPlatform : RaycastController
             } else timer += Time.deltaTime * 10;
 
             color.a = Mathf.Cos(timer);*/
-            timer = Mathf.Max(timer - Time.deltaTime, 0);
+            timer = Mathf.Max(timer - Time.deltaTime, minTransparency * disappearTime);
             color.a = timer / disappearTime;
             rend.material.color = color;
             return;
