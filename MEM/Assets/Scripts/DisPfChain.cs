@@ -22,6 +22,14 @@ public class DisPfChain : MonoBehaviour
     bool reappear = true;
     float reappearTime;
 
+    //Chain Setting
+    [Range(0, 10)]
+    public float bufferTime;
+
+    [Header("Aesthetic Setting")]
+    [Range(0, 1)]
+    public float minTransparency = 0.1f;
+
     public List<GameObject> platformChainFirst = new List<GameObject>();
     public List<GameObject> platformChainSecond = new List<GameObject>();
 
@@ -29,7 +37,8 @@ public class DisPfChain : MonoBehaviour
     {
         //float modifier = (firstOneAppear) ? 0 : 1;
         reappearTime = autoDisappearWaitTime + disappearTime;
-        for(int i = 0; i < platformChainFirst.Count; i++)
+        bufferTime = Mathf.Min(bufferTime, reappearTime);
+        for (int i = 0; i < platformChainFirst.Count; i++)
         {
             DisappearPlatform disappearPlatformScript = platformChainFirst[i].GetComponent<DisappearPlatform>();
             disappearPlatformScript.autoDisappear = true;
@@ -37,6 +46,8 @@ public class DisPfChain : MonoBehaviour
             disappearPlatformScript.disappearTime = disappearTime;
             disappearPlatformScript.reappear = true;
             disappearPlatformScript.reappearTime = reappearTime;
+            disappearPlatformScript.minTransparency = minTransparency;
+            disappearPlatformScript.bufferTime = bufferTime;
             disappearPlatformScript.disappearOnStart = false;
             /*if ((i + modifier) % 2 == 1) disappearPlatformScript.disappearOnStart = true;
             else disappearPlatformScript.disappearOnStart = false;*/
@@ -50,6 +61,8 @@ public class DisPfChain : MonoBehaviour
             disappearPlatformScript.disappearTime = disappearTime;
             disappearPlatformScript.reappear = true;
             disappearPlatformScript.reappearTime = reappearTime;
+            disappearPlatformScript.minTransparency = minTransparency;
+            disappearPlatformScript.bufferTime = bufferTime;
             disappearPlatformScript.disappearOnStart = true;
             /*if ((i + modifier) % 2 == 1) disappearPlatformScript.disappearOnStart = true;
             else disappearPlatformScript.disappearOnStart = false;*/
