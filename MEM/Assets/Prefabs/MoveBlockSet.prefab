@@ -234,8 +234,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activated: 0
   activatedLastStep: 0
-  switchObject: {fileID: 0}
-  localWaypoints: []
+  blockDisappear: 0
+  switchObject: {fileID: 7256069567423094679}
+  localWaypoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: -6.75, z: 0}
   speed: 4
   waitTime: 0.05
   easeAmount: 0.8
@@ -327,10 +330,19 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 3886165174978375549, guid: 2c52763a3ae185444999175b2f519867, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c52763a3ae185444999175b2f519867, type: 3}
 --- !u!4 &7256069567423094676 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3886165174978375547, guid: 2c52763a3ae185444999175b2f519867, type: 3}
+  m_PrefabInstance: {fileID: 5862792196877644015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7256069567423094679 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3886165174978375544, guid: 2c52763a3ae185444999175b2f519867, type: 3}
   m_PrefabInstance: {fileID: 5862792196877644015}
   m_PrefabAsset: {fileID: 0}
