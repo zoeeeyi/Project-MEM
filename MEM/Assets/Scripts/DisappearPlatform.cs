@@ -25,6 +25,9 @@ public class DisappearPlatform : RaycastController
     [Range(0, 10)]
     public float reappearTime;
 
+    //Chain Setting
+    [HideInInspector] public float bufferTime = 0;
+
     [Header("Aesthetic Setting")]
     [Range(0, 1)]
     public float minTransparency = 0.1f;
@@ -51,7 +54,7 @@ public class DisappearPlatform : RaycastController
             m_collider.enabled = false;
             timer = 0;
             isDisappearing = true;
-            StartCoroutine(ReappearCoroutine());
+            StartCoroutine(ReappearCoroutine(bufferTime));
         }
     }
 
@@ -78,6 +81,7 @@ public class DisappearPlatform : RaycastController
             return;
         }
 
+        if (autoDisappear) return;
         UpdateRaycastOrigins();
 
         for (int i = 0; i < verticalRayCount; i++)
@@ -113,7 +117,7 @@ public class DisappearPlatform : RaycastController
         isDisappearing = true;
         yield return new WaitForSeconds(disappearTime);
         m_collider.enabled = false;
-        if (reappear) StartCoroutine(ReappearCoroutine());
+        if (reappear) StartCoroutine(ReappearCoroutine(2 * bufferTime));
     }
 
     IEnumerator DisappearCoroutine()
@@ -121,12 +125,12 @@ public class DisappearPlatform : RaycastController
         isDisappearing = true;
         yield return new WaitForSeconds(disappearTime);
         m_collider.enabled = false;
-        if (reappear) StartCoroutine(ReappearCoroutine());
+        if (reappear) StartCoroutine(ReappearCoroutine(2 * bufferTime));
     }
 
-    IEnumerator ReappearCoroutine()
+    IEnumerator ReappearCoroutine(float bufferTime)
     {
-        yield return new WaitForSeconds(reappearTime);
+        yield return new WaitForSeconds(reappearTime - bufferTime);
         m_collider.enabled = true;
         isDisappearing = false;
         color.a = 1;

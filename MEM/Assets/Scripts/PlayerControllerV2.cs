@@ -16,7 +16,7 @@ public class PlayerControllerV2 : RaycastController
 
     public Vector3 lastDisplacement = Vector3.zero;
 
-    Dictionary<Transform, PlatformController> movePlatformDic = new Dictionary<Transform, PlatformController>();
+    //Dictionary<Transform, PlatformController> movePlatformDic = new Dictionary<Transform, PlatformController>();
 
     public override void Start()
     {
@@ -114,7 +114,7 @@ public class PlayerControllerV2 : RaycastController
                     continue;
                 }
 
-                if(hit.collider.tag == "MovePlatform")
+                /*if(hit.collider.tag == "MovePlatform")
                 {
                     try
                     {
@@ -125,7 +125,7 @@ public class PlayerControllerV2 : RaycastController
                         if ((movePlatformDic[hit.transform].inverseGrav != inverseGrav) && (!movePlatformDic[hit.transform].bothWay)) continue;
                     }
                     catch (NullReferenceException e) { }
-                }
+                }*/
 
                 if (hit.collider.tag == "Switch")
                 {
@@ -249,7 +249,7 @@ public class PlayerControllerV2 : RaycastController
 
                 if (hit.collider.tag == "MovePlatform")
                 {
-                    try
+                    /*try
                     {
                         if (!movePlatformDic.ContainsKey(hit.transform))
                         {
