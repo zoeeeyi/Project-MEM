@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public PlayerInputParent playerInputParent;
     public PlayerControllerV2 target;
     public PlayerControllerV2 targetFlipped;
+    public Vector2 playerPos;
     public Vector2 padding;
     public Vector2 cameraPadding;
     public float verticalOffset;
@@ -26,8 +28,25 @@ public class CameraController : MonoBehaviour
     float lookAheadDirX;
     float smoothLookVelocityX;
     float smoothVelocityY;
+    float smoothVelocityX;
 
     bool lookAheadStopped;
+
+    //Alternative Target
+    [HideInInspector] public bool otherTarget = false;
+    [HideInInspector] public Vector3 otherTargetPos = Vector3.zero;
+    [HideInInspector] public FocusOnOtherTargetState focusOnOtherTargetState = FocusOnOtherTargetState.Back;
+    [Range(0, 1)]
+    public float changeTargetPauseTime = 0.1f;
+
+    public enum FocusOnOtherTargetState
+    {
+        Setup,
+        Move,
+        Pause,
+        ReturnMove,
+        Back
+    }
 
     void Start()
     {
@@ -49,6 +68,48 @@ public class CameraController : MonoBehaviour
         focusArea.Update(target.collider.bounds, targetFlipped.collider.bounds, transform.position);
 
         Vector2 focusPosition = focusArea.center + Vector2.up * verticalOffset;
+
+        //Camera focus on the other intended target
+        if (otherTarget)
+        {
+            if(focusOnOtherTargetState == FocusOnOtherTargetState.Setup)
+            {
+                playerPos = focusPosition;
+                playerInputParent.freezeMovement = true;
+                StartCoroutine(OtherTargetPauseCoroutine(FocusOnOtherTargetState.Move));
+                return;
+            }
+
+            if (focusOnOtherTargetState == FocusOnOtherTargetState.Move)
+            {
+                focusPosition = otherTargetPos;
+                focusPosition.x = Mathf.SmoothDamp(transform.position.x, focusPosition.x, ref smoothVelocityX, verticalSmoothTime);
+                focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
+                transform.position = (Vector3)focusPosition + Vector3.forward * -10;
+                if (Mathf.Abs(transform.position.x - otherTargetPos.x) < 0.1f)
+                {
+                    focusOnOtherTargetState = FocusOnOtherTargetState.Pause;
+                }
+                return;
+            }
+
+            if (focusOnOtherTargetState == FocusOnOtherTargetState.Pause) return;
+
+            if (focusOnOtherTargetState == FocusOnOtherTargetState.ReturnMove)
+            {
+                focusPosition = playerPos;
+                focusPosition.x = Mathf.SmoothDamp(transform.position.x, focusPosition.x, ref smoothVelocityX, verticalSmoothTime);
+                focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
+                transform.position = (Vector3)focusPosition + Vector3.forward * -10;
+                if (Mathf.Abs(transform.position.x - playerPos.x) < 0.1f)
+                {
+                    playerInputParent.freezeMovement = false;
+                    otherTarget = false;
+                    focusOnOtherTargetState = FocusOnOtherTargetState.Back;
+                }
+                return;
+            }
+        }
 
         if(focusArea.velocity.x != 0)
         {
@@ -78,6 +139,14 @@ public class CameraController : MonoBehaviour
         transform.position = (Vector3)focusPosition + Vector3.forward * -10;
         focusAreatoCameraSize = Mathf.Max(focusArea.size.x * widthToCameraSize, focusArea.size.y * heightToCameraSize);
         camera.orthographicSize = Mathf.Max(cameraStartSize, focusAreatoCameraSize);
+    }
+
+    public IEnumerator OtherTargetPauseCoroutine(FocusOnOtherTargetState nextState)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(changeTargetPauseTime);
+        Time.timeScale = 1;
+        focusOnOtherTargetState = nextState;
     }
 
     void OnDrawGizmos()

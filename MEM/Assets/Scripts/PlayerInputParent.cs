@@ -6,6 +6,7 @@ public class PlayerInputParent : MonoBehaviour
 {
     [Space]
     [Header("Move")]
+    public bool freezeMovement = false;
     //Horizontal parameters
     public float moveSpeed = 6;
     public float xAccelerationTimeGrounded = 0.1f;

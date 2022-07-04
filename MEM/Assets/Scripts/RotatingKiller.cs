@@ -12,7 +12,7 @@ public class RotatingKiller : MonoBehaviour
 
     void Update()
     {
-        hiddenRotationSpeed = rotationSpeed;
+        hiddenRotationSpeed = rotationSpeed * Time.timeScale;
         hiddenRotationSpeed *= (reverse) ? -1 : 1;
 
         transform.Rotate(0, 0, hiddenRotationSpeed);

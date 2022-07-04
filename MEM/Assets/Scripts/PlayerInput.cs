@@ -66,6 +66,13 @@ public class PlayerInput : MonoBehaviour
         if (parent.state == PlayerInputParent.PlayerState.NearlyBeyondXGap) rend.material.color = Color.green;
         if (parent.state == PlayerInputParent.PlayerState.BeyondXGap) rend.material.color = Color.blue;
 
+
+        if (parent.freezeMovement)
+        {
+            velocity.x = 0;
+            return;
+        }
+
         //Get inputs
         //float xInput = (Input.GetKey(KeyCode.D)?1:0) + (Input.GetKey(KeyCode.A)?-1:0);
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));

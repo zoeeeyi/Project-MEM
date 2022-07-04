@@ -18,8 +18,7 @@ public class MoveBlockController : MonoBehaviour
     [Header("Movement Settings")]
     public Vector3[] localWaypoints;
     Vector3[] globalWaypoints;
-    Vector3[] globalWaypointsNormal;
-    Vector3[] globalWaypointsReversed;
+    Vector3 middlePoint;
 
     public float speed;
     //public bool cyclic;
@@ -31,6 +30,9 @@ public class MoveBlockController : MonoBehaviour
     float percentBetweenWaypoints;
     float nextMoveTime;
 
+    //Camera Setting (optional)
+    CameraController cameraController;
+
     public enum MoveBlockState
     {
         StartPoint,
@@ -38,18 +40,33 @@ public class MoveBlockController : MonoBehaviour
         Middle
     }
 
+
+    private void Awake()
+    {
+        Collider2D switchCollider = switchObject.GetComponent<Collider2D>();
+        switchController = switchObject.GetComponent<SwitchController>();
+        if (blockDisappear) switchCollider.isTrigger = true;
+    }
+
     void Start()
     {
-        switchController = switchObject.GetComponent<SwitchController>();
-        if (blockDisappear) switchObject.GetComponent<Collider2D>().isTrigger = true;
+        //Run if we need alternative camera focus
+        if(switchController.needCameraFocus) cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
 
         //Set global waypoints
         globalWaypoints = new Vector3[localWaypoints.Length];
+        Vector3 locationSum = Vector3.zero;
+
         for (int i = 0; i < localWaypoints.Length; i++)
         {
             globalWaypoints[i] = localWaypoints[i] + transform.position;
+            locationSum += globalWaypoints[i];
         }
+
+        middlePoint = locationSum / 2;
+
         if (globalWaypoints.Length < 2) return;
+
         transform.position = globalWaypoints[0];
         moveState = MoveBlockState.StartPoint;
 
@@ -59,10 +76,28 @@ public class MoveBlockController : MonoBehaviour
         globalWaypointsReversed = globalWaypoints;
         globalWaypoints = globalWaypointsNormal;*/
     }
+
     void Update()
     {
         if (blockDisappear && switchController.activated) gameObject.SetActive(false);
         if (globalWaypoints.Length < 2) return;
+
+        //Camera reFocus
+        if (switchController.needCameraFocus && switchController.activated)
+        {
+            switchController.needCameraFocus = false;
+            cameraController.otherTarget = true;
+            cameraController.otherTargetPos = middlePoint;
+            cameraController.focusOnOtherTargetState = CameraController.FocusOnOtherTargetState.Setup;
+            return;
+        }
+
+        if (cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Move) return;
+
+        if (moveState == MoveBlockState.FinishPoint && cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Pause)
+        {
+            cameraController.StartCoroutine(cameraController.OtherTargetPauseCoroutine(CameraController.FocusOnOtherTargetState.ReturnMove));
+        }
 
         Vector3 velocity = Vector3.zero;
         switch (moveState)

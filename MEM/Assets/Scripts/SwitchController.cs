@@ -13,6 +13,10 @@ public class SwitchController : MonoBehaviour
     Collider2D m_collider;
     Color m_color;
 
+    [Header("Camera Setting")]
+    public bool needCameraFocus = false;
+    //public Vector3 camTargetPos;
+
     //Type 1: Move Block
     public bool blockDisappear;
 
@@ -23,6 +27,8 @@ public class SwitchController : MonoBehaviour
         m_collider = GetComponent<Collider2D>();
         rend = GetComponent<Renderer>();
         m_color = rend.material.color;
+
+        if (!m_collider.isTrigger) needCameraFocus = false;
     }
 
     // Update is called once per frame
