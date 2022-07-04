@@ -2980,14 +2980,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc341f83456fc44949c5a3f23a08af96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputParent: {fileID: 1613513691}
   target: {fileID: 401787688}
   targetFlipped: {fileID: 198445026}
+  playerPos: {x: 0, y: 0}
   padding: {x: 3, y: 6}
   cameraPadding: {x: 0, y: 0}
   verticalOffset: 1
   lookAheadDstX: 4
   lookSmoothTimeX: 0.5
   verticalSmoothTime: 0.2
+  otherTarget: 0
+  otherTargetPos: {x: 0, y: 0, z: 0}
+  focusOnOtherTargetState: 4
+  changeTargetPauseTime: 0.5
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6517,6 +6523,10 @@ PrefabInstance:
       propertyPath: leftOpen
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7256069567423094677, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
+      propertyPath: needCameraFocus
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
 --- !u!4 &1310643726 stripped
@@ -8303,6 +8313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b243ce1fa1680440eb2454365ea07d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeMovement: 0
   moveSpeed: 6
   xAccelerationTimeGrounded: 0.1
   xAccelerationTimeAir: 0.2
@@ -8340,7 +8351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613513690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 192.79, y: 9.21, z: 1}
+  m_LocalPosition: {x: 52.84, y: 12.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8464,6 +8475,10 @@ PrefabInstance:
     - target: {fileID: 7256069567423094677, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
       propertyPath: leftOpen
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7256069567423094677, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
+      propertyPath: needCameraFocus
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
