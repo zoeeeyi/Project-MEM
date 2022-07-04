@@ -33,11 +33,14 @@ public class CameraController : MonoBehaviour
     bool lookAheadStopped;
 
     //Alternative Target
+    [Header("Change Target")]
     [HideInInspector] public bool otherTarget = false;
     [HideInInspector] public Vector3 otherTargetPos = Vector3.zero;
     [HideInInspector] public FocusOnOtherTargetState focusOnOtherTargetState = FocusOnOtherTargetState.Back;
     [Range(0, 1)]
     public float changeTargetPauseTime = 0.1f;
+    [Range(0,1)]
+    public float changeTargetSmoothTime = 0.5f;
 
     public enum FocusOnOtherTargetState
     {
@@ -83,8 +86,8 @@ public class CameraController : MonoBehaviour
             if (focusOnOtherTargetState == FocusOnOtherTargetState.Move)
             {
                 focusPosition = otherTargetPos;
-                focusPosition.x = Mathf.SmoothDamp(transform.position.x, focusPosition.x, ref smoothVelocityX, verticalSmoothTime);
-                focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
+                focusPosition.x = Mathf.SmoothDamp(transform.position.x, focusPosition.x, ref smoothVelocityX, changeTargetSmoothTime);
+                focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, changeTargetSmoothTime);
                 transform.position = (Vector3)focusPosition + Vector3.forward * -10;
                 if (Mathf.Abs(transform.position.x - otherTargetPos.x) < 0.1f)
                 {
@@ -98,8 +101,8 @@ public class CameraController : MonoBehaviour
             if (focusOnOtherTargetState == FocusOnOtherTargetState.ReturnMove)
             {
                 focusPosition = playerPos;
-                focusPosition.x = Mathf.SmoothDamp(transform.position.x, focusPosition.x, ref smoothVelocityX, verticalSmoothTime);
-                focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
+                focusPosition.x = Mathf.SmoothDamp(transform.position.x, focusPosition.x, ref smoothVelocityX, changeTargetSmoothTime);
+                focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, changeTargetSmoothTime);
                 transform.position = (Vector3)focusPosition + Vector3.forward * -10;
                 if (Mathf.Abs(transform.position.x - playerPos.x) < 0.1f)
                 {
