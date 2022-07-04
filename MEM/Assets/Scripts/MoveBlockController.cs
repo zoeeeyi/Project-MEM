@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MoveBlockController : MonoBehaviour
 {
@@ -83,21 +84,25 @@ public class MoveBlockController : MonoBehaviour
         if (globalWaypoints.Length < 2) return;
 
         //Camera reFocus
-        if (switchController.needCameraFocus && switchController.activated)
+        try
         {
-            switchController.needCameraFocus = false;
-            cameraController.otherTarget = true;
-            cameraController.otherTargetPos = middlePoint;
-            cameraController.focusOnOtherTargetState = CameraController.FocusOnOtherTargetState.Setup;
-            return;
-        }
+            if (switchController.needCameraFocus && switchController.activated)
+            {
+                switchController.needCameraFocus = false;
+                cameraController.otherTarget = true;
+                cameraController.otherTargetPos = middlePoint;
+                cameraController.focusOnOtherTargetState = CameraController.FocusOnOtherTargetState.Setup;
+                return;
+            }
 
-        if (cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Move) return;
+            if (cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Move) return;
 
-        if (moveState == MoveBlockState.FinishPoint && cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Pause)
-        {
-            cameraController.StartCoroutine(cameraController.OtherTargetPauseCoroutine(CameraController.FocusOnOtherTargetState.ReturnMove));
+            if (moveState == MoveBlockState.FinishPoint && cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Pause)
+            {
+                cameraController.StartCoroutine(cameraController.OtherTargetPauseCoroutine(CameraController.FocusOnOtherTargetState.ReturnMove));
+            }
         }
+        catch (Exception e) { }
 
         Vector3 velocity = Vector3.zero;
         switch (moveState)
