@@ -130,15 +130,20 @@ public class PlayerControllerV2 : RaycastController
                 if (hit.collider.tag == "Switch")
                 {
                     SwitchController switchController = hit.collider.GetComponent<SwitchController>();
-                    if(directionX == 1 * switchController.leftOpenValue)
+                    if (!hit.collider.isTrigger)
                     {
-                        switchController.activated = true;
-                        continue;
-                    } else
-                    {
-                        switchController.activated = false;
-                        continue;
+                        if (directionX == 1 * switchController.leftOpenValue)
+                        {
+                            switchController.activated = true;
+                            continue;
+                        }
+                        else
+                        {
+                            switchController.activated = false;
+                            continue;
+                        }
                     }
+                    continue;
                 }
 
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up * gravityDir);
