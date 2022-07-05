@@ -20,33 +20,61 @@ public class SwitchController : MonoBehaviour
     //Type 1: Move Block
     public bool blockDisappear;
 
+    [Header("Multiple Switch Setting")]
+    public List<SwitchController> switchChildrenList;
+    List<SwitchChild> switchChildClassList = new List<SwitchChild>();
+
     void Start()
     {
-        leftOpenValue = (leftOpen) ? 1 : -1;
+        if (switchChildrenList.Count == 0)
+        {
+            leftOpenValue = (leftOpen) ? 1 : -1;
 
-        m_collider = GetComponent<Collider2D>();
-        rend = GetComponent<Renderer>();
-        m_color = rend.material.color;
+            m_collider = GetComponent<Collider2D>();
+            rend = GetComponent<Renderer>();
+            m_color = rend.material.color;
 
-        if (!m_collider.isTrigger) needCameraFocus = false;
+            if (!m_collider.isTrigger) needCameraFocus = false;
+        } 
+        else
+        {
+            foreach(SwitchController i in switchChildrenList)
+            {
+                SwitchChild newChild = new SwitchChild(i);
+                switchChildClassList.Add(newChild);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (m_collider.isTrigger) return;
-        if (activated)
+        if (switchChildrenList.Count == 0)
         {
-            m_color.a = 0.5f;
-            rend.material.color = m_color;
-        }
+            if (m_collider.isTrigger) return;
+            if (activated)
+            {
+                m_color.a = 0.5f;
+                rend.material.color = m_color;
+            }
+            else
+            {
+                m_color.a = 1;
+                rend.material.color = m_color;
+            }
+        } 
         else
         {
-            m_color.a = 1;
-            rend.material.color = m_color;
+            foreach (SwitchChild i in switchChildClassList)
+            {
+                if (i.CheckChangeStatus())
+                {
+                    activated = i.lastStatus;
+                }
+            }
         }
     }
-    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if((collision.tag == "Player"))
@@ -54,6 +82,30 @@ public class SwitchController : MonoBehaviour
             m_color.a = 0.5f;
             rend.material.color = m_color;
             activated = true;
+        }
+    }
+
+    class SwitchChild
+    {
+        public SwitchController switchController;
+        public bool lastStatus;
+        public bool changeStatus;
+
+        public SwitchChild(SwitchController controller)
+        {
+            switchController = controller;
+            lastStatus = false;
+            changeStatus = false;
+        }
+
+        public bool CheckChangeStatus()
+        {
+            if (switchController.activated != lastStatus)
+            {
+                lastStatus = switchController.activated;
+                return true;
+            }
+            return false;
         }
     }
 }
