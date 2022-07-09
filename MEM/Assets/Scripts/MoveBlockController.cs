@@ -38,7 +38,8 @@ public class MoveBlockController : MonoBehaviour
     {
         StartPoint,
         FinishPoint,
-        Middle
+        Middle,
+        Done
     }
 
 
@@ -80,6 +81,7 @@ public class MoveBlockController : MonoBehaviour
 
     void Update()
     {
+        if (moveState == MoveBlockState.Done) return;
         if (blockDisappear && switchController.activated) gameObject.SetActive(false);
         if (globalWaypoints.Length < 2) return;
 
@@ -100,6 +102,7 @@ public class MoveBlockController : MonoBehaviour
             if (moveState == MoveBlockState.FinishPoint && cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Pause)
             {
                 cameraController.StartCoroutine(cameraController.OtherTargetPauseCoroutine(CameraController.FocusOnOtherTargetState.ReturnMove));
+                moveState = MoveBlockState.Done;
             }
         }
         catch (Exception e) { }
