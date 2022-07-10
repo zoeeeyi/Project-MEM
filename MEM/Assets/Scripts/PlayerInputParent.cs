@@ -65,6 +65,15 @@ public class PlayerInputParent : MonoBehaviour
 
     [HideInInspector] public PlayerState state;
 
+    private void OnEnable()
+    {
+        //Saving point setting
+        savePointController = GameObject.Find("SavePointController").GetComponent<SavePointController>();
+        transform.position = savePointController.lastSavePos;
+        posCharacter = savePointController.character1LocalPos + transform.position;
+        posCharacterFlipped = savePointController.character2LocalPos + transform.position;
+    }
+
     private void Start()
     {
         gravity = -2 * maxJumpHeight / Mathf.Pow(timeToJumpApex, 2);
@@ -73,9 +82,6 @@ public class PlayerInputParent : MonoBehaviour
         //vt = vo + gt
         minJumpVelocity = -Mathf.Sign(gravity) * Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
         state = PlayerState.Normal;
-
-        savePointController = GameObject.Find("SavePointController").GetComponent<SavePointController>();
-        transform.position = savePointController.lastSavePos;
     }
 
     void FixedUpdate()

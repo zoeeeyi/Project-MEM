@@ -27,26 +27,26 @@ public class PlayerInput : MonoBehaviour
 
     PlayerInputParent.PlayerState state;
 
-    // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<PlayerControllerV2>();
         parent = GetComponentInParent<PlayerInputParent>();
         rend = GetComponent<Renderer>();
 
-        //Read the position and send it to parent class
+        //If we reload the scene, we read the position from the parent, which is the last saving point
         if (!inverseGravity)
         {
-            parent.posCharacter = transform.position;
+            transform.position = parent.posCharacter;
         }
         else
         {
-            parent.posCharacterFlipped = transform.position;
+            transform.position = parent.posCharacterFlipped;
         }
     }
 
     void FixedUpdate()
     {
+        //Send the real time location to parent
         if (!inverseGravity)
         {
             parent.posCharacter = transform.position;
