@@ -6,6 +6,7 @@ public class SavePoint : MonoBehaviour
 {
     SavePointController savePointController;
     List<Collider2D> characters = new List<Collider2D>();
+    static SavePoint instance;
     private Renderer rend;
     bool used = false;
 
@@ -14,7 +15,20 @@ public class SavePoint : MonoBehaviour
     public Vector3 respawnPosition;
     public Vector3 character1LocalPos;
     public Vector3 character2LocalPos;
-    
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         rend = GetComponent<Renderer>();
