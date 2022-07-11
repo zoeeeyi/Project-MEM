@@ -6,7 +6,7 @@ public class SavePoint : MonoBehaviour
 {
     SavePointController savePointController;
     List<Collider2D> characters = new List<Collider2D>();
-    static SavePoint instance;
+    //static SavePoint instance;
     private Renderer rend;
     bool used = false;
 
@@ -16,7 +16,7 @@ public class SavePoint : MonoBehaviour
     public Vector3 character1LocalPos;
     public Vector3 character2LocalPos;
 
-    private void Awake()
+    /*private void Awake()
     {
         if (instance == null)
         {
@@ -27,13 +27,12 @@ public class SavePoint : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
+    }*/
 
     void Start()
     {
         rend = GetComponent<Renderer>();
         savePointController = GameObject.Find("SavePointController").GetComponent<SavePointController>();
-        DontDestroyOnLoad(this);
     }
 
     private void Update()

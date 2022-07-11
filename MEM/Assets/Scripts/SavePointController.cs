@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SavePointController : MonoBehaviour
 {
-    static SavePointController instance;
-    public Vector3 lastSavePos;
+    //static SavePointController instance;
+    [HideInInspector] public Vector3 lastSavePos;
 
     [HideInInspector] public Vector3 character1LocalPos;
     [HideInInspector] public Vector3 character2LocalPos;
@@ -13,7 +13,15 @@ public class SavePointController : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        //initialize the last save position
+        GameObject characterParent = GameObject.Find("Character Parent");
+        GameObject character1 = GameObject.Find("Character");
+        GameObject character2 = GameObject.Find("CharacterFlipped");
+        lastSavePos = characterParent.transform.position;
+        character1LocalPos = character1.transform.position - lastSavePos;
+        character2LocalPos = character2.transform.position - lastSavePos;
+
+        /*if (instance == null)
         {
             instance = this;
 
@@ -29,6 +37,6 @@ public class SavePointController : MonoBehaviour
         } else
         {
             Destroy(gameObject);
-        }
+        }*/
     }
 }

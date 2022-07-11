@@ -79,6 +79,11 @@ public class MoveBlockController : MonoBehaviour
         globalWaypoints = globalWaypointsNormal;*/
     }
 
+    private void FixedUpdate()
+    {
+        if (cameraController == null && switchController.needCameraFocus) cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+    }
+
     void Update()
     {
         if (moveState == MoveBlockState.Done) return;

@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene("DemoLevel");
+        SceneManager.LoadScene("Level5 Part2_Bside");
     }
 
 }
