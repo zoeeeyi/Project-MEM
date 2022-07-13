@@ -46,7 +46,6 @@ public class SavePoint : MonoBehaviour
             Color newColor = Color.green;
             newColor.a = 0.3f;
             rend.material.color = newColor;
-            //if (!parent.characters.Contains(collision)) parent.characters.Add(collision);
         }
     }
 
@@ -58,7 +57,6 @@ public class SavePoint : MonoBehaviour
         {
             parent.playerReached -= 1;
             rend.material.color = originalColor;
-            //if (parent.characters.Contains(collision)) parent.characters.Remove(collision);
         }
     }
 }
