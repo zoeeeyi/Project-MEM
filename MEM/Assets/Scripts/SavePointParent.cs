@@ -25,7 +25,7 @@ public class SavePointParent : MonoBehaviour
     {
         if (used) return;
 
-        if (playerReached == 2)
+        if (characters.Count == 2)
         {
             savePointController.lastSavePos = respawnPosition;
             savePointController.character1LocalPos = character1LocalPos;

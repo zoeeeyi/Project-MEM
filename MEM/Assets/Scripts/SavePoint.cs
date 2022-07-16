@@ -9,6 +9,7 @@ public class SavePoint : MonoBehaviour
 {
     public bool flipped;
     float playerAngle = 0;
+    Collider2D player;
 
     SavePointParent parent;
     Renderer rend;
@@ -36,13 +37,23 @@ public class SavePoint : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        if (!used)
+        {
+            parent.characters.Remove(player);
+            rend.material.color = originalColor;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") 
             && collision.transform.localEulerAngles.z == playerAngle 
             && !parent.used)
         {
-            parent.playerReached += 1;
+            player = collision;
+            parent.characters.Add(collision);
             Color newColor = Color.green;
             newColor.a = 0.3f;
             rend.material.color = newColor;
@@ -55,7 +66,7 @@ public class SavePoint : MonoBehaviour
             && collision.transform.localEulerAngles.z == playerAngle
             && !parent.used)
         {
-            parent.playerReached -= 1;
+            parent.characters.Remove(collision);
             rend.material.color = originalColor;
         }
     }
