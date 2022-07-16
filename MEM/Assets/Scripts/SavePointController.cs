@@ -17,26 +17,14 @@ public class SavePointController : MonoBehaviour
         GameObject characterParent = GameObject.Find("Character Parent");
         GameObject character1 = GameObject.Find("Character");
         GameObject character2 = GameObject.Find("CharacterFlipped");
+
+        //Read the positions before enabling scripts
         lastSavePos = characterParent.transform.position;
         character1LocalPos = character1.transform.position - lastSavePos;
         character2LocalPos = character2.transform.position - lastSavePos;
 
-        /*if (instance == null)
-        {
-            instance = this;
-
-            //initialize the last save position
-            GameObject characterParent = GameObject.Find("Character Parent");
-            GameObject character1 = GameObject.Find("Character");
-            GameObject character2 = GameObject.Find("CharacterFlipped");
-            instance.lastSavePos = characterParent.transform.position;
-            instance.character1LocalPos = character1.transform.position - lastSavePos;
-            instance.character2LocalPos = character2.transform.position - lastSavePos;
-
-            DontDestroyOnLoad(instance);
-        } else
-        {
-            Destroy(gameObject);
-        }*/
+        characterParent.GetComponent<PlayerInputParent>().enabled = true;
+        character1.GetComponent<PlayerInput>().enabled = true;
+        character2.GetComponent<PlayerInput>().enabled = true;
     }
 }
