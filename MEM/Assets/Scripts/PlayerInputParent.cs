@@ -68,7 +68,11 @@ public class PlayerInputParent : MonoBehaviour
     private void OnEnable()
     {
         //Saving point setting
-        savePointController = GameObject.Find("SavePointController").GetComponent<SavePointController>();
+        do
+        {
+            savePointController = GameObject.Find("SavePointController").GetComponent<SavePointController>();
+        } while (savePointController == null);
+
         transform.position = savePointController.lastSavePos;
         posCharacter = savePointController.character1LocalPos + transform.position;
         posCharacterFlipped = savePointController.character2LocalPos + transform.position;
