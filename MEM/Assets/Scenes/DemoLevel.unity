@@ -519,7 +519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2164229224741235805, guid: cad6ff4d10df5db4d8bdfecb57ab3d53, type: 3}
       propertyPath: disappearPlatform
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2164229224741235805, guid: cad6ff4d10df5db4d8bdfecb57ab3d53, type: 3}
       propertyPath: waitToDisappearTime
@@ -703,6 +703,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 183313517}
     m_Modifications:
+    - target: {fileID: 1832363946017803905, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832363946017803905, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832363946017804028, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
+      propertyPath: respawnPosition.x
+      value: -4.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832363946017804028, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
+      propertyPath: respawnPosition.y
+      value: -2.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152813158154881296, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
+      propertyPath: m_TagString
+      value: SavePoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152813158154881299, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152813158440085489, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152813158440085494, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
+      propertyPath: m_TagString
+      value: SavePoint
+      objectReference: {fileID: 0}
     - target: {fileID: 8152813159247166635, guid: 088cee89b37bc20428dc0f5e4f06918f, type: 3}
       propertyPath: m_Name
       value: SavePoints
