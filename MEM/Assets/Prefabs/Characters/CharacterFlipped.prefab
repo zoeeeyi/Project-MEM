@@ -198,6 +198,7 @@ MonoBehaviour:
   maxClimbAngle: 80
   maxDescendAngle: 75
   playerInput: {fileID: 0}
+  lastDisplacement: {x: 0, y: 0, z: 0}
 --- !u!114 &-9120092019706475058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +206,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7390379408123151357}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0bf5a51a250c4fcf9af42ce510b786b, type: 3}
   m_Name: 

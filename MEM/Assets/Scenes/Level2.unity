@@ -7720,50 +7720,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564155746}
   m_CullTransparentMesh: 1
---- !u!1 &1587968620
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1587968621}
-  - component: {fileID: 1587968622}
-  m_Layer: 0
-  m_Name: SavePointResetter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1587968621
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1587968620}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.45208174, y: 7.804215, z: -0.9564067}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1587968622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1587968620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c837ea9b4d56cc4796720cd67dd6ce3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1613513690
 GameObject:
   m_ObjectHideFlags: 0
@@ -15296,6 +15252,63 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -9120092019706475058, guid: 4b0e7a67c6db943fabfa3bfd594eafcf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4b0e7a67c6db943fabfa3bfd594eafcf, type: 3}
+--- !u!1001 &7931147433734067909
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.45208174
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.804215
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.9564067
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103784, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931147432885103785, guid: a827078752951394989e6c1eb4dab851, type: 3}
+      propertyPath: m_Name
+      value: SavePointResetter
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a827078752951394989e6c1eb4dab851, type: 3}
 --- !u!1001 &8152813157481145032
 PrefabInstance:
   m_ObjectHideFlags: 0
