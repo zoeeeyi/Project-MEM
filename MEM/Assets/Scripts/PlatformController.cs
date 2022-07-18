@@ -349,7 +349,7 @@ public class PlatformController : RaycastController
         }
 
         //Horizontally moving platforms (for horizontal collisions)
-        if (velocity.x != 0)
+        /*if (velocity.x != 0)
         {
             float rayLength = Mathf.Abs(velocity.x) + skinWidth;
 
@@ -372,7 +372,7 @@ public class PlatformController : RaycastController
                     }
                 }
             }
-        }
+        }*/
 
         //Passengers on top of a horizontally or downward moving platform
         if ((velocity.y < 0 && !bothWay) || (velocity.y == 0 && velocity.x != 0))
@@ -395,15 +395,18 @@ public class PlatformController : RaycastController
                 //Set velocity when collision is detected and the passenger is not "through"
                 if (hit && !samePassenger && hit.distance != 0)
                 {
-                    if (!movedPassengers.Contains(hit.transform))
+                    if (hit.transform.localEulerAngles.z == 0 || inverseGrav)
                     {
-                        movedPassengers.Add(hit.transform);
-                        float pushX = velocity.x;
-                        float pushY = velocity.y;
+                        if (!movedPassengers.Contains(hit.transform))
+                        {
+                            movedPassengers.Add(hit.transform);
+                            float pushX = velocity.x;
+                            float pushY = velocity.y;
 
-                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, false, false);
-                        newPassenger.SetVerCollision(true);
-                        passengerMovementInfoList.Add(newPassenger);
+                            PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, false, false);
+                            newPassenger.SetVerCollision(true);
+                            passengerMovementInfoList.Add(newPassenger);
+                        }
                     }
                 }
 
@@ -416,15 +419,18 @@ public class PlatformController : RaycastController
 
                     if (hitDown && !samePassenger && hitDown.distance != 0)
                     {
-                        if (!movedPassengers.Contains(hitDown.transform))
+                        if (hitDown.transform.localEulerAngles.z == 180)
                         {
-                            movedPassengers.Add(hitDown.transform);
-                            float pushX = velocity.x;
-                            float pushY = velocity.y;
+                            if (!movedPassengers.Contains(hitDown.transform))
+                            {
+                                movedPassengers.Add(hitDown.transform);
+                                float pushX = velocity.x;
+                                float pushY = velocity.y;
 
-                            PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false);
-                            newPassenger.SetVerCollision(true);
-                            passengerMovementInfoList.Add(newPassenger);
+                                PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, false, false);
+                                newPassenger.SetVerCollision(true);
+                                passengerMovementInfoList.Add(newPassenger);
+                            }
                         }
                     }
                 }
