@@ -12,6 +12,7 @@ public class SwitchController : MonoBehaviour
     Renderer rend;
     Collider2D m_collider;
     Color m_color;
+    Animator animator;
 
     [Header("Camera Setting")]
     public bool needCameraFocus = false;
@@ -34,8 +35,10 @@ public class SwitchController : MonoBehaviour
             rend = GetComponent<Renderer>();
             m_color = rend.material.color;
 
+            animator = GetComponent<Animator>();
+
             if (!m_collider.isTrigger) needCameraFocus = false;
-        } 
+        }
         else
         {
             foreach(SwitchController i in switchChildrenList)
@@ -54,8 +57,8 @@ public class SwitchController : MonoBehaviour
             if (m_collider.isTrigger) return;
             if (activated)
             {
-                m_color.a = 0.5f;
-                rend.material.color = m_color;
+                /*m_color.a = 0.5f;
+                rend.material.color = m_color;*/
             }
             else
             {
@@ -79,8 +82,9 @@ public class SwitchController : MonoBehaviour
     {
         if((collision.tag == "Player"))
         {
-            m_color.a = 0.5f;
-            rend.material.color = m_color;
+            /*m_color.a = 0.5f;
+            rend.material.color = m_color;*/
+            animator.SetBool("activated", true);
             activated = true;
         }
     }
