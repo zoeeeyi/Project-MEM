@@ -225,7 +225,7 @@ public class PlayerInput : MonoBehaviour
                 break;
         }
 
-        controller.Move(displacement);
+        controller.Move(displacement, false, false, true);
     }
 
     public Vector2 getInput()

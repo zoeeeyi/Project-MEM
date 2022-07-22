@@ -10,6 +10,7 @@ public class PlayerControllerV2 : RaycastController
     [SerializeField] float maxDescendAngle = 75;
 
     GameManager gameManager;
+    Animator animator;
 
     public CollisionInfo collisionInfo;
     public PlayerInput playerInput;
@@ -23,6 +24,7 @@ public class PlayerControllerV2 : RaycastController
         base.Start();
         playerInput = GetComponent<PlayerInput>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        animator = GetComponent<Animator>();
         collisionInfo.faceDir = 1;
     }
 
@@ -32,7 +34,7 @@ public class PlayerControllerV2 : RaycastController
     }*/
 
 
-    public void Move(Vector3 displacement, bool standingOnPlatform = false, bool overwritePlatformPush = false)
+    public void Move(Vector3 displacement, bool standingOnPlatform = false, bool overwritePlatformPush = false, bool needAnimation = false)
     {
         UpdateRaycastOrigins();
         collisionInfo.Reset();
@@ -66,6 +68,8 @@ public class PlayerControllerV2 : RaycastController
             }
         }
 
+        if(needAnimation) SetAnimation(displacement);
+
         transform.Translate(displacement);
         lastDisplacement = displacement;
 
@@ -73,6 +77,12 @@ public class PlayerControllerV2 : RaycastController
         {
             collisionInfo.below = true;
         }
+    }
+
+    void SetAnimation(Vector3 displacement)
+    {
+        animator.SetFloat("MoveX", displacement.x);
+        animator.SetFloat("MoveY", displacement.y);
     }
 
     void HorizontalCollisions(ref Vector3 displacement)
