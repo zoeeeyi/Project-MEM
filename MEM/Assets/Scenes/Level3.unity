@@ -12942,6 +12942,8 @@ MonoBehaviour:
   playerInputParent: {fileID: 1974557895}
   target: {fileID: 1284328943}
   targetFlipped: {fileID: 2097744746}
+  velocity: {x: 0, y: 0, z: 0}
+  lastPosition: {x: 0, y: 0, z: 0}
   playerPos: {x: 0, y: 0}
   padding: {x: 3, y: 6}
   cameraPadding: {x: 0, y: 0}
@@ -15833,6 +15835,25 @@ Transform:
   m_Father: {fileID: 320551727}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
+--- !u!1 &1261106669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1197743291127012463, guid: 1d4c2616b27601544bcbadda33db240d, type: 3}
+  m_PrefabInstance: {fileID: 158958306}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1261106670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261106669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4a18215c07e574785e3ca0744a9d7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 519420031}
+  vModifier: -0.0002
 --- !u!1 &1268270751
 GameObject:
   m_ObjectHideFlags: 0
