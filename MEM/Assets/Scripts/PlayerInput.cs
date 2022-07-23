@@ -24,6 +24,7 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector] public Vector3 displacement;
     PlayerControllerV2 controller;
     [HideInInspector] public PlayerInputParent parent;
+    Animator animator;
 
     PlayerInputParent.PlayerState state;
 
@@ -32,6 +33,7 @@ public class PlayerInput : MonoBehaviour
         controller = GetComponent<PlayerControllerV2>();
         parent = GetComponentInParent<PlayerInputParent>();
         rend = GetComponent<Renderer>();
+        animator = GetComponent<Animator>();
 
         //If we reload the scene, we read the position from the parent, which is the last saving point
         if (!inverseGravity)
@@ -78,6 +80,8 @@ public class PlayerInput : MonoBehaviour
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         bool isGrounded = (controller.collisionInfo.above || controller.collisionInfo.below);
+
+        if (isGrounded) animator.SetBool("isJumping", false);
 
         //Calculate movement data
         float targetVelocityX = input.x * parent.moveSpeed;
@@ -127,6 +131,8 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            animator.SetBool("isJumping", true);
+
             if (wallSliding)
             {
                 //Jump climb the wall

@@ -68,8 +68,6 @@ public class PlayerControllerV2 : RaycastController
             }
         }
 
-        if(needAnimation) SetAnimation(displacement);
-
         transform.Translate(displacement);
         lastDisplacement = displacement;
 
@@ -77,6 +75,9 @@ public class PlayerControllerV2 : RaycastController
         {
             collisionInfo.below = true;
         }
+
+        if (needAnimation) SetAnimation(displacement);
+
     }
 
     void SetAnimation(Vector3 displacement)
