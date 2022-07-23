@@ -82,7 +82,7 @@ public class PlayerControllerV2 : RaycastController
 
     void SetAnimation(Vector3 displacement)
     {
-        animator.SetFloat("MoveX", displacement.x);
+        animator.SetFloat("MoveX", Mathf.Abs(displacement.x));
         animator.SetFloat("MoveY", displacement.y);
     }
 

@@ -79,6 +79,15 @@ public class PlayerInput : MonoBehaviour
         //float xInput = (Input.GetKey(KeyCode.D)?1:0) + (Input.GetKey(KeyCode.A)?-1:0);
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
+        if(input.x > 0)
+        {
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+        } 
+        else if (input.x < 0)
+        {
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+        }
+
         bool isGrounded = (controller.collisionInfo.above || controller.collisionInfo.below);
 
         if (isGrounded) animator.SetBool("isJumping", false);

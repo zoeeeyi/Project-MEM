@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotatingKiller : MonoBehaviour
 {
-    [Range(0, 0.5f)]
+    [Range(0, 200)]
     public float rotationSpeed;
     [HideInInspector]public float hiddenRotationSpeed;
 
@@ -12,7 +12,7 @@ public class RotatingKiller : MonoBehaviour
 
     void Update()
     {
-        hiddenRotationSpeed = rotationSpeed * Time.timeScale;
+        hiddenRotationSpeed = rotationSpeed * Time.deltaTime;
         hiddenRotationSpeed *= (reverse) ? -1 : 1;
 
         transform.Rotate(0, 0, hiddenRotationSpeed);

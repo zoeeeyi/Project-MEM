@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[RequireComponent(typeof(Animator))]
 public class MoveBlockController : MonoBehaviour
 {
     [HideInInspector] public bool activated = false;
     [HideInInspector] public bool activatedLastStep = false;
     MoveBlockState moveState;
-    /*bool open = false;
-    bool move = false;*/
 
     [Header("Switch Setting")]
     public bool blockDisappear = false;
@@ -22,7 +21,6 @@ public class MoveBlockController : MonoBehaviour
     Vector3 middlePoint;
 
     public float speed;
-    //public bool cyclic;
     public float waitTime;
     [Range(0, 2)]//clamp easeAmount between 0-2.
     public float easeAmount;
@@ -33,6 +31,9 @@ public class MoveBlockController : MonoBehaviour
 
     //Camera Setting (optional)
     CameraController cameraController;
+
+    //Animation
+    Animator animator;
 
     public enum MoveBlockState
     {
@@ -54,6 +55,7 @@ public class MoveBlockController : MonoBehaviour
     {
         //Run if we need alternative camera focus
         if(switchController.needCameraFocus) cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        animator = GetComponent<Animator>();
 
         //Set global waypoints
         globalWaypoints = new Vector3[localWaypoints.Length];
@@ -134,6 +136,13 @@ public class MoveBlockController : MonoBehaviour
         }
 
         transform.Translate(velocity);
+        if(moveState == MoveBlockState.Middle)
+        {
+            animator.SetTrigger("Middle");
+        } else if (moveState == MoveBlockState.FinishPoint)
+        {
+            animator.SetTrigger("Finish");
+        }
         activatedLastStep = switchController.activated;
     }
 
