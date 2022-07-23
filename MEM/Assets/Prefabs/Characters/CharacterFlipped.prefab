@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 7390379408123151359}
   - component: {fileID: 7390379408123151356}
   - component: {fileID: 6885328242207062394}
-  - component: {fileID: -9120092019706475058}
-  m_Layer: 0
+  - component: {fileID: 198445025}
+  m_Layer: 15
   m_Name: CharacterFlipped
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 7390379408123151357}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: -3.8, y: -2.98, z: 0.04142278}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,7 +48,7 @@ Animator:
   m_GameObject: {fileID: 7390379408123151357}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6822f1214a4294c399d87764eb8da883, type: 2}
+  m_Controller: {fileID: 9100000, guid: 81de803d0c2feea4785bc7438fbbc973, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -99,12 +99,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -439996572, guid: 7271c00af7c561f4da251fcfe62912d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 555198916d9facb499537163ee5b8a0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.72, y: 0.74}
+  m_Size: {x: 16.12, y: 9.76}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -123,18 +123,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.0792222}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.72, y: 0.74}
-    newSize: {x: 0.72, y: 0.74}
+    oldSize: {x: 3.224, y: 1.952}
+    newSize: {x: 16.12, y: 9.76}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.72, y: 0.74}
+  m_Size: {x: 0.58135986, y: 1.0469856}
   m_EdgeRadius: 0
 --- !u!50 &7390379408123151359
 Rigidbody2D:
@@ -144,7 +144,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7390379408123151357}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -187,19 +187,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 26752
   horizontalRayCount: 4
   verticalRayCount: 4
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
-  inverseGrav: 0
+  inverseGrav: 1
   gravityDir: 1
   maxClimbAngle: 80
   maxDescendAngle: 75
   playerInput: {fileID: 0}
   lastDisplacement: {x: 0, y: 0, z: 0}
---- !u!114 &-9120092019706475058
+--- !u!114 &198445025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
