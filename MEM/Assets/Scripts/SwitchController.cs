@@ -57,13 +57,11 @@ public class SwitchController : MonoBehaviour
             if (m_collider.isTrigger) return;
             if (activated)
             {
-                /*m_color.a = 0.5f;
-                rend.material.color = m_color;*/
+                animator.SetBool("activated", true);
             }
             else
             {
-                m_color.a = 1;
-                rend.material.color = m_color;
+                animator.SetBool("activated", false);
             }
         } 
         else

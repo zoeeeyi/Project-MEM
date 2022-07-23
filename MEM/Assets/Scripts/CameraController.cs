@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CameraController : MonoBehaviour
 {
     public PlayerInputParent playerInputParent;
     public PlayerControllerV2 target;
     public PlayerControllerV2 targetFlipped;
+    public Vector3 velocity;
+    public Vector3 lastPosition;
     public Vector2 playerPos;
     public Vector2 padding;
     public Vector2 cameraPadding;
@@ -140,6 +143,15 @@ public class CameraController : MonoBehaviour
         focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
         focusPosition += Vector2.right * currentLookAheadX;
         transform.position = (Vector3)focusPosition + Vector3.forward * -10;
+
+        //Get camera velocity for moving background
+        try
+        {
+            velocity = transform.position - lastPosition;
+            lastPosition = transform.position;
+        }
+        catch (Exception e) { }
+
         focusAreatoCameraSize = Mathf.Max(focusArea.size.x * widthToCameraSize, focusArea.size.y * heightToCameraSize);
         camera.orthographicSize = Mathf.Max(cameraStartSize, focusAreatoCameraSize);
     }
