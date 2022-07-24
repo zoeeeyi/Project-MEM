@@ -36,8 +36,6 @@ public class SwitchController : MonoBehaviour
             m_color = rend.material.color;
 
             animator = GetComponent<Animator>();
-
-            if (!m_collider.isTrigger) needCameraFocus = false;
         }
         else
         {
