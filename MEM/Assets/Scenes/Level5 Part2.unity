@@ -14498,6 +14498,18 @@ PrefabInstance:
       propertyPath: needCameraFocus
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8082757548941470654, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
+      propertyPath: needCameraFocus
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082757548941470655, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 53.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082757548941470655, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.09
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
 --- !u!4 &307976204 stripped
@@ -16224,6 +16236,8 @@ MonoBehaviour:
   playerInputParent: {fileID: 1613513691}
   target: {fileID: 401787688}
   targetFlipped: {fileID: 198445026}
+  velocity: {x: 0, y: 0, z: 0}
+  lastPosition: {x: 0, y: 0, z: 0}
   playerPos: {x: 0, y: 0}
   padding: {x: 3, y: 6}
   cameraPadding: {x: 0, y: 0}
@@ -16480,11 +16494,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d88a9ec7ecc6cbe4b8e99075b2a4ed47, type: 3}
---- !u!1 &555099893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7256069567423094679, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
-  m_PrefabInstance: {fileID: 614304644}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &562563485
 GameObject:
   m_ObjectHideFlags: 0
@@ -20068,6 +20077,18 @@ PrefabInstance:
       propertyPath: needCameraFocus
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8082757548941470654, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
+      propertyPath: needCameraFocus
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082757548941470655, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 41.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082757548941470655, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41997e7cf8adcf14fa08a61df26d56cc, type: 3}
 --- !u!4 &1069956031 stripped
@@ -23262,7 +23283,7 @@ MonoBehaviour:
   activated: 0
   activatedLastStep: 0
   blockDisappear: 0
-  switchObject: {fileID: 555099893}
+  switchObject: {fileID: 0}
   localWaypoints:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: -1.5, z: 0}
@@ -24043,6 +24064,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -1.73
       objectReference: {fileID: 0}
+    - target: {fileID: 6580237549341872388, guid: 45ab41f28f078b84da14307d7d591d43, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580237549341872388, guid: 45ab41f28f078b84da14307d7d591d43, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580237549341872388, guid: 45ab41f28f078b84da14307d7d591d43, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7809535536732827436, guid: 45ab41f28f078b84da14307d7d591d43, type: 3}
       propertyPath: m_Name
       value: MovePlatBoth_Switch
@@ -24170,7 +24203,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613513690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 174.64, y: 7.04, z: 1}
+  m_LocalPosition: {x: 224.22, y: 17.07, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
