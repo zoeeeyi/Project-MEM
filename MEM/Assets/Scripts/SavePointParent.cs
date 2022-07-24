@@ -16,6 +16,12 @@ public class SavePointParent : MonoBehaviour
     public Vector3 character1LocalPos;
     public Vector3 character2LocalPos;
 
+    //Floating Settings
+    [Header("Floating Settings")]
+    public float floatingRange;
+    public float floatingSmoothTime;
+    public float floatingScaleModifier;
+
     void Start()
     {
         savePointController = GameObject.Find("SavePointController").GetComponent<SavePointController>();
