@@ -5,12 +5,17 @@ using UnityEngine;
 public class AudioTest : MonoBehaviour
 {
     public AudioSource JumpSound;
-    public List<audioClipDic> audioClipDic;
+    public List<AudioClipSaver> audioClipSavers;
+    Dictionary<string, AudioClip> audioDic;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < audioClipSavers.Count; i++)
+        {
+            string name = audioClipSavers[i].getAudioName();
+            audioDic[name] = audioClipSavers[i].getAudioClip();
+        }
     }
 
     // Update is called once per frame
@@ -18,19 +23,8 @@ public class AudioTest : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            //JumpSound.clip = audioClipDic["Jump"];
+            JumpSound.clip = audioDic["Jump"];
             JumpSound.Play();
         }
     }
-}
-
-public class audioClipDic : AudioTest
-{
-    public AudioClip audioClip;
-    public string audioName;
-
-    /*protected AudioClip getAudioClip(string audioName)
-    {
-
-    }*/
 }
