@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class SwitchHold : SwitchController
+public class LoadingSwitchController : SwitchController
 {
     [Header("Timer setting")]
     public float timeToOpen = 3;
