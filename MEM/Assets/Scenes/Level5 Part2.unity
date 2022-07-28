@@ -14571,7 +14571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4969641442760373905, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
       propertyPath: AudioClipsList.Array.size
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4969641442760373905, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
       propertyPath: AudioClipsList.Array.data[1].clip
@@ -14614,6 +14614,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 52a548f5a7623fc4ca943fe1ba29925a, type: 3}
     - target: {fileID: 4969641442760373905, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
+      propertyPath: AudioClipsList.Array.data[11].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: ff100916745c9a04f9311a32a337ee16, type: 3}
+    - target: {fileID: 4969641442760373905, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
       propertyPath: AudioClipsList.Array.data[1].clipName
       value: CheckPoint
       objectReference: {fileID: 0}
@@ -14643,7 +14647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4969641442760373905, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
       propertyPath: AudioClipsList.Array.data[8].clipName
-      value: SwitchON=n
+      value: SwitchOn
       objectReference: {fileID: 0}
     - target: {fileID: 4969641442760373905, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
       propertyPath: AudioClipsList.Array.data[9].clipName
@@ -14652,6 +14656,10 @@ PrefabInstance:
     - target: {fileID: 4969641442760373905, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
       propertyPath: AudioClipsList.Array.data[10].clipName
       value: BGM2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969641442760373905, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
+      propertyPath: AudioClipsList.Array.data[11].clipName
+      value: EndPoint
       objectReference: {fileID: 0}
     - target: {fileID: 6390730222540252943, guid: 7d15eb69fec7c084698333fd7bdeae07, type: 3}
       propertyPath: m_Name
