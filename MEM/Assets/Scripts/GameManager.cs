@@ -14,33 +14,28 @@ public class GameManager : MonoBehaviour
     public int endPointNum = 2;
     public int endPointReached = 0;
 
-    //For pause menu
-    GameObject[] allGameObjects;
-    public GameObject pauseMenu;
-    public List<GameObject> pauseMenuDontDestroyList;
+    public PauseMenu pauseMenu;
+
+
+    private void Awake()
+    {
+        Time.timeScale = 1;
+    }
 
     private void Start()
     {
-        allGameObjects = FindObjectsOfType<GameObject>();
-        playerInputParent = GameObject.Find("Character Parent").GetComponent<PlayerInputParent>();
-        Time.timeScale = 1;
         gameOverUI = GameObject.Find("GameOver");
         gameWinUI = GameObject.Find("GameWin");
         gameOverUI.SetActive(false);
         gameWinUI.SetActive(false);
+
+        playerInputParent = GameObject.Find("Character Parent").GetComponent<PlayerInputParent>();
     }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Time.timeScale = 0;
-            var player = GameObject.Find("Character");
-            foreach (GameObject i in allGameObjects)
-            {
-                if(!pauseMenuDontDestroyList.Contains(i)) i.SetActive(false);
-            }
-            Instantiate(pauseMenu, player.transform.position, Quaternion.identity);
-            player.SetActive(true);
+            pauseMenu.CallPauseMenu();
         }
 
         if (Input.GetKeyDown(KeyCode.R))

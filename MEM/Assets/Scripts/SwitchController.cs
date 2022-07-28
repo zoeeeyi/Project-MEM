@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class SwitchController : MonoBehaviour
 {
-    /*public bool requireBothCharacters = false;
-    public bool playersReached;*/
-    public bool leftOpen = true;
-    [HideInInspector] public int leftOpenValue = 1;
-    [HideInInspector] public bool activated = false;
-    Renderer rend;
-    Collider2D m_collider;
-    Color m_color;
-    Animator animator;
 
     [Header("Camera Setting")]
     public bool needCameraFocus = false;
@@ -25,6 +16,14 @@ public class SwitchController : MonoBehaviour
     public List<SwitchController> switchChildrenList;
     List<SwitchChild> switchChildClassList = new List<SwitchChild>();
 
+    [Header("Misc")]
+    public bool leftOpen = true;
+    [HideInInspector] public int leftOpenValue = 1;
+    [HideInInspector] public bool activated = false;
+    Renderer rend;
+    Collider2D m_collider;
+    Animator animator;
+
     void Start()
     {
         if (switchChildrenList.Count == 0)
@@ -33,7 +32,6 @@ public class SwitchController : MonoBehaviour
 
             m_collider = GetComponent<Collider2D>();
             rend = GetComponent<Renderer>();
-            m_color = rend.material.color;
 
             animator = GetComponent<Animator>();
         }
