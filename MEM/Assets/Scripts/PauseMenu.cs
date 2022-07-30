@@ -8,8 +8,6 @@ public class PauseMenu : MonoBehaviour
     GameObject[] allGameObjects;
     Vector3 playerLastPosition;
 
-    public List<GameObject> pauseMenuDontDestroyList;
-
     // Start is called before the first frame update
     void Start()
     {

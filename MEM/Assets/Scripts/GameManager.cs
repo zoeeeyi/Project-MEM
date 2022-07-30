@@ -16,10 +16,19 @@ public class GameManager : MonoBehaviour
 
     public PauseMenu pauseMenu;
 
+    [Header("Test")]
+    public GameObject test;
+    public GameObject camera1;
+    public GameObject camera2;
+    Vector3 lastSavePos;
+
+    [Header("Misc")]
+    [HideInInspector] public float rotationSpeedModifier = 1; //use this when pausing & resuming game, value given by gameManager, can only be 0/1;
 
     private void Awake()
     {
         Time.timeScale = 1;
+        rotationSpeedModifier = 1;
     }
 
     private void Start()
@@ -35,7 +44,33 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pauseMenu.CallPauseMenu();
+            lastSavePos = playerInputParent.transform.position;
+            //var lastPos = playerInputParent.transform.position;
+            var lastPos = new Vector3(-98.5999985f, -51.5f, -3);
+
+            GameObject.Find("SavePointController").GetComponent<SavePointController>().lastSavePos = lastPos;
+
+            playerInputParent.gameObject.SetActive(false);
+            GameObject cpClone = Instantiate(test, lastPos, Quaternion.identity);
+            cpClone.name = "cpClone";
+
+            rotationSpeedModifier = 0;
+
+            camera1.SetActive(false);
+            camera2.SetActive(true);
+            //pauseMenu.CallPauseMenu();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            GameObject.Find("SavePointController").GetComponent<SavePointController>().lastSavePos = lastSavePos;
+
+            camera1.SetActive(true);
+            camera2.SetActive(false);
+
+            Destroy(GameObject.Find("cpClone"));
+            playerInputParent.gameObject.SetActive(true);
+            rotationSpeedModifier = 1;
         }
 
         if (Input.GetKeyDown(KeyCode.R))
