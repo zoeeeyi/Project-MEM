@@ -89,7 +89,18 @@ public class MoveBlockController : MonoBehaviour
     void Update()
     {
         if (moveState == MoveBlockState.Done) return;
-        if (blockDisappear && switchController.activated) gameObject.SetActive(false);
+        if (blockDisappear && switchController.activated)
+        {
+            GetComponent<Collider2D>().enabled = false;
+            GetComponent<Renderer>().enabled = false;
+            return;
+        }
+        if (blockDisappear && !switchController.activated)
+        {
+            GetComponent<Collider2D>().enabled = true;
+            GetComponent<Renderer>().enabled = true;
+            return;
+        }
         if (globalWaypoints.Length < 2) return;
 
         //Camera reFocus
