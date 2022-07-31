@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,11 @@ public class LoadingSwitchController : SwitchController
         {
             activated = true;
             timer = 0;
+
+            //Destroy "dont destroy onload objects" before leaving the scene
+            GameObject dontDestroyOnLoad = GameObject.Find("DontDestroyOnLoad");
+            Destroy(dontDestroyOnLoad);
+
             SceneManager.LoadScene(sceneName);
         }
     }
