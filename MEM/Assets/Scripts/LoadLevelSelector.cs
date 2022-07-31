@@ -6,7 +6,8 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(SwitchController))]
 public class LoadLevelSelector : MonoBehaviour
 {
-    public GameObject levelSelector;
+    public GameObject levelSelectorOtherObjects;
+    public GameObject levelSelectorTilemap;
 
     SwitchController switchController;
     Tilemap levelSelectorTiles;
@@ -15,13 +16,14 @@ public class LoadLevelSelector : MonoBehaviour
 
     void Start()
     {
-        levelSelectorTiles = levelSelector.GetComponent<Tilemap>();
+        levelSelectorTiles = levelSelectorTilemap.GetComponent<Tilemap>();
         switchController = GetComponent<SwitchController>();
 
         m_color = levelSelectorTiles.color;
         m_transparency = 0;
 
-        levelSelector.SetActive(false);
+        levelSelectorTilemap.SetActive(false);
+        levelSelectorOtherObjects.SetActive(false);
     }
 
     // Update is called once per frame
@@ -29,12 +31,13 @@ public class LoadLevelSelector : MonoBehaviour
     {
         if (switchController.activated)
         {
-            levelSelector.SetActive(true);
+            levelSelectorTilemap.SetActive(true);
 
             if (m_transparency < 1) m_transparency += Time.deltaTime;
             else
             {
                 m_transparency = 1;
+                levelSelectorOtherObjects.SetActive(true);
             }
         }
         else
@@ -43,7 +46,8 @@ public class LoadLevelSelector : MonoBehaviour
             else
             {
                 m_transparency = 0;
-                levelSelector.SetActive(false);
+                levelSelectorTilemap.SetActive(false);
+                levelSelectorOtherObjects.SetActive(false);
             }
         }
 

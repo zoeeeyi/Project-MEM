@@ -1,14 +1,18 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Collider2D))]
 public class LoadingSwitchController : SwitchController
 {
-    [Header("Timer setting")]
+    [Header("Timer Setting")]
     public float timeToOpen = 3;
     float timer;
-    Renderer rend;
+
+    [Header("Scene Loading Setting")]
+    public string sceneName;
 
     private void Awake()
     {
@@ -18,12 +22,11 @@ public class LoadingSwitchController : SwitchController
 
     void Start()
     {
-        rend = GetComponent<Renderer>();
-
+        animator = GetComponent<Animator>();
         timer = timeToOpen;
+        animator.SetFloat("Timer", timer);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (timer <= 0 && !activated)
@@ -31,10 +34,17 @@ public class LoadingSwitchController : SwitchController
             activated = true;
             timer = 0;
 
-            Color m_color = rend.material.color;
-            m_color.a = 0.5f;
-            rend.material.color = m_color;
+            //Destroy "dont destroy onload objects" before leaving the scene
+            GameObject dontDestroyOnLoad = GameObject.Find("DontDestroyOnLoad");
+            Destroy(dontDestroyOnLoad);
+
+            SceneManager.LoadScene(sceneName);
         }
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Leave blank
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -42,6 +52,7 @@ public class LoadingSwitchController : SwitchController
         if (collision.tag == "Player" && timer > 0 && !activated)
         {
             timer -= Time.deltaTime;
+            animator.SetFloat("Timer", timer);
         }
     }
 
@@ -50,6 +61,7 @@ public class LoadingSwitchController : SwitchController
         if (collision.tag == "Player" && !activated)
         {
             timer = timeToOpen;
+            animator.SetFloat("Timer", timer);
         }
     }
 }

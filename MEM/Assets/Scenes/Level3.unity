@@ -11438,11 +11438,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4145055008793017261, guid: 15d3bb83923fc5f4ba1bff9656b5d5ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 72.71
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4145055008793017261, guid: 15d3bb83923fc5f4ba1bff9656b5d5ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.85
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4145055008793017261, guid: 15d3bb83923fc5f4ba1bff9656b5d5ae, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17368,6 +17368,11 @@ MonoBehaviour:
   playerInputParent: {fileID: 0}
   endPointNum: 2
   endPointReached: 0
+  pauseMenu: {fileID: 0}
+  test: {fileID: 0}
+  camera1: {fileID: 0}
+  camera2: {fileID: 0}
+  rotationSpeedModifier: 1
 --- !u!1 &1899190663
 GameObject:
   m_ObjectHideFlags: 0

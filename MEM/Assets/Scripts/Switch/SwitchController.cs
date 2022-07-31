@@ -22,7 +22,7 @@ public class SwitchController : MonoBehaviour
     [HideInInspector] public bool activated = false;
     Renderer rend;
     Collider2D m_collider;
-    Animator animator;
+    protected Animator animator;
 
     void Start()
     {
@@ -72,7 +72,7 @@ public class SwitchController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if((collision.tag == "Player"))
         {
