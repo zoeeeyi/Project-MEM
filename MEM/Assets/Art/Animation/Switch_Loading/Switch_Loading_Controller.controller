@@ -10,7 +10,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Timer
-    m_EventTreshold: 2.99
+    m_EventTreshold: 1.99
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 9207275169979302206}
   m_Solo: 0
@@ -39,7 +39,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -149,7 +149,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 87d12d9fbf2c98f4391b719f1ee9928b, type: 2}
-    m_Threshold: 1
+    m_Threshold: 0.67
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -157,7 +157,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 2acbc6eba0a1f5146a8f7a5555141643, type: 2}
-    m_Threshold: 2
+    m_Threshold: 1.33
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -166,7 +166,7 @@ BlendTree:
   m_BlendParameter: Timer
   m_BlendParameterY: Blend
   m_MinThreshold: 0.1
-  m_MaxThreshold: 2
+  m_MaxThreshold: 1.33
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
@@ -180,7 +180,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Timer
-    m_EventTreshold: 3
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5947998862470605559}
   m_Solo: 0
