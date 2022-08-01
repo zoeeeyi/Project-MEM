@@ -20,8 +20,7 @@ public class LoadingSwitchController : SwitchController
     void OnEnable()
     {
         animator = GetComponent<Animator>();
-        timer = timeToOpen;
-        animator.SetFloat("Timer", timer);
+        Reset();
     }
 
     protected override void Update()
@@ -51,8 +50,14 @@ public class LoadingSwitchController : SwitchController
     {
         if (collision.tag == "Player" && !activated)
         {
-            timer = timeToOpen;
-            animator.SetFloat("Timer", timer);
+            Reset();
         }
+    }
+
+    public void Reset()
+    {
+        timer = timeToOpen;
+        animator.SetFloat("Timer", timer);
+        activated = false;
     }
 }
