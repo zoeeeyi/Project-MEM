@@ -11,34 +11,25 @@ public class LoadingSwitchController : SwitchController
     public float timeToOpen = 3;
     float timer;
 
-    [Header("Scene Loading Setting")]
-    public string sceneName;
-
     private void Awake()
     {
         Collider2D m_collider = GetComponent<Collider2D>();
         m_collider.isTrigger = true;
     }
 
-    void Start()
+    void OnEnable()
     {
         animator = GetComponent<Animator>();
         timer = timeToOpen;
         animator.SetFloat("Timer", timer);
     }
 
-    void Update()
+    protected override void Update()
     {
         if (timer <= 0 && !activated)
         {
             activated = true;
             timer = 0;
-
-            //Destroy "dont destroy onload objects" before leaving the scene
-            GameObject dontDestroyOnLoad = GameObject.Find("DontDestroyOnLoad");
-            Destroy(dontDestroyOnLoad);
-
-            SceneManager.LoadScene(sceneName);
         }
     }
 

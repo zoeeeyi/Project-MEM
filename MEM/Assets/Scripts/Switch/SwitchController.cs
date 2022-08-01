@@ -20,11 +20,11 @@ public class SwitchController : MonoBehaviour
     public bool leftOpen = true;
     [HideInInspector] public int leftOpenValue = 1;
     [HideInInspector] public bool activated = false;
-    Renderer rend;
-    Collider2D m_collider;
+    protected Renderer rend;
+    protected Collider2D m_collider;
     protected Animator animator;
 
-    void Start()
+    protected virtual void Start()
     {
         if (switchChildrenList.Count == 0)
         {
@@ -46,7 +46,7 @@ public class SwitchController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (switchChildrenList.Count == 0)
         {

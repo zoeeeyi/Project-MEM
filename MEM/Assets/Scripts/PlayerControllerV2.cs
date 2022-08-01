@@ -284,7 +284,6 @@ public class PlayerControllerV2 : RaycastController
 
                     if (directionY == 1 || hit.distance == 0)
                     {
-                        Debug.Log("Yes");
                         continue;
                     }
 
