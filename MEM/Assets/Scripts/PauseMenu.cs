@@ -4,45 +4,50 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    //For pause menu
-    GameObject[] allGameObjects;
-    Vector3 playerLastPosition;
+    PlayerInputParent playerInputParent;
+    GameObject mainCamera;
+    Vector3 playerLastSavePos;
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject charactersClone;
+    public GameObject pauseMenuCamera;
+
+    public void CallPauseMenu(PlayerInputParent instance)
     {
-        /*allGameObjects = FindObjectsOfType<GameObject>();
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager.rotationSpeedModifier = 0;
+        gameManager.inPauseMenu = true;
 
-        foreach (GameObject i in pauseMenuDontDestroyList)
-        {
-            foreach (Transform child in i.transform)
-            {
-                pauseMenuDontDestroyList.Add(child.gameObject);
-            }
-        }*/
+
+        playerInputParent = instance;
+        playerLastSavePos = playerInputParent.transform.position;
+
+        //Temporarily set save point to pause menu
+        var pauseMenuPos = transform.position;
+        GameObject.Find("SavePointController").GetComponent<SavePointController>().SetSavePosition(pauseMenuPos, 10 * Vector3.up, 10 * Vector3.down);
+        //Spawn a clone of characters to pause menu
+        playerInputParent.gameObject.SetActive(false);
+        GameObject cpClone = Instantiate(charactersClone, pauseMenuPos, Quaternion.identity);
+        cpClone.name = "cpClone";
+
+        //Set camera
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera.SetActive(false);
+        pauseMenuCamera.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResumeGame()
     {
+        GameObject.Find("SavePointController").GetComponent<SavePointController>().RevertSavePosition();
         
-    }
+        //Reset Camera
+        mainCamera.SetActive(true);
+        pauseMenuCamera.SetActive(false);
 
-    public void CallPauseMenu()
-    {
-        var player = GameObject.Find("Character");
-        var playerFlipped = GameObject.Find("CharacterFlipped");
+        Destroy(GameObject.Find("cpClone"));
+        playerInputParent.gameObject.SetActive(true);
 
-        playerFlipped.SetActive(false);
-        playerLastPosition = player.transform.position;
-
-        player.transform.position = transform.position;
-        
-        /*foreach (GameObject i in allGameObjects)
-        {
-            if(!pauseMenuDontDestroyList.Contains(i)) i.SetActive(false);
-        }
-        Instantiate(pauseMenu, player.transform.position, Quaternion.identity);
-        player.SetActive(true);*/
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager.rotationSpeedModifier = 1;
+        gameManager.inPauseMenu = false;
     }
 }
