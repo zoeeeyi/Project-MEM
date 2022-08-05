@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < audioSourceList.Count; i++)
         {
-            if (!audioSourceList[i].isPlaying)
+            if (!audioSourceList[i].isPlaying && !audioSourceList[i].loop)
             {
                 AudioSource deleteThis = audioSourceList[i];
                 audioSourceList[i] = temp;

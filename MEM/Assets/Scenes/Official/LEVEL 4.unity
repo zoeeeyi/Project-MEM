@@ -2728,6 +2728,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1124380007070040355, guid: f38682653c9c04b4baeeea1865115c06, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960710014673014913, guid: f38682653c9c04b4baeeea1865115c06, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.11999971
+      objectReference: {fileID: 0}
     - target: {fileID: 9148549033563744933, guid: f38682653c9c04b4baeeea1865115c06, type: 3}
       propertyPath: m_Name
       value: PauseMenu
@@ -15708,7 +15716,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1855414742
 MonoBehaviour:
@@ -16523,7 +16531,7 @@ Transform:
   - {fileID: 98394755}
   - {fileID: 518964326}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1985799137
 GameObject:
@@ -31673,7 +31681,7 @@ Transform:
   - {fileID: 428271642565554702}
   - {fileID: 4173018449415510114}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4173018449415510114
 Transform:
