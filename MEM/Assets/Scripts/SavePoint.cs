@@ -13,6 +13,7 @@ public class SavePoint : MonoBehaviour
     Collider2D player;
 
     SavePointParent parent;
+    AudioManager audioManager;
     Renderer rend;
     Color originalColor;
     Vector3 center;
@@ -26,6 +27,7 @@ public class SavePoint : MonoBehaviour
 
     void Start()
     {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         center = transform.position;
         originalScale = transform.localScale;
         if (flipped) playerAngle = 180;
@@ -75,6 +77,7 @@ public class SavePoint : MonoBehaviour
             Color newColor = Color.green;
             newColor.a = 0.3f;
             rend.material.color = newColor;
+            audioManager.playAudioClip("CheckPoint");
         }
     }
 
