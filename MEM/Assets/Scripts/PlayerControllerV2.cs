@@ -11,6 +11,7 @@ public class PlayerControllerV2 : RaycastController
 
     GameManager gameManager;
     Animator animator;
+    AudioManager audioManager;
 
     public CollisionInfo collisionInfo;
     public PlayerInput playerInput;
@@ -25,6 +26,7 @@ public class PlayerControllerV2 : RaycastController
         playerInput = GetComponent<PlayerInput>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         animator = GetComponent<Animator>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         collisionInfo.faceDir = 1;
     }
 
@@ -396,7 +398,12 @@ public class PlayerControllerV2 : RaycastController
             //this.gameObject.SetActive(false);
         }
 
-        if (playerInput.parent.Killers.Contains(other.tag)) gameManager.gameOver = true;
+        if (playerInput.parent.Killers.Contains(other.tag))
+        {
+            if (other.tag == "DeathBound") audioManager.playAudioClip("DeathFall");
+            if (other.tag == "Enemy") audioManager.playAudioClip("DeathHit");
+            gameManager.gameOver = true;
+        }
 
         /*if (other.gameObject.CompareTag("Switch"))
         {

@@ -29,16 +29,15 @@ public class PlayerInput : MonoBehaviour
     PlayerInputParent.PlayerState state;
 
     //Audio
-    public List<AudioClip> audioClipList;
-    AudioSource audioSource;
+    AudioManager audioManager;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource> ();
         controller = GetComponent<PlayerControllerV2>();
         parent = GetComponentInParent<PlayerInputParent>();
         rend = GetComponent<Renderer>();
         animator = GetComponent<Animator>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
         //If we reload the scene, we read the position from the parent, which is the last saving point
         if (!inverseGravity)
@@ -173,8 +172,7 @@ public class PlayerInput : MonoBehaviour
             }
             if (isGrounded)
             {
-                //audioSource.clip = audioClipList[0];
-                //audioSource.Play();
+                audioManager.playAudioClip("Jump");
                 velocity.y = parent.maxJumpVelocity;
                 isJumping = true;
             }

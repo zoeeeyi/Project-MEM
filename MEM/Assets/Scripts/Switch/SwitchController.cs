@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SwitchController : MonoBehaviour
 {
-
     [Header("Camera Setting")]
     public bool needCameraFocus = false;
     //public Vector3 camTargetPos;
@@ -17,6 +16,7 @@ public class SwitchController : MonoBehaviour
     List<SwitchChild> switchChildClassList = new List<SwitchChild>();
 
     [Header("Misc")]
+    protected bool lastStatus;
     public bool leftOpen = true;
     [HideInInspector] public int leftOpenValue = 1;
     [HideInInspector] public bool activated = false;
@@ -24,16 +24,20 @@ public class SwitchController : MonoBehaviour
     protected Collider2D m_collider;
     protected Animator animator;
 
+    //Audio
+    protected AudioManager audioManager;
+
     protected virtual void Start()
     {
         if (switchChildrenList.Count == 0)
         {
+            lastStatus = false;
             leftOpenValue = (leftOpen) ? 1 : -1;
 
             m_collider = GetComponent<Collider2D>();
             rend = GetComponent<Renderer>();
-
             animator = GetComponent<Animator>();
+            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         }
         else
         {
@@ -59,7 +63,16 @@ public class SwitchController : MonoBehaviour
             {
                 animator.SetBool("activated", false);
             }
-        } 
+
+            //Play audio
+            if (activated != lastStatus)
+            {
+                if (activated) audioManager.playAudioClip("SwitchOn");
+                else audioManager.playAudioClip("SwitchOff");
+            }
+
+            lastStatus = activated;
+        }
         else
         {
             foreach (SwitchChild i in switchChildClassList)
