@@ -35,6 +35,9 @@ public class MoveBlockController : MonoBehaviour
     //Animation
     Animator animator;
 
+    //Audio
+    AudioManager audioManager;
+
     public enum MoveBlockState
     {
         StartPoint,
@@ -56,6 +59,7 @@ public class MoveBlockController : MonoBehaviour
         //Run if we need alternative camera focus
         if(switchController.needCameraFocus) cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         animator = GetComponent<Animator>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
         //Set global waypoints
         globalWaypoints = new Vector3[localWaypoints.Length];
@@ -129,11 +133,19 @@ public class MoveBlockController : MonoBehaviour
         switch (moveState)
         {
             case MoveBlockState.StartPoint:
-                if (switchController.activated) velocity = CalculatePlatformMovement();
+                if (switchController.activated)
+                {
+                    velocity = CalculatePlatformMovement();
+                    audioManager.playAudioClip("MovingBlock");
+                }
                 break;
 
             case MoveBlockState.FinishPoint:
-                if (!switchController.activated) velocity = CalculatePlatformMovement();
+                if (!switchController.activated)
+                {
+                    velocity = CalculatePlatformMovement();
+                    audioManager.playAudioClip("MovingBlock");
+                }
                 break;
 
             case MoveBlockState.Middle:
@@ -142,6 +154,7 @@ public class MoveBlockController : MonoBehaviour
                 {
                     changeDirMidway();
                     velocity = CalculatePlatformMovement();
+                    audioManager.playAudioClip("MovingBlock");
                 }
                 break;
         }
