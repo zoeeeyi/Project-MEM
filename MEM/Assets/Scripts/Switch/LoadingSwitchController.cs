@@ -13,6 +13,7 @@ public class LoadingSwitchController : SwitchController
 
     private void Awake()
     {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         Collider2D m_collider = GetComponent<Collider2D>();
         m_collider.isTrigger = true;
     }
@@ -28,6 +29,7 @@ public class LoadingSwitchController : SwitchController
         if (timer <= 0 && !activated)
         {
             activated = true;
+            audioManager.playAudioClip("EndPoint");
             timer = 0;
         }
     }

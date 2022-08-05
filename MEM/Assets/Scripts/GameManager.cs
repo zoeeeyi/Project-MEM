@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     [Header("Misc")]
     [HideInInspector] public float rotationSpeedModifier = 1; //use this when pausing & resuming game, value given by gameManager, can only be 0/1;
 
+    [Header("Audio Setting")]
+    AudioManager audioManager;
+    public string bgmName;
+
     private void Awake()
     {
         Time.timeScale = 1;
@@ -29,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager.playAudioClip(bgmName);
         pauseMenu = GameObject.Find("PauseMenu").GetComponent<PauseMenu>();
         inPauseMenu = false;
 

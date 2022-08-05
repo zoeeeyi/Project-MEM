@@ -3,27 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    private AudioSource audioSource;
+    List<AudioSource> audioSourceList = new List<AudioSource>();
+    Dictionary<string, AudioClip> AudioClipsDic = new Dictionary<string, AudioClip>();
+    
     public List<AudioClips> AudioClipsList;
-    Dictionary<string, AudioClip> AudioClipsDic;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
-        foreach(AudioClips i in AudioClipsList)
+        for (int i = 0; i < AudioClipsList.Count; i++)
         {
-            AudioClipsDic[i.clipName] = i.clip;
+            AudioClipsDic.Add(AudioClipsList[i].clipName, AudioClipsList[i].clip);
         }
     }
 
-    public AudioClip getAudioClip(string name)
+    void LateUpdate()
     {
-        AudioClip clip = AudioClipsDic[name];
-        return clip;
+        foreach (AudioSource i in audioSourceList)
+        {
+            if (!i.isPlaying) audioSourceList.Remove(i);
+        }
+    }
+
+    public void playAudioClip(string name)
+    {
+        AudioSource new_audioSource = gameObject.AddComponent<AudioSource>();
+        new_audioSource.clip = AudioClipsDic[name];
+        audioSourceList.Add(new_audioSource);
+        audioSourceList[audioSourceList.Count - 1].Play();
     }
 }
 
