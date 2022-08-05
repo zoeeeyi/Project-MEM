@@ -7,9 +7,18 @@ public class PauseMenu : MonoBehaviour
     PlayerInputParent playerInputParent;
     GameObject mainCamera;
     Vector3 playerLastSavePos;
+    Renderer rend;
 
     public GameObject charactersClone;
     public GameObject pauseMenuCamera;
+
+    private void Awake()
+    {
+        rend = GetComponent<Renderer>();
+        Color color = Color.white;
+        color.a = 0;
+        rend.material.color = color;
+    }
 
     public void CallPauseMenu(PlayerInputParent instance)
     {
