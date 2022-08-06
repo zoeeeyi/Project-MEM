@@ -124,9 +124,9 @@ public class DisappearPlatform : RaycastController
 
     IEnumerator DisappearCoroutine()
     {
+        StartCoroutine(PlayDisappearSound());
         isDisappearing = true;
         yield return new WaitForSeconds(disappearTime);
-        audioManager.playAudioClip("DisappearPlat");
         m_collider.enabled = false;
         if (reappear) StartCoroutine(ReappearCoroutine(2 * bufferTime));
     }
@@ -140,5 +140,11 @@ public class DisappearPlatform : RaycastController
         rend.material.color = color;
         timer = disappearTime;
         waitingToDisappear = false;
+    }
+
+    IEnumerator PlayDisappearSound()
+    {
+        yield return new WaitForSeconds(0.8f * disappearTime);
+        audioManager.playAudioClip("DisappearPlat");
     }
 }
