@@ -29,7 +29,6 @@ public class LoadingSwitchController : SwitchController
         if (timer <= 0 && !activated)
         {
             activated = true;
-            audioManager.playAudioClip("EndPoint");
             timer = 0;
         }
     }
