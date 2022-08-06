@@ -144,7 +144,7 @@ public class DisappearPlatform : RaycastController
 
     IEnumerator PlayDisappearSound()
     {
-        yield return new WaitForSeconds(0.8f * disappearTime);
+        yield return new WaitForSeconds(0f * disappearTime);
         audioManager.playAudioClip("DisappearPlat");
     }
 }
