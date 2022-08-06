@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    List<LoadingSwitchController> loadingSwitchControllers;
+    protected List<LoadingSwitchController> loadingSwitchControllers;
     LevelSelectorSwitchParent levelSelectorSwitchParent;
 
     string sceneName;
@@ -20,13 +20,13 @@ public class LevelLoader : MonoBehaviour
         loadingSwitchControllers = loadingSwitchControllerArray.ToList();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         sceneName = levelSelectorSwitchParent.selectedLevel;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (!sceneName.Equals(""))
         {
@@ -52,5 +52,10 @@ public class LevelLoader : MonoBehaviour
                 i.Reset();
             }
         }
+    }
+
+    protected void SetSceneName(string n)
+    {
+        sceneName = n;
     }
 }

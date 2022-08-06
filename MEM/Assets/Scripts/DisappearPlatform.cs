@@ -35,6 +35,7 @@ public class DisappearPlatform : RaycastController
     Collider2D m_collider;
     Renderer rend;
     Color color;
+    AudioManager audioManager;
 
     bool isDisappearing = false;
     float timer = 0;
@@ -46,6 +47,7 @@ public class DisappearPlatform : RaycastController
 
         m_collider = GetComponent<Collider2D>();
         rend = GetComponent<Renderer>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         color = rend.material.color;
         timer = disappearTime;
 
@@ -124,6 +126,7 @@ public class DisappearPlatform : RaycastController
     {
         isDisappearing = true;
         yield return new WaitForSeconds(disappearTime);
+        audioManager.playAudioClip("DisappearPlat");
         m_collider.enabled = false;
         if (reappear) StartCoroutine(ReappearCoroutine(2 * bufferTime));
     }

@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class LoadingSwitchController : SwitchController
 {
     [Header("Timer Setting")]
-    public float timeToOpen = 3;
+    public float timeToOpen = 2;
     float timer;
 
     private void Awake()
