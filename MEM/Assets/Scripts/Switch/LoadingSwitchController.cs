@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Sprites;
 
 [RequireComponent(typeof(Collider2D))]
 public class LoadingSwitchController : SwitchController
@@ -10,6 +11,10 @@ public class LoadingSwitchController : SwitchController
     [Header("Timer Setting")]
     public float timeToOpen = 2;
     float timer;
+
+    [Header("Sprite Setting")]
+    public List<Sprite> spriteList;
+    SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -20,6 +25,7 @@ public class LoadingSwitchController : SwitchController
 
     void OnEnable()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         Reset();
     }
@@ -35,7 +41,7 @@ public class LoadingSwitchController : SwitchController
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        //Leave blank
+        spriteRenderer.sprite = spriteList[0];
     }
 
     private void OnTriggerStay2D(Collider2D collision)
