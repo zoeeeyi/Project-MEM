@@ -30,15 +30,21 @@ public class LevelSelectorSwitchParent : MonoBehaviour
         {
             if (i.activated) allSwitchOff = false;
         }
-        if (allSwitchOff) selectedLevel = "";
+        if (allSwitchOff)
+        {
+            selectedLevel = "";
+            arrow1.SetActive(false);
+            arrow2.SetActive(false);
+        }
 
-        if (lastActiveSwitch != currentlyActiveSwitch)
+            if (lastActiveSwitch != currentlyActiveSwitch)
         {
             foreach (LevelSelectorSwitch i in switchControllers)
             {
                 if (i != currentlyActiveSwitch)
                 {
                     i.activated = false;
+
                     arrow1.SetActive(true);
                     arrow2.SetActive(true);
                 }
