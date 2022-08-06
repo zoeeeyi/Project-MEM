@@ -10,9 +10,6 @@ public class LevelLoader : MonoBehaviour
     protected List<LoadingSwitchController> loadingSwitchControllers;
     LevelSelectorSwitchParent levelSelectorSwitchParent;
 
-    public GameObject arrow1;
-    public GameObject arrow2;
-
 
     string sceneName;
 
@@ -38,8 +35,7 @@ public class LevelLoader : MonoBehaviour
             foreach (var i in loadingSwitchControllers)
             {
                 if (!i.activated) allActivated = false;
-                arrow1.SetActive(true);
-                arrow2.SetActive(true);
+                
             }
 
             if (allActivated)

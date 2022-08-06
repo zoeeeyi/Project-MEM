@@ -11,6 +11,9 @@ public class LevelSelectorSwitchParent : MonoBehaviour
     [HideInInspector] public LevelSelectorSwitch currentlyActiveSwitch;
     [HideInInspector] public string selectedLevel;
 
+    public GameObject arrow1;
+    public GameObject arrow2;
+
     void Start()
     {
         var switchControllersArray = GetComponentsInChildren<LevelSelectorSwitch>();
@@ -36,6 +39,8 @@ public class LevelSelectorSwitchParent : MonoBehaviour
                 if (i != currentlyActiveSwitch)
                 {
                     i.activated = false;
+                    arrow1.SetActive(true);
+                    arrow2.SetActive(true);
                 }
             }
 
