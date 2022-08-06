@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4863301049426764322}
   - component: {fileID: 4863301049426764323}
   - component: {fileID: 4863301049426764320}
-  - component: {fileID: 4863301049426764321}
   m_Layer: 0
   m_Name: LoadingSwitch_Flipped
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4863301049426764511}
   m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
-  m_LocalPosition: {x: 0, y: 12.88, z: 0}
+  m_LocalPosition: {x: 0, y: -7.008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -133,26 +132,11 @@ MonoBehaviour:
   leftOpenValue: 1
   activated: 0
   timeToOpen: 2
---- !u!95 &4863301049426764321
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4863301049426764511}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 20d74ea8cf8453e4f9a831de3e3305dd, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  spriteList:
+  - {fileID: 21300000, guid: dc841e39b9cf0b942aee76005b0306f9, type: 3}
+  - {fileID: 21300000, guid: 0c70be9cf38113847aee2e02fd38e6bb, type: 3}
+  - {fileID: 21300000, guid: 328dee1118485ba4cb8dc64493c66639, type: 3}
+  - {fileID: 21300000, guid: e6e70e7b252bc754f8ba581e5f7d0900, type: 3}
 --- !u!1 &4863301050070837050
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +161,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4863301050070837050}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.74, y: 0.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -199,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6521a8fd90d5a49a9b46ba8a5661c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: LEVEL 1
+  nextSceneName: LEVEL 3
 --- !u!1 &4863301050886540933
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +418,6 @@ GameObject:
   - component: {fileID: 4863301051015725208}
   - component: {fileID: 4863301051015725209}
   - component: {fileID: 4863301051015725206}
-  - component: {fileID: 4863301051015725207}
   m_Layer: 0
   m_Name: LoadingSwitch
   m_TagString: Untagged
@@ -555,23 +538,8 @@ MonoBehaviour:
   leftOpenValue: 1
   activated: 0
   timeToOpen: 2
---- !u!95 &4863301051015725207
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4863301051015725205}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 20d74ea8cf8453e4f9a831de3e3305dd, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  spriteList:
+  - {fileID: 21300000, guid: dc841e39b9cf0b942aee76005b0306f9, type: 3}
+  - {fileID: 21300000, guid: 0c70be9cf38113847aee2e02fd38e6bb, type: 3}
+  - {fileID: 21300000, guid: 328dee1118485ba4cb8dc64493c66639, type: 3}
+  - {fileID: 21300000, guid: e6e70e7b252bc754f8ba581e5f7d0900, type: 3}

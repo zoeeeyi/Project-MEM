@@ -87,7 +87,7 @@ public class MoveBlockController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (cameraController == null && switchController.needCameraFocus) cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        if (cameraController == null && switchController.needCameraFocus) cameraController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
     }
 
     void Update()
