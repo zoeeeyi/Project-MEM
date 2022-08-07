@@ -31278,6 +31278,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7256069567350881933}
     m_Modifications:
     - target: {fileID: 5793211730879501377, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793211730879501377, guid: b38a49bd38eb0d64ca746f01e9060d94, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 0149458946638bd43af9f6e59385c7c7, type: 2}
@@ -32189,7 +32193,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7256069567326295580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0149458946638bd43af9f6e59385c7c7, type: 2}
   m_CullingMode: 0
