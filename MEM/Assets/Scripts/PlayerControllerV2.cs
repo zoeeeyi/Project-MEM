@@ -402,7 +402,7 @@ public class PlayerControllerV2 : RaycastController
         {
             if (other.tag == "DeathBound") audioManager.playAudioClip("DeathFall");
             if (other.tag == "Enemy") audioManager.playAudioClip("DeathHit");
-            gameManager.gameOver = true;
+            gameManager.ChangeGameStateTo(GameManager.GameStates.GameOver);
         }
 
         /*if (other.gameObject.CompareTag("Switch"))

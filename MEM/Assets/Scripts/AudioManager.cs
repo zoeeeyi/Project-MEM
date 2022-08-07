@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     
     public List<AudioClips> AudioClipsList;
 
-    void Start()
+    void Awake()
     {
         temp = gameObject.AddComponent<AudioSource>();
 

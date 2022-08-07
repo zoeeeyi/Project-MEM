@@ -22,11 +22,6 @@ public class PauseMenu : MonoBehaviour
 
     public void CallPauseMenu(PlayerInputParent instance)
     {
-        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameManager.rotationSpeedModifier = 0;
-        gameManager.inPauseMenu = true;
-
-
         playerInputParent = instance;
         playerLastSavePos = playerInputParent.transform.position;
 
@@ -54,9 +49,5 @@ public class PauseMenu : MonoBehaviour
 
         Destroy(GameObject.Find("cpClone"));
         playerInputParent.gameObject.SetActive(true);
-
-        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameManager.rotationSpeedModifier = 1;
-        gameManager.inPauseMenu = false;
     }
 }

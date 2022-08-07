@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,7 +11,11 @@ public class GameManager : MonoBehaviour
     PauseMenu pauseMenu;
     [HideInInspector] public bool inPauseMenu;
 
-    public bool gameOver = false;
+    //UI
+    Volume m_volume;
+    VolumeProfile m_volProfile;
+    float volumeWeightSmoothV;
+    public float volumeWeightSmoothTime;
     public GameObject gameOverUI;
     public GameObject gameWinUI;
     public PlayerInputParent playerInputParent;
@@ -18,6 +24,7 @@ public class GameManager : MonoBehaviour
     public int endPointNum = 2;
     public int endPointReached = 0;
 
+    //Misc
     [Header("Misc")]
     [HideInInspector] public float rotationSpeedModifier = 1; //use this when pausing & resuming game, value given by gameManager, can only be 0/1;
 
@@ -25,18 +32,32 @@ public class GameManager : MonoBehaviour
     AudioManager audioManager;
     public string bgmName;
 
+    //Game States
+    GameStates gameState;
+    public enum GameStates
+    {
+        InGame,
+        GameOver,
+        inPauseMenu
+    }
+
     private void Awake()
     {
+        gameState = GameStates.InGame;
         Time.timeScale = 1;
         rotationSpeedModifier = 1;
     }
 
     private void Start()
     {
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        audioManager.playAudioClip(bgmName);
+        //Pause Menu Setup
         pauseMenu = GameObject.Find("PauseMenu").GetComponent<PauseMenu>();
         inPauseMenu = false;
+
+        //UI Setup
+        m_volume = GameObject.Find("Global Volume").GetComponent<Volume>();
+        m_volProfile = m_volume.sharedProfile;
+        m_volume.weight = 1;
 
         gameOverUI = GameObject.Find("GameOver");
         gameWinUI = GameObject.Find("GameWin");
@@ -47,33 +68,75 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!inPauseMenu) pauseMenu.CallPauseMenu(playerInputParent);
-            else pauseMenu.ResumeGame();
-        }
-
+        //Universal Controlls
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!inPauseMenu)
+            if (gameState != GameStates.inPauseMenu)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
 
-        if (gameOver)
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            Time.timeScale = 0;
-            gameOverUI.SetActive(true);
+            gameState = GameStates.GameOver;
         }
+
+
+        //Game State Specific Controlls
+        switch (gameState)
+        {
+            case GameStates.InGame:
+                //UI
+                if (m_volume.weight != 0)
+                {
+                    m_volume.weight = Mathf.SmoothDamp(m_volume.weight, 0, ref volumeWeightSmoothV, volumeWeightSmoothTime);
+                }
+
+                //Inputs
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    pauseMenu.CallPauseMenu(playerInputParent);
+                    rotationSpeedModifier = 0;
+                    m_volume.weight = 1;
+                    gameState = GameStates.inPauseMenu;
+                }
+                break;
+
+            case GameStates.GameOver:
+                //UI
+                if (m_volume.weight != 1)
+                {
+                    m_volume.weight = Mathf.SmoothDamp(m_volume.weight, 1, ref volumeWeightSmoothV, volumeWeightSmoothTime);
+                }
+                playerInputParent.gameObject.SetActive(false);
+                gameOverUI.SetActive(true);
+                break;
+
+            case GameStates.inPauseMenu:
+                //UI
+                if (m_volume.weight != 0)
+                {
+                    m_volume.weight = Mathf.SmoothDamp(m_volume.weight, 0, ref volumeWeightSmoothV, volumeWeightSmoothTime);
+                }
+
+                //Inputs
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    pauseMenu.ResumeGame();
+                    m_volume.weight = 1;
+                    rotationSpeedModifier = 1;
+                    gameState = GameStates.InGame;
+                }
+                break;
+        }
+
 
         if (endPointNum == endPointReached)
         {
             Time.timeScale = 0;
             gameWinUI.SetActive(true);
         }
-
-        if (playerInputParent.state == PlayerInputParent.PlayerState.BeyondXGap) gameOver = true;
     }
 
     public void ExitGame()
@@ -84,5 +147,10 @@ public class GameManager : MonoBehaviour
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ChangeGameStateTo(GameStates s)
+    {
+        gameState = s;
     }
 }
