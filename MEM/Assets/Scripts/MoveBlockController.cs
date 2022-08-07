@@ -37,6 +37,8 @@ public class MoveBlockController : MonoBehaviour
 
     //Audio
     AudioManager audioManager;
+    bool okToPlayAudio;
+    bool playAudioBasedOnCamera;
 
     public enum MoveBlockState
     {
@@ -60,6 +62,7 @@ public class MoveBlockController : MonoBehaviour
         if(switchController.needCameraFocus) cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         animator = GetComponent<Animator>();
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        playAudioBasedOnCamera = false;
 
         //Set global waypoints
         globalWaypoints = new Vector3[localWaypoints.Length];
@@ -110,16 +113,33 @@ public class MoveBlockController : MonoBehaviour
         //Camera reFocus
         try
         {
+            if (switchController.needCameraFocus)
+            {
+                okToPlayAudio = false;
+                playAudioBasedOnCamera = true;
+            }
+
             if (switchController.needCameraFocus && switchController.activated)
             {
                 switchController.needCameraFocus = false;
                 cameraController.otherTarget = true;
                 cameraController.otherTargetPos = middlePoint;
                 cameraController.focusOnOtherTargetState = CameraController.FocusOnOtherTargetState.Setup;
+                okToPlayAudio = true;
                 return;
             }
 
-            if (cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Move) return;
+            if (cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Move)
+            {
+                okToPlayAudio = true;
+                return;
+            }
+
+            if (cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Pause)
+            {
+                if (okToPlayAudio) audioManager.playAudioClip("MovingBlock");
+                okToPlayAudio = false;
+            }
 
             if (moveState == MoveBlockState.FinishPoint && cameraController.focusOnOtherTargetState == CameraController.FocusOnOtherTargetState.Pause)
             {
@@ -135,8 +155,8 @@ public class MoveBlockController : MonoBehaviour
             case MoveBlockState.StartPoint:
                 if (switchController.activated)
                 {
+                    if (!playAudioBasedOnCamera) audioManager.playAudioClip("MovingBlock");
                     velocity = CalculatePlatformMovement();
-                    audioManager.playAudioClip("MovingBlock");
                 }
                 break;
 
