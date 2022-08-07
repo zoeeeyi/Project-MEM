@@ -99,7 +99,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.009171188, y: 0.0068736672}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -110,7 +110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.2}
+  m_Size: {x: 3.6486382, y: 0.7911273}
   m_EdgeRadius: 0
 --- !u!114 &3265525170174683504
 MonoBehaviour:
@@ -128,7 +128,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   horizontalRayCount: 4
-  verticalRayCount: 4
+  verticalRayCount: 8
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
@@ -249,11 +249,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3886165174978375548, guid: 2c52763a3ae185444999175b2f519867, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3886165174978375548, guid: 2c52763a3ae185444999175b2f519867, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3886165174978375548, guid: 2c52763a3ae185444999175b2f519867, type: 3}
       propertyPath: m_Color.r
