@@ -61,7 +61,7 @@ public class MoveBlockController : MonoBehaviour
         //Run if we need alternative camera focus
         if(switchController.needCameraFocus) cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         animator = GetComponent<Animator>();
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         playAudioBasedOnCamera = false;
 
         //Set global waypoints

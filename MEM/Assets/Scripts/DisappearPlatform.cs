@@ -47,7 +47,7 @@ public class DisappearPlatform : RaycastController
 
         m_collider = GetComponent<Collider2D>();
         rend = GetComponent<Renderer>();
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         color = rend.material.color;
         timer = disappearTime;
 

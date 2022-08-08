@@ -26,7 +26,7 @@ public class PlayerControllerV2 : RaycastController
         playerInput = GetComponent<PlayerInput>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         animator = GetComponent<Animator>();
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         collisionInfo.faceDir = 1;
     }
 
@@ -402,7 +402,8 @@ public class PlayerControllerV2 : RaycastController
         {
             if (other.tag == "DeathBound") audioManager.playAudioClip("DeathFall");
             if (other.tag == "Enemy") audioManager.playAudioClip("DeathHit");
-            gameManager.gameOver = true;
+            if (other.tag == "RotatingKiller") audioManager.playAudioClip("DeathHit");
+            gameManager.ChangeGameStateTo(GameManager.GameStates.GameOver);
         }
 
         /*if (other.gameObject.CompareTag("Switch"))
