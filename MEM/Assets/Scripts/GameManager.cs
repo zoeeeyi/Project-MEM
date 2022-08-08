@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     Volume m_volume;
     VolumeProfile m_volProfile;
     float volumeWeightSmoothV;
-    public float volumeWeightSmoothTime;
+    public float volumeWeightSmoothTime = 0.3f;
     public GameObject gameOverUI;
     public GameObject gameWinUI;
     public PlayerInputParent playerInputParent;

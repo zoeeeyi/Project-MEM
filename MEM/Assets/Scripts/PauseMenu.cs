@@ -27,7 +27,7 @@ public class PauseMenu : MonoBehaviour
 
         //Temporarily set save point to pause menu
         var pauseMenuPos = transform.position;
-        GameObject.Find("SavePointController").GetComponent<SavePointController>().SetSavePosition(pauseMenuPos, 10 * Vector3.up, 10 * Vector3.down);
+        GameObject.FindGameObjectWithTag("SavePointController").GetComponent<SavePointController>().SetSavePosition(pauseMenuPos, 10 * Vector3.up, 10 * Vector3.down);
         //Spawn a clone of characters to pause menu
         playerInputParent.gameObject.SetActive(false);
         GameObject cpClone = Instantiate(charactersClone, pauseMenuPos, Quaternion.identity);
@@ -41,7 +41,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
-        GameObject.Find("SavePointController").GetComponent<SavePointController>().RevertSavePosition();
+        GameObject.FindGameObjectWithTag("SavePointController").GetComponent<SavePointController>().RevertSavePosition();
         
         //Reset Camera
         mainCamera.SetActive(true);

@@ -101,10 +101,10 @@ public class NotRotatingPlatform : RaycastController
                         float pushX = velocity.x;
                         //float pushY = 0;
                         float pushY;
-                        if (directionY == -1) pushY = velocity.y - (hit.distance - skinWidth) * directionY;
-                        else pushY = -velocity.y;
+                        if (directionY == -1) pushY = velocity.y - (hitDown.distance - skinWidth) * directionY;
+                        else pushY = velocity.y;
 
-                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, pushY), true, true, false);
+                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, -pushY), true, true, false);
                         passengerMovementInfoList.Add(newPassenger);
                     }
                 }

@@ -24,7 +24,7 @@ public class SavePointParent : MonoBehaviour
 
     void Start()
     {
-        savePointController = GameObject.Find("SavePointController").GetComponent<SavePointController>();
+        savePointController = GameObject.FindGameObjectWithTag("SavePointController").GetComponent<SavePointController>();
     }
 
     private void Update()

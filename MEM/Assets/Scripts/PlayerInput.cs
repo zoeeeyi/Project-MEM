@@ -37,7 +37,7 @@ public class PlayerInput : MonoBehaviour
         parent = GetComponentInParent<PlayerInputParent>();
         rend = GetComponent<Renderer>();
         animator = GetComponent<Animator>();
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         //If we reload the scene, we read the position from the parent, which is the last saving point
         if (!inverseGravity)

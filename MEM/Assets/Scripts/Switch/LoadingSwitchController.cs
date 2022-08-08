@@ -20,7 +20,7 @@ public class LoadingSwitchController : SwitchController
 
     private void Awake()
     {
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         Collider2D m_collider = GetComponent<Collider2D>();
         m_collider.isTrigger = true;
     }

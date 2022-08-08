@@ -27,7 +27,7 @@ public class SavePoint : MonoBehaviour
 
     void Start()
     {
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         center = transform.position;
         originalScale = transform.localScale;
         if (flipped) playerAngle = 180;

@@ -10,7 +10,7 @@ public class GameManagerDontDestroy : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         //Audio Setup
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         audioManager.playAudioClip(gameManager.bgmName);
     }
 }

@@ -10,7 +10,7 @@ public class LoadingSwitchSound : MonoBehaviour
     void Start()
     {
         playSound = 0;
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     void FixedUpdate()

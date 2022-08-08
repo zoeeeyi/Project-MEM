@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2323122783264087499}
   - component: {fileID: 4969641442760373905}
   m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
+  m_Name: DDOL_AudioManager
+  m_TagString: AudioManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6390730222540252943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -59.537796, y: 5.7715826, z: 0.20561473}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -180,11 +180,11 @@ MonoBehaviour:
     loop: 0
   - clipName: BGM1
     clip: {fileID: 8300000, guid: 923a3d465e3d0ce49bae8ccc5547aa85, type: 3}
-    volume: 0.15
+    volume: 0.3
     loop: 1
   - clipName: BGM2
     clip: {fileID: 8300000, guid: 52a548f5a7623fc4ca943fe1ba29925a, type: 3}
-    volume: 0.15
+    volume: 0.3
     loop: 1
   - clipName: EndPoint
     clip: {fileID: 8300000, guid: ff100916745c9a04f9311a32a337ee16, type: 3}

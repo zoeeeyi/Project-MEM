@@ -37,7 +37,7 @@ public class SwitchController : MonoBehaviour
             m_collider = GetComponent<Collider2D>();
             rend = GetComponent<Renderer>();
             animator = GetComponent<Animator>();
-            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         }
         else
         {
