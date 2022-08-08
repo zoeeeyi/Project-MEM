@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
     public Vector3 lastPosition;
     public Vector2 playerPos;
     public Vector2 padding;
-    public Vector2 cameraPadding;
     public float verticalOffset;
     public float lookAheadDstX;
     public float lookSmoothTimeX;
@@ -22,6 +21,7 @@ public class CameraController : MonoBehaviour
     Camera camera;
 
     float cameraStartSize;
+    Vector2 cameraStartSizeInDistance;
     float widthToCameraSize;
     float heightToCameraSize;
     float focusAreatoCameraSize;
@@ -67,10 +67,16 @@ public class CameraController : MonoBehaviour
         focusArea = new FocusArea(target.collider.bounds, targetFlipped.collider.bounds, padding);
         focusAreatoCameraSize = Mathf.Max(focusArea.size.x * widthToCameraSize, focusArea.size.y * heightToCameraSize);
         camera.orthographicSize = Mathf.Max(cameraStartSize, focusAreatoCameraSize);
+        cameraStartSizeInDistance.y = camera.orthographicSize / heightToCameraSize;
+        cameraStartSizeInDistance.x = camera.orthographicSize / widthToCameraSize;
     }
 
     void LateUpdate()
     {
+        if (Mathf.Abs(target.transform.position.x - targetFlipped.transform.position.x) > cameraStartSizeInDistance.x)
+        {
+
+        }
         focusArea.Update(target.collider.bounds, targetFlipped.collider.bounds, transform.position);
 
         Vector2 focusPosition = focusArea.center + Vector2.up * verticalOffset;
