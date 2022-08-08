@@ -1292,6 +1292,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Global Volume
       objectReference: {fileID: 0}
+    - target: {fileID: 7215784699677941510, guid: 1b4a2b23a09d7ba4a8dc3fc43cbac604, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7215784699677941512, guid: 1b4a2b23a09d7ba4a8dc3fc43cbac604, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2041,7 +2045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 723683094, guid: 84ba7e2c0d06e8f44b36e14caf9dccb4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.59
+      value: -4.32
       objectReference: {fileID: 0}
     - target: {fileID: 1545791987, guid: 84ba7e2c0d06e8f44b36e14caf9dccb4, type: 3}
       propertyPath: m_TagString
@@ -2049,7 +2053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1545791988, guid: 84ba7e2c0d06e8f44b36e14caf9dccb4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.87
+      value: 5.1400003
       objectReference: {fileID: 0}
     - target: {fileID: 1545791991, guid: 84ba7e2c0d06e8f44b36e14caf9dccb4, type: 3}
       propertyPath: m_Color.b
@@ -2073,7 +2077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7514609007085912196, guid: 84ba7e2c0d06e8f44b36e14caf9dccb4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.44
+      value: 4.17
       objectReference: {fileID: 0}
     - target: {fileID: 7514609007085912196, guid: 84ba7e2c0d06e8f44b36e14caf9dccb4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3139,7 +3143,6 @@ MonoBehaviour:
   lastPosition: {x: 0, y: 0, z: 0}
   playerPos: {x: 0, y: 0}
   padding: {x: 3, y: 6}
-  cameraPadding: {x: 0, y: 0}
   verticalOffset: 1
   lookAheadDstX: 4
   lookSmoothTimeX: 0.5
@@ -10233,7 +10236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613513690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 114.33, y: 9.41, z: -3}
+  m_LocalPosition: {x: 39.71, y: 9.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19611,15 +19614,29 @@ CompositeCollider2D:
         Y: 70000000
       - X: 1260000000
         Y: 50000000
+      - X: 1339999900
+        Y: 50000000
+      - X: 1339999900
+        Y: 50000041
+      - X: 1339999959
+        Y: 50000100
+      - X: 1350000041
+        Y: 50000100
+      - X: 1350000100
+        Y: 50000041
+      - X: 1350000100
+        Y: 50000000
       - X: 1370000000
         Y: 50000000
-      - X: 1389999930
-        Y: 30000071
-      - X: 1389999900
+      - X: 1389999901
+        Y: 30000100
+      - X: 1390000041
+        Y: 30000100
+      - X: 1390000100
         Y: 30000041
-      - X: 1389999900
+      - X: 1390000100
         Y: 19999959
-      - X: 1389999959
+      - X: 1390000041
         Y: 19999900
       - X: 1399999980
         Y: 19999900
@@ -19788,6 +19805,12 @@ CompositeCollider2D:
       - X: 1720000000
         Y: -60000000
     - - X: 1370000000
+        Y: 19999900
+      - X: 1339999959
+        Y: 19999900
+      - X: 1339999900
+        Y: 19999959
+      - X: 1339999900
         Y: 20000000
       - X: 1270000000
         Y: 20000000
@@ -20038,8 +20061,8 @@ CompositeCollider2D:
       - {x: 126, y: 6.9999704}
       - {x: 126.00003, y: 5}
       - {x: 137.00002, y: 4.9999924}
-      - {x: 138.99998, y: 2.9999933}
-      - {x: 139.00003, y: 1.99999}
+      - {x: 139.00002, y: 2.9999933}
+      - {x: 139.00005, y: 1.99999}
     - - {x: 195.99997, y: 4}
       - {x: 196.00003, y: 8}
       - {x: 196.56252, y: 8.000011}
@@ -20110,7 +20133,7 @@ CompositeCollider2D:
       - {x: -1, y: 0.99997073}
       - {x: -0.99997073, y: -3}
     - - {x: 136.99997, y: -6}
-      - {x: 136.99997, y: 2}
+      - {x: 136.99997, y: 1.99999}
       - {x: 127, y: 1.9999708}
       - {x: 127.00003, y: -6}
     - - {x: 171.99997, y: -6}
@@ -37106,7 +37129,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7256069567517610546}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0149458946638bd43af9f6e59385c7c7, type: 2}
   m_CullingMode: 0
@@ -37166,7 +37189,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7256069567166463889}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0149458946638bd43af9f6e59385c7c7, type: 2}
   m_CullingMode: 0
@@ -37465,7 +37488,7 @@ MonoBehaviour:
   bothWay: 1
   passengerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 32832
   switchObject: {fileID: 1913439794}
   localWaypoints:
   - {x: 0, y: 0, z: 0}
