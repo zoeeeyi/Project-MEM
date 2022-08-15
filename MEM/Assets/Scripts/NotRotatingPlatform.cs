@@ -23,13 +23,17 @@ public class NotRotatingPlatform : RaycastController
 
     void Update()
     {
-        transform.Rotate(0, 0, -parent.hiddenRotationSpeed);
         velocity = transform.position - lastPosition;
+        transform.position = lastPosition;
 
         UpdateRaycastOrigins();
-
         CalculatePassengerMovement(velocity);
         MovePassengers(true);
+
+        transform.position = lastPosition + velocity;
+        transform.Rotate(0, 0, -parent.hiddenRotationSpeed);
+
+        MovePassengers(false);
 
         lastPosition = transform.position;
     }
@@ -82,10 +86,15 @@ public class NotRotatingPlatform : RaycastController
                         //float pushY = 0;
                         //float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
                         float pushY;
+                        bool moveBeforePlatform = true;
                         if (directionY == 1) pushY = velocity.y - (hit.distance - skinWidth) * directionY;
-                        else pushY = velocity.y;
+                        else
+                        {
+                            moveBeforePlatform = false;
+                            pushY = velocity.y;
+                        }
 
-                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, true, false);
+                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hit.transform, new Vector3(pushX, pushY), true, moveBeforePlatform, false);
                         passengerMovementInfoList.Add(newPassenger);
                     }
                 }
@@ -101,10 +110,15 @@ public class NotRotatingPlatform : RaycastController
                         float pushX = velocity.x;
                         //float pushY = 0;
                         float pushY;
+                        bool moveBeforePlatform = true;
                         if (directionY == -1) pushY = velocity.y - (hitDown.distance - skinWidth) * directionY;
-                        else pushY = velocity.y;
+                        else
+                        {
+                            moveBeforePlatform = false;
+                            pushY = velocity.y;
+                        }
 
-                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, -pushY), true, true, false);
+                        PassengerMovementInfo newPassenger = new PassengerMovementInfo(hitDown.transform, new Vector3(pushX, -pushY), true, moveBeforePlatform, false);
                         passengerMovementInfoList.Add(newPassenger);
                     }
                 }

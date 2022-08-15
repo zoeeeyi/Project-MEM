@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour
     {
         if (Mathf.Abs(target.transform.position.x - targetFlipped.transform.position.x) > cameraStartSizeInDistance.x)
         {
-
+            camera.orthographicSize = 1000 * camera.orthographicSize * Mathf.Abs(target.transform.position.x - targetFlipped.transform.position.x) / cameraStartSizeInDistance.x;
         }
         focusArea.Update(target.collider.bounds, targetFlipped.collider.bounds, transform.position);
 
