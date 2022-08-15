@@ -57,7 +57,7 @@ public class LoadingSwitchController : SwitchController
         {
             spriteRenderer.sprite = spriteList[1];
             audioManager.playAudioClip("SwitchLoad");
-            currentSpriteIndex += 1;
+            currentSpriteIndex = 2;
             StartCoroutine(PlayNextSprite());
         }
     }
