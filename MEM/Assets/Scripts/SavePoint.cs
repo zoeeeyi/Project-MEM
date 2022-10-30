@@ -64,7 +64,7 @@ public class SavePoint : MonoBehaviour
         transform.localScale = new Vector3(newScaleX, newScaleY, transform.localScale.z);
 
         //Flash if the other savepoint under the same parent is activated
-        if (sisterPointActivated)
+        /*if (sisterPointActivated)
         {
             if(timer < 2 * Mathf.PI)
             {
@@ -77,7 +77,7 @@ public class SavePoint : MonoBehaviour
             Color newColor = rend.material.color;
             newColor.a = Mathf.Abs(Mathf.Sin(timer));
             rend.material.color = newColor;
-        }
+        }*/
     }
 
     public void Reset()
@@ -101,7 +101,7 @@ public class SavePoint : MonoBehaviour
             newColor.a = 0.3f;
             rend.material.color = newColor;
             audioManager.playAudioClip("CheckPoint");
-            sisterPoint.sisterPointActivated = true;
+            //sisterPoint.sisterPointActivated = true;
             timer = 0;
         }
     }
@@ -114,7 +114,7 @@ public class SavePoint : MonoBehaviour
         {
             parent.characters.Remove(collision);
             rend.material.color = originalColor;
-            sisterPoint.sisterPointActivated = false;
+            //sisterPoint.sisterPointActivated = false;
         }
     }
 
