@@ -24,6 +24,9 @@ public class SavePoint : MonoBehaviour
     float scaleSmoothY;
 
     bool used = false;
+    [HideInInspector] public bool sisterPointActivated = false;
+    public SavePoint sisterPoint;
+    float timer;
 
     void Start()
     {
@@ -43,10 +46,12 @@ public class SavePoint : MonoBehaviour
         if (parent.used)
         {
             Color newColor = Color.green;
+            newColor.a = 1;
             rend.material.color = newColor;
             used = true;
         }
 
+        //Visuals
         //Floating effect
         float newPosX = Mathf.SmoothDamp(transform.position.x, center.x + Random.Range(-parent.floatingRange, parent.floatingRange), ref floatingSmoothX, parent.floatingSmoothTime);
         float newPosY = Mathf.SmoothDamp(transform.position.y, center.y + Random.Range(-parent.floatingRange, parent.floatingRange), ref floatingSmoothY, parent.floatingSmoothTime);
@@ -55,6 +60,22 @@ public class SavePoint : MonoBehaviour
         float newScaleX = Mathf.SmoothDamp(transform.localScale.x, originalScale.x + Random.Range(-parent.floatingScaleModifier, parent.floatingScaleModifier), ref scaleSmoothX, parent.floatingSmoothTime);
         float newScaleY = Mathf.SmoothDamp(transform.localScale.y, originalScale.y + Random.Range(-parent.floatingScaleModifier, parent.floatingScaleModifier), ref scaleSmoothY, parent.floatingSmoothTime);
         transform.localScale = new Vector3(newScaleX, newScaleY, transform.localScale.z);
+
+        //Flash if the other savepoint under the same parent is activated
+        if (sisterPointActivated)
+        {
+            if(timer < 2 * Mathf.PI)
+            {
+                timer += 0.01f;
+            }
+            else
+            {
+                timer = 0;
+            }
+            Color newColor = rend.material.color;
+            newColor.a = Mathf.Abs(Mathf.Sin(timer));
+            rend.material.color = newColor;
+        }
     }
 
     public void Reset()
@@ -78,6 +99,8 @@ public class SavePoint : MonoBehaviour
             newColor.a = 0.3f;
             rend.material.color = newColor;
             audioManager.playAudioClip("CheckPoint");
+            sisterPoint.sisterPointActivated = true;
+            timer = 0;
         }
     }
 
@@ -89,6 +112,8 @@ public class SavePoint : MonoBehaviour
         {
             parent.characters.Remove(collision);
             rend.material.color = originalColor;
+            sisterPoint.sisterPointActivated = false;
         }
     }
+
 }

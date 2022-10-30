@@ -73,10 +73,13 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
+        //Experiment with dynamic camera size based on character x distance
         if (Mathf.Abs(target.transform.position.x - targetFlipped.transform.position.x) > cameraStartSizeInDistance.x)
         {
             camera.orthographicSize = 1000 * camera.orthographicSize * Mathf.Abs(target.transform.position.x - targetFlipped.transform.position.x) / cameraStartSizeInDistance.x;
         }
+
+        //Update camera
         focusArea.Update(target.collider.bounds, targetFlipped.collider.bounds, transform.position);
 
         Vector2 focusPosition = focusArea.center + Vector2.up * verticalOffset;
