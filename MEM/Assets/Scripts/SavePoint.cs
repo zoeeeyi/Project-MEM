@@ -12,6 +12,7 @@ public class SavePoint : MonoBehaviour
     float playerAngle = 0;
     Collider2D player;
 
+    public Color changeToColor = Color.green;
     SavePointParent parent;
     AudioManager audioManager;
     Renderer rend;
@@ -45,9 +46,10 @@ public class SavePoint : MonoBehaviour
 
         if (parent.used)
         {
-            Color newColor = Color.green;
-            newColor.a = 1;
-            rend.material.color = newColor;
+            Debug.Log("Parent used");
+            Color newColor = changeToColor;
+            newColor.a = .99f;
+            rend.material.color = changeToColor;
             used = true;
         }
 
