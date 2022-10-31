@@ -18,6 +18,9 @@ public class PlayerControllerV2 : RaycastController
 
     public Vector3 lastDisplacement = Vector3.zero;
 
+    public LayerMask horizontalCollisionMask;
+    //public LayerMask verticalCollisionMask;
+
     //Dictionary<Transform, PlatformController> movePlatformDic = new Dictionary<Transform, PlatformController>();
 
     public override void Start()
@@ -105,7 +108,7 @@ public class PlayerControllerV2 : RaycastController
             //Raycasts do not use local vectors. So anything related to vertical raycast should be multiplied by gravityDir
             rayOrigin += Vector2.up * (horizontalRaySpacing * i) * gravityDir;
             //Detect if there is an obstacle
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, horizontalCollisionMask);
             Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
 
             if (hit)
@@ -289,11 +292,11 @@ public class PlayerControllerV2 : RaycastController
                         continue;
                     }
 
-                    if (playerInput.getInput().y == -1)
+                    /*if (playerInput.getInput().y == -1)
                     {
                         collisionInfo.fallThroughPlatform = hit.collider;
                         continue;
-                    }
+                    }*/
                     //We release down button at instant, but falling through may take some time.
                     //Without following check, game wouldn't know that the player is still falling through, sometimes will cause jigering.
                     //We need to keep track if we are still falling through the same platform.
