@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverUI;
     public GameObject gameWinUI;
     public PlayerInputParent playerInputParent;
+    public TextMeshProUGUI debugBox;
 
     //Checkpoints
     public int endPointNum = 2;
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
+        debugBox.text = System.Math.Round(1.0f / Time.deltaTime, 2).ToString();
         //Universal Controlls
         if (Input.GetKeyDown(KeyCode.R))
         {
