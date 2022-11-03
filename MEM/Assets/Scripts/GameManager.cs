@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        debugBox.text = System.Math.Round(1.0f / Time.deltaTime, 2).ToString();
+        if(debugBox != null) debugBox.text = System.Math.Round(1.0f / Time.deltaTime, 2).ToString();
         //Universal Controlls
         if (Input.GetKeyDown(KeyCode.R))
         {
