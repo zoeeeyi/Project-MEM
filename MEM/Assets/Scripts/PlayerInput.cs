@@ -142,7 +142,7 @@ public class PlayerInput : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
         {
             animator.SetBool("isJumping", true);
 
