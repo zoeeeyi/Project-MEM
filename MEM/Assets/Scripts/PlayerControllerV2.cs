@@ -406,6 +406,7 @@ public class PlayerControllerV2 : RaycastController
             if (other.tag == "DeathBound") audioManager.playAudioClip("DeathFall");
             if (other.tag == "Enemy") audioManager.playAudioClip("DeathHit");
             if (other.tag == "RotatingKiller") audioManager.playAudioClip("DeathHit");
+            if (other.tag == "Spike") audioManager.playAudioClip("DeathHit");
             gameManager.ChangeGameStateTo(GameManager.GameStates.GameOver);
         }
 
