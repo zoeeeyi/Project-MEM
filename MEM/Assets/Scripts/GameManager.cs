@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
                 //UI
                 if (m_volume.weight != 0)
                 {
-                    m_volume.weight = Mathf.SmoothDamp(m_volume.weight, 0, ref volumeWeightSmoothV, volumeWeightSmoothTime);
+                    m_volume.weight = Mathf.SmoothDamp(m_volume.weight, 0, ref volumeWeightSmoothV, 1);
                 }
 
                 //Inputs

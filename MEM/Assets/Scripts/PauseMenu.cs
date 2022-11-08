@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour
 
     public void CallPauseMenu(PlayerInputParent instance)
     {
-        playerInputParent = instance;
+        /*playerInputParent = instance;
         playerLastSavePos = playerInputParent.transform.position;
 
         //Temporarily set save point to pause menu
@@ -36,7 +36,7 @@ public class PauseMenu : MonoBehaviour
         //Set camera
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         mainCamera.SetActive(false);
-        pauseMenuCamera.SetActive(true);
+        pauseMenuCamera.SetActive(true);*/
     }
 
     public void ResumeGame()
