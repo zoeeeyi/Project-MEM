@@ -62,7 +62,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuCamera.SetActive(false);
 
         Destroy(GameObject.Find("cpClone"));*/
-        playerInputParent.gameObject.SetActive(true);
+        //playerInputParent.gameObject.SetActive(true);
         gameManager.rotationSpeedModifier = 1;
         gameManager.ChangeGameStateTo(GameManager.GameStates.InGame);
         EventSystem.current.SetSelectedGameObject(null);
@@ -72,6 +72,7 @@ public class PauseMenu : MonoBehaviour
             animator.SetTrigger("Normal");
         }
         
+        gameManager.playerInputParent.freezeMovement = false;
         this.gameObject.SetActive(false);
     }
 

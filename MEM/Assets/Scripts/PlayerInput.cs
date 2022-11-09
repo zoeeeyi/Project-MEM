@@ -75,7 +75,7 @@ public class PlayerInput : MonoBehaviour
 
         if (parent.freezeMovement)
         {
-            velocity.x = 0;
+            //velocity.x = 0;
             return;
         }
 

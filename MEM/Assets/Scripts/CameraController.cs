@@ -73,6 +73,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
+        if (playerInputParent.freezeMovement) return;
         //Experiment with dynamic camera size based on character x distance
         if (Mathf.Abs(target.transform.position.x - targetFlipped.transform.position.x) > cameraStartSizeInDistance.x)
         {
