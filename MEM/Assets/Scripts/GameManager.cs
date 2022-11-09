@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     {
         //Pause Menu Setup
         pauseMenu = GameObject.Find("PauseMenu").GetComponent<PauseMenu>();
+        pauseMenu.gameObject.SetActive(false);
         inPauseMenu = false;
 
         //UI Setup
@@ -97,11 +98,12 @@ public class GameManager : MonoBehaviour
                 }
 
                 //Inputs
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != "PlayableMenu")
                 {
+                    pauseMenu.gameObject.SetActive(true);
                     pauseMenu.CallPauseMenu(playerInputParent);
                     rotationSpeedModifier = 0;
-                    m_volume.weight = 1;
+                    //m_volume.weight = 1;
                     gameState = GameStates.inPauseMenu;
                 }
                 break;
@@ -118,18 +120,19 @@ public class GameManager : MonoBehaviour
 
             case GameStates.inPauseMenu:
                 //UI
-                if (m_volume.weight != 0)
+                if (m_volume.weight != 1)
                 {
-                    m_volume.weight = Mathf.SmoothDamp(m_volume.weight, 0, ref volumeWeightSmoothV, volumeWeightSmoothTime);
+                    m_volume.weight = Mathf.SmoothDamp(m_volume.weight, 1, ref volumeWeightSmoothV, volumeWeightSmoothTime);
                 }
 
                 //Inputs
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     pauseMenu.ResumeGame();
-                    m_volume.weight = 1;
-                    rotationSpeedModifier = 1;
-                    gameState = GameStates.InGame;
+                    //pauseMenu.gameObject.SetActive(false);
+                    //m_volume.weight = 1;
+                    //rotationSpeedModifier = 1;
+                    //gameState = GameStates.InGame;
                 }
                 break;
         }

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -8,20 +11,31 @@ public class PauseMenu : MonoBehaviour
     GameObject mainCamera;
     Vector3 playerLastSavePos;
     Renderer rend;
+    GameManager gameManager;
 
     public GameObject charactersClone;
     public GameObject pauseMenuCamera;
 
+    public List<Animator> buttons = new List<Animator>();
+
     private void Awake()
     {
-        rend = GetComponent<Renderer>();
+        /*rend = GetComponent<Renderer>();
         Color color = Color.white;
         color.a = 0;
-        rend.material.color = color;
+        rend.material.color = color;*/
+    }
+
+    private void Start()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void CallPauseMenu(PlayerInputParent instance)
     {
+        playerInputParent = instance;
+        playerInputParent.gameObject.SetActive(false);
+
         /*playerInputParent = instance;
         playerLastSavePos = playerInputParent.transform.position;
 
@@ -41,13 +55,37 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
-        GameObject.FindGameObjectWithTag("SavePointController").GetComponent<SavePointController>().RevertSavePosition();
+        //GameObject.FindGameObjectWithTag("SavePointController").GetComponent<SavePointController>().RevertSavePosition();
         
         //Reset Camera
-        mainCamera.SetActive(true);
+        /*mainCamera.SetActive(true);
         pauseMenuCamera.SetActive(false);
 
-        Destroy(GameObject.Find("cpClone"));
+        Destroy(GameObject.Find("cpClone"));*/
         playerInputParent.gameObject.SetActive(true);
+        gameManager.rotationSpeedModifier = 1;
+        gameManager.ChangeGameStateTo(GameManager.GameStates.InGame);
+        EventSystem.current.SetSelectedGameObject(null);
+        buttons[0].SetTrigger("Normal");
+        foreach (Animator animator in buttons)
+        {
+            animator.SetTrigger("Normal");
+        }
+        
+        this.gameObject.SetActive(false);
+    }
+
+    public void RestartLevel()
+    {
+        GameObject dontDestroyOnLoad = GameObject.Find("DontDestroyOnLoad");
+        Destroy(dontDestroyOnLoad);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void GoToMainMenu()
+    {
+        GameObject dontDestroyOnLoad = GameObject.Find("DontDestroyOnLoad");
+        Destroy(dontDestroyOnLoad);
+        SceneManager.LoadScene("PlayableMenu");
     }
 }
