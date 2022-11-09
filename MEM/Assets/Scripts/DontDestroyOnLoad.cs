@@ -5,6 +5,7 @@ using UnityEngine;
 public class DontDestroyOnLoad : MonoBehaviour
 {
     static DontDestroyOnLoad instance;
+    [HideInInspector] public bool levelStarted = false;
     void Awake()
     {
         if (instance == null)
