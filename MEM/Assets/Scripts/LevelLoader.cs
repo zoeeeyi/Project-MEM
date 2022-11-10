@@ -44,6 +44,8 @@ public class LevelLoader : MonoBehaviour
                 GameObject dontDestroyOnLoad = GameObject.Find("DontDestroyOnLoad");
                 Destroy(dontDestroyOnLoad);
 
+                if (sceneName == "LEVEL 1") GameObject.Find("SaveData").GetComponent<SaveData>().SetTutorialFinish();
+
                 SceneManager.LoadScene(sceneName);
             }
         } 
