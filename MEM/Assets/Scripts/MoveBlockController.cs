@@ -147,7 +147,7 @@ public class MoveBlockController : MonoBehaviour
                 moveState = MoveBlockState.Done;
             }
         }
-        catch (Exception e) { }
+        catch (Exception e) {}
 
         Vector3 velocity = Vector3.zero;
         switch (moveState)

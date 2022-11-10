@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
 
     FocusArea focusArea;
     Camera camera;
+    GameManager gm;
 
     float cameraStartSize;
     Vector2 cameraStartSizeInDistance;
@@ -57,6 +58,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         camera = GetComponent<Camera>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         /*Camera actual width and height formula:
         height = 2 * Camera.main.orthographicSize;
         width = height * Camera.main.aspect;*/
@@ -73,7 +75,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (playerInputParent.freezeMovement) return;
+        if (playerInputParent.freezeMovement && gm.GetGameState() == GameManager.GameStates.inPauseMenu) return;
         //Experiment with dynamic camera size based on character x distance
         if (Mathf.Abs(target.transform.position.x - targetFlipped.transform.position.x) > cameraStartSizeInDistance.x)
         {

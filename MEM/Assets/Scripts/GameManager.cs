@@ -163,4 +163,9 @@ public class GameManager : MonoBehaviour
     {
         gameState = s;
     }
+
+    public GameStates GetGameState()
+    {
+        return gameState;
+    }
 }
