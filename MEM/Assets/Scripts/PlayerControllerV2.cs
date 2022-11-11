@@ -107,8 +107,8 @@ public class PlayerControllerV2 : RaycastController
 
     void SetAnimation(Vector3 displacement)
     {
-        animator.SetFloat("MoveX", Mathf.Abs(displacement.x));
-        animator.SetFloat("MoveY", displacement.y);
+        animator.SetFloat("MoveX", Mathf.Abs(displacement.x / Time.deltaTime));
+        animator.SetFloat("MoveY", displacement.y / Time.deltaTime);
     }
 
     void HorizontalCollisions(ref Vector3 displacement)
