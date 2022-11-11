@@ -170,7 +170,7 @@ public class PlayerInput : MonoBehaviour
                 }
                 //Leap between two walls
             }
-            if (isGrounded)
+            if (isGrounded || controller.collisionInfo.standingOnPlatform)
             {
                 audioManager.playAudioClip("Jump");
                 velocity.y = parent.maxJumpVelocity;

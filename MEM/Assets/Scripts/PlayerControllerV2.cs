@@ -45,6 +45,8 @@ public class PlayerControllerV2 : RaycastController
         UpdateRaycastOrigins();
         this.collisionInfo.Reset();
 
+        if (standingOnPlatform) collisionInfo.standingOnPlatform = true;
+
         //When platforms do a horizontal push on the player, the pushY is 0 so player won't castRay below
         //We can overwrite this with original player inputs
         if (overwritePlatformPush)
@@ -441,6 +443,7 @@ public class PlayerControllerV2 : RaycastController
     {
         public bool above, below;
         public bool left, right;
+        public bool standingOnPlatform;
 
         public bool climbingSlope;
         public bool descendingSlope;
@@ -453,6 +456,9 @@ public class PlayerControllerV2 : RaycastController
         {
             above = below = false;
             left = right = false;
+
+            standingOnPlatform = false;
+
             climbingSlope = false;
             descendingSlope = false;
 
