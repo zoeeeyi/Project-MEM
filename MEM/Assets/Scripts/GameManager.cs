@@ -8,10 +8,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //PauseMenu
-    PauseMenu pauseMenu;
-    [HideInInspector] public bool inPauseMenu;
-
+    [Header("UI")]
     //UI
     Volume m_volume;
     VolumeProfile m_volProfile;
@@ -21,7 +18,11 @@ public class GameManager : MonoBehaviour
     public GameObject gameWinUI;
     public PlayerInputParent playerInputParent;
     public TextMeshProUGUI debugBox;
+    //PauseMenu
+    [SerializeField] PauseMenu pauseMenu;
+    [HideInInspector] public bool inPauseMenu;
 
+    [Header("Checkpoints")]
     //Checkpoints
     public int endPointNum = 2;
     public int endPointReached = 0;
@@ -53,8 +54,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //Pause Menu Setup
-        pauseMenu = GameObject.Find("PauseMenu").GetComponent<PauseMenu>();
-        pauseMenu.gameObject.SetActive(false);
+        if(pauseMenu != null) pauseMenu.gameObject.SetActive(false);
         inPauseMenu = false;
 
         //UI Setup
@@ -62,10 +62,7 @@ public class GameManager : MonoBehaviour
         m_volProfile = m_volume.sharedProfile;
         m_volume.weight = 1;
 
-        gameOverUI = GameObject.Find("GameOver");
-        gameWinUI = GameObject.Find("GameWin");
         gameOverUI.SetActive(false);
-        gameWinUI.SetActive(false);
 
         playerInputParent = GameObject.Find("Character Parent").GetComponent<PlayerInputParent>();
     }
@@ -145,7 +142,6 @@ public class GameManager : MonoBehaviour
         if (endPointNum == endPointReached)
         {
             Time.timeScale = 0;
-            gameWinUI.SetActive(true);
         }
     }
 

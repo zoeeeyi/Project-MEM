@@ -11,7 +11,7 @@ public class LevelLoader : MonoBehaviour
     LevelSelectorSwitchParent levelSelectorSwitchParent;
 
 
-    string sceneName;
+    string sceneName = "";
 
     void Start()
     {

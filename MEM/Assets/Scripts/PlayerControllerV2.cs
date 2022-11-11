@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerControllerV2;
 
 
 public class PlayerControllerV2 : RaycastController
@@ -42,7 +43,7 @@ public class PlayerControllerV2 : RaycastController
     public void Move(Vector3 displacement, bool standingOnPlatform = false, bool overwritePlatformPush = false, bool needAnimation = false)
     {
         UpdateRaycastOrigins();
-        collisionInfo.Reset();
+        this.collisionInfo.Reset();
 
         //When platforms do a horizontal push on the player, the pushY is 0 so player won't castRay below
         //We can overwrite this with original player inputs
@@ -58,7 +59,7 @@ public class PlayerControllerV2 : RaycastController
 
         if (displacement.x != 0)
         {
-            collisionInfo.faceDir = (int)Mathf.Sign(displacement.x);
+            this.collisionInfo.faceDir = (int)Mathf.Sign(displacement.x);
         }
         HorizontalCollisions(ref displacement);
         //"ref" will pass through the velocity variable to Move() method from VerticalCollision()
@@ -67,18 +68,37 @@ public class PlayerControllerV2 : RaycastController
         {
             VerticalCollisions(ref displacement);
             //in case there is a new slope while we are climbing the slope, we need to detect it beforehand
-            if (collisionInfo.climbingSlope)
+            if (this.collisionInfo.climbingSlope)
             {
                 SlopeTransition(ref displacement);
             }
         }
+
+        //Final Check
+/*        Vector2 _rayOrigin;
+        if (!standingOnPlatform && displacement.x != 0 && !collisionInfo.below && !collisionInfo.above && !collisionInfo.left && !collisionInfo.right)
+        {
+            if (displacement.x > 0 && displacement.y > 0) _rayOrigin = raycastOrigins.topRight + new Vector2(skinWidth, skinWidth);
+            else if (displacement.x > 0 && displacement.y < 0) _rayOrigin = raycastOrigins.bottomRight + new Vector2(skinWidth, -skinWidth);
+            else if (displacement.x < 0 && displacement.y > 0) _rayOrigin = raycastOrigins.topLeft + new Vector2(-skinWidth, skinWidth);
+            else _rayOrigin = raycastOrigins.bottomLeft + new Vector2(-skinWidth, -skinWidth);
+
+            RaycastHit2D _hit = Physics2D.Raycast(_rayOrigin, displacement.normalized, displacement.magnitude, collisionMask | horizontalCollisionMask);
+            Debug.DrawRay(_rayOrigin, displacement.normalized * displacement.magnitude * 50, Color.red);
+            if (_hit)
+            {
+                Debug.Log("Hit!");
+                displacement = _hit.point - _rayOrigin;
+            }
+        }
+*/
 
         transform.Translate(displacement);
         lastDisplacement = displacement;
 
         if (standingOnPlatform)
         {
-            collisionInfo.below = true;
+            this.collisionInfo.below = true;
         }
 
         if (needAnimation) SetAnimation(displacement);

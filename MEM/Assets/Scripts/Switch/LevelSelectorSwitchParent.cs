@@ -9,7 +9,7 @@ public class LevelSelectorSwitchParent : MonoBehaviour
     LevelSelectorSwitch lastActiveSwitch;
 
     [HideInInspector] public LevelSelectorSwitch currentlyActiveSwitch;
-    [HideInInspector] public string selectedLevel;
+    [HideInInspector] public string selectedLevel = "";
 
     public GameObject arrow1;
     public GameObject arrow2;
