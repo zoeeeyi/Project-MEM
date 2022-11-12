@@ -108,6 +108,7 @@ public class PlayerInput : MonoBehaviour
             }
             if (_isGrounded)
             {
+                Debug.Log("Jump");
                 audioManager.playAudioClip("Jump");
                 velocity.y = parent.maxJumpVelocity;
                 isJumping = true;
