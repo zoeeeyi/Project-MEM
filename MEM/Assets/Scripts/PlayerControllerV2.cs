@@ -77,7 +77,7 @@ public class PlayerControllerV2 : RaycastController
         }
 
         //Final Check
-/*        Vector2 _rayOrigin;
+        Vector2 _rayOrigin;
         if (!standingOnPlatform && displacement.x != 0 && !collisionInfo.below && !collisionInfo.above && !collisionInfo.left && !collisionInfo.right)
         {
             if (displacement.x > 0 && displacement.y > 0) _rayOrigin = raycastOrigins.topRight + new Vector2(skinWidth, skinWidth);
@@ -87,13 +87,13 @@ public class PlayerControllerV2 : RaycastController
 
             RaycastHit2D _hit = Physics2D.Raycast(_rayOrigin, displacement.normalized, displacement.magnitude, collisionMask | horizontalCollisionMask);
             Debug.DrawRay(_rayOrigin, displacement.normalized * displacement.magnitude * 50, Color.red);
-            if (_hit)
+            if (_hit && _hit.collider.tag != "Switch")
             {
                 Debug.Log("Hit!");
                 displacement = _hit.point - _rayOrigin;
             }
         }
-*/
+
 
         transform.Translate(displacement);
         lastDisplacement = displacement;

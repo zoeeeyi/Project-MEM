@@ -193,18 +193,70 @@ MonoBehaviour:
     m_StrikethroughOffset: 18
     m_StrikethroughThickness: 6.298828
     m_TabWidth: 24
-  m_GlyphTable: []
-  m_CharacterTable: []
+  m_GlyphTable:
+  - m_Index: 1396
+    m_Metrics:
+      m_Width: 28
+      m_Height: 17
+      m_HorizontalBearingX: 2
+      m_HorizontalBearingY: 54
+      m_HorizontalAdvance: 32
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 10
+      m_Width: 28
+      m_Height: 17
+    m_Scale: 1
+    m_AtlasIndex: 0
+  - m_Index: 1349
+    m_Metrics:
+      m_Width: 50
+      m_Height: 47
+      m_HorizontalBearingX: 1
+      m_HorizontalBearingY: 46
+      m_HorizontalAdvance: 52
+    m_GlyphRect:
+      m_X: 57
+      m_Y: 10
+      m_Width: 50
+      m_Height: 47
+    m_Scale: 1
+    m_AtlasIndex: 0
+  m_CharacterTable:
+  - m_ElementType: 1
+    m_Unicode: 7508
+    m_GlyphIndex: 1396
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 7461
+    m_GlyphIndex: 1349
+    m_Scale: 1
   m_AtlasTextures:
   - {fileID: 28268798066460806}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_ClearDynamicDataOnBuild: 1
-  m_UsedGlyphRects: []
-  m_FreeGlyphRects:
+  m_UsedGlyphRects:
   - m_X: 0
     m_Y: 0
+    m_Width: 47
+    m_Height: 36
+  - m_X: 47
+    m_Y: 0
+    m_Width: 69
+    m_Height: 66
+  m_FreeGlyphRects:
+  - m_X: 0
+    m_Y: 66
     m_Width: 511
+    m_Height: 445
+  - m_X: 0
+    m_Y: 36
+    m_Width: 47
+    m_Height: 475
+  - m_X: 116
+    m_Y: 0
+    m_Width: 395
     m_Height: 511
   m_fontInfo:
     Name: Liberation Sans
