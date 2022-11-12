@@ -3428,6 +3428,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RotatingKiller2Arms (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8344026623889419612, guid: 6dd781e50d28c614dbc6791da6227eda, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dd781e50d28c614dbc6791da6227eda, type: 3}
 --- !u!1001 &681204033
@@ -6897,11 +6901,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3886165174978375547, guid: 2c52763a3ae185444999175b2f519867, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.76
+      value: -4.228
       objectReference: {fileID: 0}
     - target: {fileID: 3886165174978375547, guid: 2c52763a3ae185444999175b2f519867, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.72
+      value: -8.083
       objectReference: {fileID: 0}
     - target: {fileID: 3886165174978375547, guid: 2c52763a3ae185444999175b2f519867, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8645,36 +8649,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: autoDisappearWaitTime
-      value: 1.15
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainFirst.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainSecond.Array.size
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainFirst.Array.data[0]
       value: 
-      objectReference: {fileID: 1932703141}
+      objectReference: {fileID: 726833671}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainFirst.Array.data[1]
       value: 
-      objectReference: {fileID: 361083752}
+      objectReference: {fileID: 355710813}
+    - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
+      propertyPath: platformChainFirst.Array.data[2]
+      value: 
+      objectReference: {fileID: 1998646485}
+    - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
+      propertyPath: platformChainFirst.Array.data[3]
+      value: 
+      objectReference: {fileID: 708347530}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainSecond.Array.data[0]
       value: 
-      objectReference: {fileID: 726833671}
+      objectReference: {fileID: 1932703141}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainSecond.Array.data[1]
       value: 
-      objectReference: {fileID: 355710813}
+      objectReference: {fileID: 361083752}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainSecond.Array.data[2]
       value: 
-      objectReference: {fileID: 1998646485}
+      objectReference: {fileID: 708347530}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainSecond.Array.data[3]
       value: 
@@ -19099,7 +19111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7395350779721505591}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 221.4419, y: -24.010464, z: 0.7350577}
+  m_LocalPosition: {x: 221.4419, y: -23.63, z: 0.7350577}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
