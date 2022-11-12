@@ -66,9 +66,14 @@ public class GameManager : MonoBehaviour
 
         playerInputParent = GameObject.Find("Character Parent").GetComponent<PlayerInputParent>();
     }
+
+    private void FixedUpdate()
+    {
+        if (debugBox != null) debugBox.text = System.Math.Round(1.0f / Time.deltaTime, 2).ToString();
+    }
+
     void Update()
     {
-        if(debugBox != null) debugBox.text = System.Math.Round(1.0f / Time.deltaTime, 2).ToString();
         //Universal Controlls
         if (Input.GetButtonDown("Restart"))
         {

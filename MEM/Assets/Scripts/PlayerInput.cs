@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent (typeof(PlayerControllerV2))]
@@ -30,6 +31,8 @@ public class PlayerInput : MonoBehaviour
 
     //Audio
     AudioManager audioManager;
+
+    [SerializeField] TextMeshProUGUI debugBox;
 
     void Start()
     {
@@ -70,10 +73,10 @@ public class PlayerInput : MonoBehaviour
             _wallSliding = true;
         }
 
-        /*if (_isGrounded)
+        if (_isGrounded && velocity.y < 0)
         {
             velocity.y = 0;
-        }*/
+        }
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -128,6 +131,8 @@ public class PlayerInput : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (debugBox != null) debugBox.text = System.Math.Round(1.0f / Time.deltaTime, 2).ToString();
+
         //Send the real time location to parent
         if (!inverseGravity)
         {
