@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent (typeof(PlayerControllerV2))]
@@ -31,6 +32,8 @@ public class PlayerInput : MonoBehaviour
     //Audio
     AudioManager audioManager;
 
+    [SerializeField] TextMeshProUGUI debugBox;
+
     void Start()
     {
         controller = GetComponent<PlayerControllerV2>();
@@ -50,8 +53,86 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (parent.freezeMovement)
+        {
+            //velocity.x = 0;
+            return;
+        }
+
+        //Get inputs
+        //float xInput = (Input.GetKey(KeyCode.D)?1:0) + (Input.GetKey(KeyCode.A)?-1:0);
+        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        bool _wallSliding = false;
+        int _wallDirX = (controller.collisionInfo.left) ? -1 : 1;
+        bool _isGrounded = (controller.collisionInfo.above || controller.collisionInfo.below);
+
+        if ((controller.collisionInfo.left || controller.collisionInfo.right) && (!controller.collisionInfo.below) && velocity.y < 0)
+        {
+            _wallSliding = true;
+        }
+
+        if (_isGrounded && velocity.y < 0)
+        {
+            velocity.y = 0;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            animator.SetBool("isJumping", true);
+
+            if (_wallSliding)
+            {
+                //Jump climb the wall
+                /*if (parent.wallJumpActivate)
+                {
+                    if (_wallDirX == input.x)
+                    {
+                        velocity.x = -_wallDirX * parent.wallJumpClimb.x;
+                        velocity.y = parent.wallJumpClimb.y;
+                    }
+                    else
+                    {
+                        velocity.x = -_wallDirX * parent.wallLeap.x;
+                        velocity.y = parent.wallLeap.y;
+                    }
+                }*/
+                //Jump off the wall
+                if (input.x == 0)
+                {
+                    velocity.x = -_wallDirX * parent.wallJumpOff.x;
+                    velocity.y = (parent.wallJumpActivate) ? parent.wallJumpClimb.y : 0;
+                }
+                //Leap between two walls
+            }
+            if (_isGrounded)
+            {
+                audioManager.playAudioClip("Jump");
+                velocity.y = parent.maxJumpVelocity;
+                isJumping = true;
+            }
+        }
+
+        /*during jumping, if we release the space bar before player reaches the max height
+        we "terminate" the jump early by setting velocity.y to a small level*/
+        if (Input.GetButtonUp("Jump"))
+        {
+            if (isJumping)
+            {
+                if (velocity.y > parent.minJumpVelocity)
+                {
+                    velocity.y = parent.minJumpVelocity;
+                }
+            }
+            isJumping = false;
+        }
+    }
+
     void FixedUpdate()
     {
+        if (debugBox != null) debugBox.text = System.Math.Round(1.0f / Time.deltaTime, 2).ToString();
+
         //Send the real time location to parent
         if (!inverseGravity)
         {
@@ -61,16 +142,13 @@ public class PlayerInput : MonoBehaviour
         {
             parent.posCharacterFlipped = transform.position;
         }
-    }
 
-    void Update()
-    {
         //Set state from parent
-        state = parent.state;
+        /*state = parent.state;
 
         if (parent.state == PlayerInputParent.PlayerState.Normal) rend.material.color = Color.white;
         if (parent.state == PlayerInputParent.PlayerState.NearlyBeyondXGap) rend.material.color = Color.green;
-        if (parent.state == PlayerInputParent.PlayerState.BeyondXGap) rend.material.color = Color.blue;
+        if (parent.state == PlayerInputParent.PlayerState.BeyondXGap) rend.material.color = Color.blue;*/
 
 
         if (parent.freezeMovement)
@@ -81,46 +159,46 @@ public class PlayerInput : MonoBehaviour
 
         //Get inputs
         //float xInput = (Input.GetKey(KeyCode.D)?1:0) + (Input.GetKey(KeyCode.A)?-1:0);
-        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        //input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         if(input.x > 0)
         {
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-        } 
+        }
         else if (input.x < 0)
         {
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
 
-        bool isGrounded = (controller.collisionInfo.above || controller.collisionInfo.below);
+        bool _isGrounded = (controller.collisionInfo.above || controller.collisionInfo.below);
 
-        if (isGrounded) animator.SetBool("isJumping", false);
+        if (_isGrounded) animator.SetBool("isJumping", false);
 
         //Calculate movement data
-        float targetVelocityX = input.x * parent.moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (isGrounded) ? parent.xAccelerationTimeGrounded : parent.xAccelerationTimeAir);
+        float _targetVelocityX = input.x * parent.moveSpeed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, _targetVelocityX, ref velocityXSmoothing, (_isGrounded) ? parent.xAccelerationTimeGrounded : parent.xAccelerationTimeAir);
 
         //Wall jump
-        int wallDirX = (controller.collisionInfo.left) ? -1 : 1;
+        int _wallDirX = (controller.collisionInfo.left) ? -1 : 1;
 
         //Wall sliding
-        bool wallSliding = false;
+        bool _wallSliding = false;
         //if we are sliding on the wall, vertical speed is reduced (max 3)
         if ((controller.collisionInfo.left || controller.collisionInfo.right) && (!controller.collisionInfo.below) && velocity.y < 0)
         {
-            wallSliding = true;
-
-            /*if(velocity.y < -parent.wallSlideSpeedMax)
+            _wallSliding = true;
+        }
+/*            *//*if(velocity.y < -parent.wallSlideSpeedMax)
             {
                 velocity.y = -parent.wallSlideSpeedMax;
-            }*/
+            }*//*
 
             if(timeToWallUnstick > 0)
             {
                 velocityXSmoothing = 0;
                 velocity.x = 0;
 
-                if(input.x != wallDirX && (input.x != 0))
+                if(input.x != _wallDirX && (input.x != 0))
                 {
                     timeToWallUnstick -= Time.deltaTime;
                 }
@@ -136,41 +214,41 @@ public class PlayerInput : MonoBehaviour
         }
 
         //Reset vertical velocity to 0 when on the ground or touching the ceiling
-        if (isGrounded)
+        if (_isGrounded)
         {
             velocity.y = 0;
         }
 
 
-        if (Input.GetButtonDown("Jump"))
+       if (Input.GetButtonDown("Jump"))
         {
             animator.SetBool("isJumping", true);
 
-            if (wallSliding)
+            if (_wallSliding)
             {
                 //Jump climb the wall
-                if (parent.wallJumpActivate)
+                *//*if (parent.wallJumpActivate)
                 {
-                    if (wallDirX == input.x)
+                    if (_wallDirX == input.x)
                     {
-                        velocity.x = -wallDirX * parent.wallJumpClimb.x;
+                        velocity.x = -_wallDirX * parent.wallJumpClimb.x;
                         velocity.y = parent.wallJumpClimb.y;
                     }
                     else
                     {
-                        velocity.x = -wallDirX * parent.wallLeap.x;
+                        velocity.x = -_wallDirX * parent.wallLeap.x;
                         velocity.y = parent.wallLeap.y;
                     }
-                }
+                }*//*
                 //Jump off the wall
                 if(input.x == 0)
                 {
-                    velocity.x = -wallDirX * parent.wallJumpOff.x;
+                    velocity.x = -_wallDirX * parent.wallJumpOff.x;
                     velocity.y = (parent.wallJumpActivate) ? parent.wallJumpClimb.y : 0;
                 }
                 //Leap between two walls
             }
-            if (isGrounded || controller.collisionInfo.standingOnPlatform)
+            if (_isGrounded)
             {
                 audioManager.playAudioClip("Jump");
                 velocity.y = parent.maxJumpVelocity;
@@ -178,9 +256,9 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-        /*during jumping, if we release the space bar before player reaches the max height
-        we "terminate" the jump early by setting velocity.y to a small level*/
-        if (Input.GetKeyUp(KeyCode.Space))
+        *//*during jumping, if we release the space bar before player reaches the max height
+        we "terminate" the jump early by setting velocity.y to a small level*//*
+        if (Input.GetButtonUp("Jump"))
         {
             if (isJumping)
             {
@@ -191,8 +269,8 @@ public class PlayerInput : MonoBehaviour
             }
             isJumping = false;
         }
-
-        if (Input.GetKeyDown(KeyCode.E))
+*/
+        /*if (Input.GetKeyDown(KeyCode.E))
         {
             if (((!inverseGravity) && (parent.characterXGap > 0))//normal character on right.
                 ||((inverseGravity) && (parent.characterXGap < 0))) //flipped character on right.
@@ -214,7 +292,7 @@ public class PlayerInput : MonoBehaviour
         {
             velocity.x = 0;
             parent.state = PlayerInputParent.PlayerState.Normal;
-        }
+        }*/
 
         switch (state)
         {
@@ -239,13 +317,14 @@ public class PlayerInput : MonoBehaviour
                 //velocity.x = input.x * moveSpeed;
                 displacement.x = velocity.x * Time.deltaTime;
                 float yInitialVelocity = velocity.y;
-                gravity = (wallSliding) ? (parent.wallSlideGravBuffer * parent.gravity) : parent.gravity;
+                gravity = parent.gravity; //(_wallSliding) ? (parent.wallSlideGravBuffer * parent.gravity) : parent.gravity;
                 velocity.y += gravity * Time.deltaTime;
                 displacement.y = (Mathf.Pow(velocity.y, 2) - Mathf.Pow(yInitialVelocity, 2)) / (2 * gravity);
                 break;
         }
 
-        controller.Move(displacement, false, false, true);
+        bool _overWritePlatformPush = (isJumping) ? true : false;
+        controller.Move(displacement, false, _overWritePlatformPush, true);
     }
 
     public Vector2 getInput()
