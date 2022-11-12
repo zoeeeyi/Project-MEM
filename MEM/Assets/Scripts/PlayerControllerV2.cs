@@ -87,7 +87,7 @@ public class PlayerControllerV2 : RaycastController
 
             RaycastHit2D _hit = Physics2D.Raycast(_rayOrigin, displacement.normalized, displacement.magnitude, collisionMask | horizontalCollisionMask);
             Debug.DrawRay(_rayOrigin, displacement.normalized * displacement.magnitude * 50, Color.red);
-            if (_hit && _hit.collider.tag != "Switch")
+            if (_hit && _hit.collider.tag != "Switch" && _hit.collider.tag != "MovePlatform")
             {
                 Debug.Log("Hit!");
                 displacement = _hit.point - _rayOrigin;
