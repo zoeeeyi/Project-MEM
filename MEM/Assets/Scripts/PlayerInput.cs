@@ -78,6 +78,8 @@ public class PlayerInput : MonoBehaviour
             velocity.y = 0;
         }
 
+        if (_isGrounded) animator.SetBool("isJumping", false);
+
         if (Input.GetButtonDown("Jump"))
         {
             animator.SetBool("isJumping", true);
@@ -173,7 +175,7 @@ public class PlayerInput : MonoBehaviour
 
         bool _isGrounded = (controller.collisionInfo.above || controller.collisionInfo.below);
 
-        if (_isGrounded) animator.SetBool("isJumping", false);
+        //if (_isGrounded) animator.SetBool("isJumping", false);
 
         //Calculate movement data
         float _targetVelocityX = input.x * parent.moveSpeed;
