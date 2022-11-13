@@ -21717,24 +21717,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainFirst.Array.size
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainSecond.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainFirst.Array.data[0]
       value: 
-      objectReference: {fileID: 1440172793}
+      objectReference: {fileID: 1203913378}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainFirst.Array.data[1]
       value: 
-      objectReference: {fileID: 758688046}
+      objectReference: {fileID: 1572923655}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainFirst.Array.data[2]
       value: 
-      objectReference: {fileID: 668727681}
+      objectReference: {fileID: 147610519}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainFirst.Array.data[3]
       value: 
@@ -21742,11 +21742,19 @@ PrefabInstance:
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainSecond.Array.data[0]
       value: 
-      objectReference: {fileID: 1203913378}
+      objectReference: {fileID: 1440172793}
     - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: platformChainSecond.Array.data[1]
       value: 
-      objectReference: {fileID: 1572923655}
+      objectReference: {fileID: 758688046}
+    - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
+      propertyPath: platformChainSecond.Array.data[2]
+      value: 
+      objectReference: {fileID: 668727681}
+    - target: {fileID: 748817811796698862, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
+      propertyPath: platformChainSecond.Array.data[3]
+      value: 
+      objectReference: {fileID: 147610519}
     - target: {fileID: 748817811796698863, guid: bf3fb1269f6f4a74dbf45d1ce4533684, type: 3}
       propertyPath: m_RootOrder
       value: 0
