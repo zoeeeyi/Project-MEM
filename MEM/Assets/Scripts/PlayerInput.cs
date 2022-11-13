@@ -69,6 +69,7 @@ public class PlayerInput : MonoBehaviour
         bool _isGrounded = controller.collisionInfo.below; // (controller.collisionInfo.above || controller.collisionInfo.below);
         bool _isCeiling = controller.collisionInfo.above;
 
+
         if ((controller.collisionInfo.left || controller.collisionInfo.right) && (!controller.collisionInfo.below) && velocity.y < 0)
         {
             _wallSliding = true;
@@ -178,11 +179,9 @@ public class PlayerInput : MonoBehaviour
 
         bool _isGrounded = controller.collisionInfo.below; // (controller.collisionInfo.above || controller.collisionInfo.below);
         bool _isCeiling = controller.collisionInfo.above;
-
-        if (_isCeiling) velocity.y = 0;
-
         //if (_isGrounded) animator.SetBool("isJumping", false);
 
+        if (_isCeiling) velocity.y = 0;
         //Calculate movement data
         float _targetVelocityX = input.x * parent.moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, _targetVelocityX, ref velocityXSmoothing, (_isGrounded) ? parent.xAccelerationTimeGrounded : parent.xAccelerationTimeAir);
